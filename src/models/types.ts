@@ -1,5 +1,3 @@
-import { Book, Hashes } from './base-types';
-
 export interface IProviderStats {
   name: string;
   baseUrl: string;
@@ -77,7 +75,6 @@ export enum MediaFormat {
   NOVEL = 'NOVEL',
   ONE_SHOT = 'ONE_SHOT',
   PV = 'PV',
-  COMIC = 'COMIC',
 }
 
 export interface IAnimeInfo extends IAnimeResult {
@@ -265,74 +262,6 @@ export interface IMangaChapterPage {
   [x: string]: unknown; // other fields
 }
 
-export interface ILightNovelResult {
-  id: string;
-  title: string | ITitle;
-  url: string;
-  image?: string;
-  [x: string]: unknown; // other fields
-}
-
-export interface ILightNovelChapter {
-  id: string;
-  title: string;
-  volume?: number | string;
-  url?: string;
-}
-
-export interface ILightNovelChapterContent {
-  novelTitle: string;
-  chapterTitle: string;
-  text: string;
-}
-
-export interface ILightNovelInfo extends ILightNovelResult {
-  authors?: string[];
-  genres?: string[];
-  description?: string;
-  chapters?: ILightNovelChapter[];
-  status?: MediaStatus;
-  views?: number;
-  rating?: number;
-}
-
-export interface LibgenBook extends Book {
-  id: string;
-  language: string;
-  format: string;
-  size: string;
-  pages: string;
-  tableOfContents: string;
-  topic: string;
-  hashes: Hashes;
-}
-
-export interface LibgenResult {
-  result: LibgenBook[];
-  hasNextPage: boolean;
-}
-
-export interface GetComicsComics {
-  image: string;
-  title: string;
-  year: string;
-  size: string;
-  excerpt: string;
-  category: string;
-  description: string;
-  download: string;
-  ufile: string;
-  mega: string;
-  mediafire: string;
-  zippyshare: string;
-  readOnline: string;
-}
-
-export interface ComicRes {
-  containers: GetComicsComics[];
-  hasNextPage: boolean;
-}
-
 export interface ISubtitle {
   /**
    * The id of the subtitle. **not** required
@@ -405,42 +334,6 @@ export interface IPeopleResult {
   image?: string;
   movies: IMovieResult[];
   [x: string]: unknown; // other unkown fields
-}
-
-export interface INewsFeed extends INews {
-  /** topics of the feed */
-  topics: Topics[];
-  /** preview of the news feed */
-  preview: INewsFeedPreview;
-}
-
-export interface INewsInfo extends INews {
-  /** intro of the news */
-  intro: string;
-  /** description of the news */
-  description: string;
-}
-
-interface INews {
-  /** id of the news */
-  id: string;
-  /** title of the news */
-  title: string;
-  /** time at which the news was uploaded */
-  uploadedAt: string;
-  /** thumbnail image URL of the news */
-  thumbnail: string;
-  /** thumbnail image blurhash code of the news */
-  thumbnailHash: string;
-  /** URL of the news */
-  url: string;
-}
-
-interface INewsFeedPreview {
-  /** intro of the feed */
-  intro: string;
-  /** some contents of the feed */
-  full: string;
 }
 
 export interface IMovieInfo extends IMovieResult {

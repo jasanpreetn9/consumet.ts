@@ -22,11 +22,6 @@ exports.PROVIDERS_LIST = {
         new providers_1.MANGA.ComicK(),
         new providers_1.MANGA.Comix(),
     ],
-    BOOKS: [],
-    COMICS: [
-    // new COMICS.GetComics()
-    ],
-    LIGHT_NOVELS: [],
     MOVIES: [
     // new MOVIES.DramaCool(),
     // new MOVIES.FlixHQ(),
@@ -35,8 +30,5 @@ exports.PROVIDERS_LIST = {
     // new MOVIES.HiMovies(),
     // new MOVIES.Turkish(),
     ],
-    NEWS: [new providers_1.NEWS.ANN()],
-    META: [new providers_1.META.Anilist(), new providers_1.META.TMDB(), new providers_1.META.Myanimelist()],
-    OTHERS: [],
 };
 //# sourceMappingURL=providers-list.js.map

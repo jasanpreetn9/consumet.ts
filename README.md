@@ -33,7 +33,6 @@ consumet.ts is a Node library which provides high-level APIs to get information 
 - [Contributing](#contributing)
 - [Support](#support)
 - [Contributors ✨](#contributors-)
-  - [Credits](#credits)
 - [License](#license)
 
 ## Quick Start
@@ -50,27 +49,14 @@ yarn add @consumet/extensions
 
 ### Usage
 
-**Example** - searching for a book using the libgen provider.
+**Example** - searching for manga using the MangaPill provider.
 ```ts
-import { BOOKS } from "@consumet/extensions"
+import { MANGA } from "@consumet/extensions"
 
-// Create a new instance of the Libgen provider
-const books = new BOOKS.Libgen();
-// Search for a book. In this case, "Pride and Prejudice"
-const data = books.search('pride and prejudice').then(data => {
-  // print results
-  console.log(data)
-})
-```
-
-**Example** - searching for anime using the gogoanime provider.
-```ts
-import { ANIME } from "@consumet/extensions"
-
-// Create a new instance of the Gogoanime provider
-const gogoanime = new ANIME.Gogoanime();
-// Search for an anime. In this case, "One Piece"
-const results = gogoanime.search("One Piece").then(data => {
+// Create a new instance of the MangaPill provider
+const mangapill = new MANGA.MangaPill();
+// Search for a manga. In this case, "One Piece"
+const results = mangapill.search("One Piece").then(data => {
   // print results
   console.log(data);
 })
@@ -83,12 +69,7 @@ Do you want to know more? Head to the [`Getting Started`](https://github.com/jas
 - [`Guides`](https://github.com/jasanpreetn9/consumet.ts/tree/master/docs)
 - [`Anime`](./docs/guides/anime.md)
 - [`Manga`](./docs/guides/manga.md)
-- [`Books`](./docs/guides/books.md)
 - [`Movies`](./docs/guides/movies.md)
-- [`Light Novels`](./docs/guides/light-novels.md)
-- [`Comics`](./docs/guides/comics.md)
-- [`Meta`](./docs/guides/meta.md)
-- [`News`](./docs/guides/news.md)
 
 ## Ecosystem
 - [Rest-API Reference](https://docs.consumet.org/) - public rest api documentation
@@ -114,9 +95,6 @@ You can contact the maintainers of consumet.ts via [email](mailto:consumet.org@g
 Thanks to the following people for keeping this project alive and thriving.
 
 [![](https://contrib.rocks/image?repo=jasanpreetn9/consumet.ts)](https://github.com/jasanpreetn9/consumet.ts/graphs/contributors)
-
-### Credits
-- [Anify API](https://github.com/Eltik/Anify) - Used as a caching layer for the meta/anilist provider to speed up responses. 
 
 ## License
 Licensed under [GPL-3.0](./LICENSE).

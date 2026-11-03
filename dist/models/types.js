@@ -15,7 +15,6 @@ var MediaFormat;
     MediaFormat["NOVEL"] = "NOVEL";
     MediaFormat["ONE_SHOT"] = "ONE_SHOT";
     MediaFormat["PV"] = "PV";
-    MediaFormat["COMIC"] = "COMIC";
 })(MediaFormat || (exports.MediaFormat = MediaFormat = {}));
 var StreamingServers;
 (function (StreamingServers) {
