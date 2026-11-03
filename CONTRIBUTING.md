@@ -31,7 +31,7 @@ For additional details, see our [informal contributing guide](./docs/guides/cont
 
 To contribute to consumet.ts, you should have knowledge of:
 
-- **[Node.js](https://nodejs.org/)** - JavaScript runtime (v16 or higher recommended)
+- **[Node.js](https://nodejs.org/)** - JavaScript runtime (v24.22.2 or higher recommended)
 - **[TypeScript](https://www.typescriptlang.org/)** - Typed superset of JavaScript
 - **Web Scraping** (for provider development):
   - [Cheerio](https://cheerio.js.org/) - jQuery-like HTML parsing

@@ -1,4 +1,5 @@
-import { load } from 'cheerio';
+import { load, type Cheerio } from 'cheerio';
+import type { AnyNode } from 'domhandler' with { 'resolution-mode': 'import' };
 
 export const USER_AGENT =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36';
@@ -36,12 +37,12 @@ export const formatTitle = (title: string) => {
   return result.trim();
 };
 
-export const genElement = (s: string, e: string) => {
+export const genElement = (s: string, e: string): Cheerio<AnyNode> | undefined => {
   if (s == '') return;
   const $ = load(e);
   let i = 0;
   let str = '';
-  let el = $();
+  let el: Cheerio<AnyNode> = $();
   for (; i < s.length; i++) {
     if (s[i] == ' ') {
       el = $(str);

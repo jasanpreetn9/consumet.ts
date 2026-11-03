@@ -1,4 +1,4 @@
-import type { Response } from 'got';
+import type { Response } from 'got' with { 'resolution-mode': 'import' };
 import {
   ISearch,
   IAnimeInfo,

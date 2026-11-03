@@ -7,7 +7,7 @@ consumet.ts is a Node.js TypeScript library that provides high-level APIs for sc
 ## Working Effectively
 
 ### Prerequisites
-- Node.js (tested with v20.19.5)
+- Node.js (tested with v24.22.2)
 - Yarn (tested with v1.22.22)  
 - All commands should be run from the repository root directory
 
