@@ -1,3 +1,5 @@
 import NovelUpdates from './novelupdates';
 
-export default { NovelUpdates };
+export default {
+  // NovelUpdates
+ };
