@@ -34,9 +34,11 @@ const movieProvider = new MOVIES.<providerName>();
 ## Movies Providers List
 This list is in alphabetical order. (except the sub bullet points)
 
-- [Goku](../providers/goku.md)
-- [FlixHQ](../providers/flixhq.md)
-- [Sflix](../providers/sflix.md)
-- [Himovies](../providers/himovies.md)
+> **Note:** Providers marked *(disabled)* are currently turned off because their sites are unreachable, blocked, or have changed. See [STATUS.md](../../STATUS.md) for details.
 
-<p align="end">(<a href="https://github.com/consumet/extensions/blob/master/docs">back to table of contents</a>)</p>
+- [Goku](../providers/goku.md) *(disabled)*
+- [FlixHQ](../providers/flixhq.md) *(disabled)*
+- [Sflix](../providers/sflix.md) *(disabled)*
+- [Himovies](../providers/himovies.md) *(disabled)*
+
+<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs">back to table of contents</a>)</p>

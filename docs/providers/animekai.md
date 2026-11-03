@@ -49,7 +49,7 @@ const animekai = new ANIME.AnimeKai({
 - [fetchSearchSuggestions](#fetchsearchsuggestions)
 
 ### search
-> Note: This method is a subclass of the [`BaseParser`](https://github.com/consumet/extensions/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
+> Note: This method is a subclass of the [`BaseParser`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
 
 
 <h4>Parameters</h4>
@@ -64,7 +64,7 @@ animekai.search("dandadan").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```js
 {
@@ -103,7 +103,7 @@ animekai.fetchAnimeInfo("jujutsu-kaisen-4gm6").then(data => {
 })
 ```
 
-returns a promise which resolves into an anime info object . (*[`Promise<IAnimeInfo>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L28-L42)*)\
+returns a promise which resolves into an anime info object . (*[`Promise<IAnimeInfo>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L28-L42)*)\
 output:
 ```js
 {
@@ -186,7 +186,7 @@ animekai.fetchEpisodeServers("jujutsu-kaisen-4gm6$ep=1$token=30nW30ysAuVpjobTutx
 })
 ```
 
-returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L210-L214)*)\
+returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L210-L214)*)\
 output:
 ```js
 [
@@ -218,7 +218,7 @@ animekai.fetchEpisodeSources("jujutsu-kaisen-4gm6$ep=1$token=30nW30ysAuVpjobTutx
 })
 ```
 
-returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L210-L214)*)\
+returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L210-L214)*)\
 output:
 ```js
 {
@@ -253,7 +253,7 @@ animekai.fetchLatestCompleted().then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```js
 {                                                        
@@ -338,7 +338,7 @@ animekai.genreSearch('action').then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```js
 {
@@ -376,7 +376,7 @@ animekai.fetchSchedule().then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```js
 {
@@ -408,7 +408,7 @@ animekai.fetchSpotlight().then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```js
 {
@@ -455,7 +455,7 @@ animekai.fetchSearchSuggestions("One Piece").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```js
 {

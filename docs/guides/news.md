@@ -17,4 +17,4 @@ This list is in alphabetical order. (except the sub bullet points)
 
 - [ANN (Anime News Network)](../providers/ann.md)
 
-<p align="end">(<a href="https://github.com/consumet/extensions/blob/master/docs">back to table of contents</a>)</p>
+<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs">back to table of contents</a>)</p>

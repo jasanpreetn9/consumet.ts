@@ -18,7 +18,7 @@ const mangahere = new MANGA.MangaHere();
 - [Genres](#genres)
 
 ### search
-> Note: This method is a subclass of the [`BaseParser`](https://github.com/consumet/extensions/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
+> Note: This method is a subclass of the [`BaseParser`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
 > 
 <h4>Parameters</h4>
 
@@ -31,7 +31,7 @@ mangahere.search("Tomodachi Game").then(data => {
   console.log(data);
 })
 ```
-returns a promise which resolves into an array of manga. (*[`Promise<ISearch<IMangaResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L97-L106)*)
+returns a promise which resolves into an array of manga. (*[`Promise<ISearch<IMangaResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L97-L106)*)
 output:
 ```js
 {
@@ -71,7 +71,7 @@ mangahere.fetchMangaInfo("tomodachi_game").then(data => {
   console.log(data);
 })
 ```
-returns a promise which resolves into an manga info object (including the chapters). (*[`Promise<IMangaInfo>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L115-L120)*)
+returns a promise which resolves into an manga info object (including the chapters). (*[`Promise<IMangaInfo>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L115-L120)*)
 output:
 ```js
 {
@@ -109,7 +109,7 @@ mangahere.fetchChapterPages("tomodachi_game/c102").then(data => {
   console.log(data);
 })
 ```
-returns an array of pages. (*[`Promise<IMangaChapterPage[]>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L122-L126)*)
+returns an array of pages. (*[`Promise<IMangaChapterPage[]>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L122-L126)*)
 output:
 ```js
 [
@@ -148,7 +148,7 @@ mangahere.fetchMangaTrending().then(data => {
   console.log(data);
 })
 ```
-returns a promise which resolves into an array of trending manga. (*[`Promise<ISearch<IMangaResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L36-L45)*)
+returns a promise which resolves into an array of trending manga. (*[`Promise<ISearch<IMangaResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L36-L45)*)
 output:
 ```js
 {
@@ -194,7 +194,7 @@ mangahere.fetchMangaRanking('day').then(data => {
   console.log(data);
 })
 ```
-returns a promise which resolves into an array of ranking manga. (*[`Promise<ISearch<IMangaResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L36-L45)*)
+returns a promise which resolves into an array of ranking manga. (*[`Promise<ISearch<IMangaResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L36-L45)*)
 
 ### fetchMangaHotReleases
 
@@ -205,7 +205,7 @@ mangahere.fetchMangaHotReleases().then(data => {
   console.log(data);
 })
 ```
-returns a promise which resolves into an array of hot releases. (*[`Promise<ISearch<IMangaResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L36-L45)*)
+returns a promise which resolves into an array of hot releases. (*[`Promise<ISearch<IMangaResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L36-L45)*)
 
 ### fetchMangaRecentUpdate
 
@@ -220,7 +220,7 @@ mangahere.fetchMangaRecentUpdate(2).then(data => {
   console.log(data);
 })
 ```
-returns a promise which resolves into an array of recent updates. (*[`Promise<ISearch<IMangaResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L36-L45)*)
+returns a promise which resolves into an array of recent updates. (*[`Promise<ISearch<IMangaResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L36-L45)*)
 
 ### browse
 
@@ -238,7 +238,7 @@ mangahere.browse({ genre: 'supernatural', status: 'completed', page: 2 }).then(d
   console.log(data);
 })
 ```
-returns a promise which resolves into an array of browsed manga. (*[`Promise<ISearch<IMangaResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L36-L45)*)
+returns a promise which resolves into an array of browsed manga. (*[`Promise<ISearch<IMangaResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L36-L45)*)
 
 ## Enums
 
@@ -309,4 +309,4 @@ returns a promise which resolves into an array of browsed manga. (*[`Promise<ISe
 | `mecha`         | Mecha           |
 | `webtoons`      | Webtoons        |
 
-<p align="end">(<a href="https://github.com/consumet/extensions/blob/master/docs/guides/manga.md#">back to manga providers list</a>)</p>
+<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs/guides/manga.md#">back to manga providers list</a>)</p>

@@ -11,7 +11,7 @@ const monoschinos = new ANIME.MonosChinos();
 - [fetchEpisodeSources](#fetchepisodesources)
 
 ### search
-> Note: This method is a subclass of the [`BaseParser`](https://github.com/consumet/extensions/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
+> Note: This method is a subclass of the [`BaseParser`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
 
 
 <h4>Parameters</h4>
@@ -26,7 +26,7 @@ monoschinos.search("Jujutsu Kaisen").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```js
 {
@@ -72,7 +72,7 @@ monoschinos.fetchAnimeInfo("jujutsu-kaisen-sub-espanol", 24).then(data => {
 })
 ```
 
-returns a promise which resolves into an anime info object (including the episodes). (*[`Promise<IAnimeInfo>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L28-L42)*)\
+returns a promise which resolves into an anime info object (including the episodes). (*[`Promise<IAnimeInfo>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L28-L42)*)\
 output:
 ```js
 {
@@ -113,7 +113,7 @@ monoschinos.fetchEpisodeSources("jujutsu-kaisen-episodio-1").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L210-L214)*)\
+returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L210-L214)*)\
 output:
 ```js
 {
@@ -127,4 +127,4 @@ output:
 }
 ```
 
-<p align="end">(<a href="https://github.com/consumet/extensions/blob/master/docs/guides/anime.md#">back to anime providers list</a>)</p>
+<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs/guides/anime.md#">back to anime providers list</a>)</p>

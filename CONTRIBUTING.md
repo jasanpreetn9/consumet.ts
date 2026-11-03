@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to consumet.ts! This guide will help you get started with contributing to the project. Whether you're fixing a bug, adding a new provider, or improving documentation, we appreciate your help.
 
-If you have any questions or suggestions, please open an [issue](https://github.com/consumet/extensions/issues/new?assignees=&labels=Bug&template=bug-report.yml) or join our [Discord server](https://discord.gg/qTPfvMxzNH).
+If you have any questions or suggestions, please open an [issue](https://github.com/jasanpreetn9/consumet.ts/issues/new?assignees=&labels=Bug&template=bug-report.yml) or join our [Discord server](https://discord.gg/qTPfvMxzNH).
 
 For additional details, see our [informal contributing guide](./docs/guides/contributing.md).
 
@@ -43,7 +43,7 @@ To contribute to consumet.ts, you should have knowledge of:
 ## Getting Started
 
 ### Cloning the Repository
-1. [Fork the repository](https://github.com/consumet/consumet.ts/fork)
+1. [Fork the repository](https://github.com/jasanpreetn9/consumet.ts/fork)
 2. Clone your fork to your local machine using the following command **(make sure to change `<your-username>` to your GitHub username)**:
 ```sh
 git clone https://github.com/<your-username>/consumet.ts.git
@@ -307,7 +307,7 @@ Once you've made your changes and committed them, you're ready to submit a pull 
    ```
 
 2. **Create a Pull Request**:
-   - Go to the [consumet.ts repository](https://github.com/consumet/consumet.ts)
+   - Go to the [consumet.ts repository](https://github.com/jasanpreetn9/consumet.ts)
    - Click "Pull Requests" → "New Pull Request"
    - Click "compare across forks"
    - Select your fork and branch
@@ -338,8 +338,8 @@ Once you've made your changes and committed them, you're ready to submit a pull 
 Need assistance? Here are your options:
 
 - **Discord**: Join our [Discord server](https://discord.gg/qTPfvMxzNH) for real-time help
-- **Issues**: Open an [issue](https://github.com/consumet/consumet.ts/issues/new/choose) for bugs or feature requests
-- **Discussions**: Use [GitHub Discussions](https://github.com/consumet/consumet.ts/discussions) for questions
+- **Issues**: Open an [issue](https://github.com/jasanpreetn9/consumet.ts/issues/new/choose) for bugs or feature requests
+- **Discussions**: Use [GitHub Discussions](https://github.com/jasanpreetn9/consumet.ts/discussions) for questions
 - **Documentation**: Check the [docs](./docs) folder for guides and examples
 
 Thank you for contributing to consumet.ts! 🎉

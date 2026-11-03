@@ -12,7 +12,7 @@ const animepahe = new ANIME.AnimePahe();
 - [fetchRecentEpisodes](#fetchRecentEpisodes)
 
 ### search
-> Note: This method is a subclass of the [`BaseParser`](https://github.com/consumet/extensions/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
+> Note: This method is a subclass of the [`BaseParser`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
 
 
 <h4>Parameters</h4>
@@ -27,7 +27,7 @@ animepahe.search("Overlord IV").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```js
 {
@@ -70,7 +70,7 @@ animepahe.fetchAnimeInfo("adb84358-8fec-fe80-1dc5-ad6218421dc1").then(data => {
 })
 ```
 
-returns a promise which resolves into an anime info object (including the episodes). (*[`Promise<IAnimeInfo>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L28-L42)*)\
+returns a promise which resolves into an anime info object (including the episodes). (*[`Promise<IAnimeInfo>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L28-L42)*)\
 output:
 ```js
 {
@@ -115,7 +115,7 @@ animepahe.fetchEpisodeSources("c673b4d6cedf5e4cd1900d30d61ee2130e23a74e58f4401a8
 })
 ```
 
-returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L210-L214)*)\
+returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L210-L214)*)\
 output:
 ```js
 {
@@ -158,7 +158,7 @@ animepahe.fetchRecentEpisodes().then(data => {
   console.log(data);
 })
 ```
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```js
 {
@@ -181,4 +181,4 @@ output:
 ```
 
 
-<p align="end">(<a href="https://github.com/consumet/extensions/blob/master/docs/guides/anime.md#">back to anime providers list</a>)</p>
+<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs/guides/anime.md#">back to anime providers list</a>)</p>

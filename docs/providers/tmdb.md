@@ -1,7 +1,7 @@
 <h1>TMDB</h1>
 This is a custom provider that maps an movie provider (like flixhq) to TMDB.
 
-`TMDB` class takes a [`MovieParser`](https://github.com/consumet/extensions/blob/master/src/models/movie-parser.ts) object as a parameter **(optional)**. This object is used to parse the anime episodes from the provider, then mapped to TMDB.
+`TMDB` class takes a [`MovieParser`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/movie-parser.ts) object as a parameter **(optional)**. This object is used to parse the anime episodes from the provider, then mapped to TMDB.
 
 ```ts
 const tmdb = new META.TMDB();
@@ -30,7 +30,7 @@ tmdb.fetchTrending("the flash").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<(IMovieResult | IAnimeResult | IPeopleResult)[]>>`](https://github.com/consumet/consumet.ts/blob/master/src/models/types.ts#L328-L336)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<(IMovieResult | IAnimeResult | IPeopleResult)[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L328-L336)*)\
 output:
 ```js
 {
@@ -81,7 +81,7 @@ tmdb.search("the flash").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IMovieResult[]>>`](https://github.com/consumet/consumet.ts/blob/master/src/models/types.ts#L328-L336)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IMovieResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L328-L336)*)\
 output:
 ```js
 {
@@ -135,7 +135,7 @@ tmdb.fetchMediaInfo("60735", "tv").then(data => {
 })
 ```
 
-returns a promise which resolves into an movie info object (including the episodes). (*[`Promise<IMovieInfo>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L28-L42)*)\
+returns a promise which resolves into an movie info object (including the episodes). (*[`Promise<IMovieInfo>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L28-L42)*)\
 output:
 ```js
 {
@@ -238,7 +238,7 @@ tmdb.fetchEpisodeSources("2899", "tv/watch-the-flash-39535").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L210-L214)*)\
+returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L210-L214)*)\
 output:
 ```js
 {
@@ -286,4 +286,4 @@ output:
 
 Make sure to check the `headers` property of the returned object. It contains the referer header, which is needed to bypass the 403 error and allow you to stream the video without any issues.
 
-<p align="end">(<a href="https://github.com/consumet/extensions/blob/master/docs/guides/meta.md#">back to meta providers list</a>)</p>
+<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs/guides/meta.md#">back to meta providers list</a>)</p>

@@ -1,7 +1,7 @@
 <h1>Anilist</h1>
 This is a custom provider that maps an anime provider (like gogoanime) to anilist and kitsu.
 
-`Anilist` class takes a [`AnimeParser`](https://github.com/consumet/extensions/blob/master/src/models/anime-parser.ts) object as a parameter **(optional)**. This object is used to parse the anime episodes from the provider, then mapped to anilist and kitsu.
+`Anilist` class takes a [`AnimeParser`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/anime-parser.ts) object as a parameter **(optional)**. This object is used to parse the anime episodes from the provider, then mapped to anilist and kitsu.
 
 ```ts
 const anilist = new META.Anilist();
@@ -33,7 +33,7 @@ anilist.search("Classroom of the elite").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```js
 {
@@ -85,7 +85,7 @@ anilist.fetchTrendingAnime().then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```ts
 {
@@ -147,7 +147,7 @@ anilist.fetchPopularAnime().then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```ts
 {
@@ -210,7 +210,7 @@ anilist.fetchAnimeInfo("98659").then(data => {
 })
 ```
 
-returns a promise which resolves into an anime info object (including the episodes). (*[`Promise<IAnimeInfo>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L28-L42)*)\
+returns a promise which resolves into an anime info object (including the episodes). (*[`Promise<IAnimeInfo>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L28-L42)*)\
 output:
 ```js
 {
@@ -293,7 +293,7 @@ anilist.fetchAnimeGenres(["Action", "Adventure"])
   console.log(data);
 })
 ```
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 
 ```ts
@@ -340,7 +340,7 @@ anilist.fetchAiringSchedule(1 , 20, 1660047922, 1661832000, true).then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```ts
 
@@ -409,7 +409,7 @@ anilist.fetchEpisodeSources("youkoso-jitsuryoku-shijou-shugi-no-kyoushitsu-e-tv-
 })
 ```
 
-returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L210-L214)*)\
+returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L210-L214)*)\
 output:
 ```js
 {
@@ -431,4 +431,4 @@ output:
 
 Make sure to check the `headers` property of the returned object. It contains the referer header, which is needed to bypass the 403 error and allow you to stream the video without any issues.
 
-<p align="end">(<a href="https://github.com/consumet/extensions/blob/master/docs/guides/meta.md#">back to meta providers list</a>)</p>
+<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs/guides/meta.md#">back to meta providers list</a>)</p>

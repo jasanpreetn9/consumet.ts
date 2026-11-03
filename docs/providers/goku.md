@@ -18,7 +18,7 @@ const goku = new MOVIES.Goku();
 - [fetchByGenre](#fetchbygenre)
 
 ### search
-> Note: This method is a subclass of the [`BaseParser`](https://github.com/consumet/extensions/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
+> Note: This method is a subclass of the [`BaseParser`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
 
 
 <h4>Parameters</h4>
@@ -34,7 +34,7 @@ goku.search("Batman").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of movies/tv series. (*[`Promise<ISearch<IMovieResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L233-L241)*)\
+returns a promise which resolves into an array of movies/tv series. (*[`Promise<ISearch<IMovieResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L233-L241)*)\
 output:
 ```js
 {
@@ -70,7 +70,7 @@ goku.fetchMediaInfo("watch-movie/watch-batman-begins-19636").then(data => {
 })
 ```
 
-returns a promise which resolves into an anime info object (including the episodes). (*[`Promise<IMovieInfo>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L243-L254)*)\
+returns a promise which resolves into an anime info object (including the episodes). (*[`Promise<IMovieInfo>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L243-L254)*)\
 output:
 ```js
 {
@@ -108,7 +108,7 @@ output:
 | ----------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | episodeId         | `string`                                                                                             | takes episode id as a parameter. (*episode id can be found in the media info object*)                                                                      |
 | mediaId           | `string`                                                                                             | takes media id as a parameter. (*media id can be found in the media info object*)                                                                          |
-| server (optional) | [`StreamingServers`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L144-L157) | takes server enum as a parameter. *default: [`StreamingServers.VidCloud`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L150)* |
+| server (optional) | [`StreamingServers`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L144-L157) | takes server enum as a parameter. *default: [`StreamingServers.VidCloud`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L150)* |
 
 
 ```ts
@@ -116,7 +116,7 @@ goku.fetchEpisodeSources('1064170', 'watch-movie/watch-batman-begins-19636').the
   console.log(data);
 })
 ```
-returns a promise which resolves into an array of episode sources and subtitles. (*[`Promise<ISource>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L300-L306)*)\
+returns a promise which resolves into an array of episode sources and subtitles. (*[`Promise<ISource>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L300-L306)*)\
 output:
 ```js
 {
@@ -170,7 +170,7 @@ goku.fetchEpisodeServers('1064170', 'watch-movie/watch-batman-begins-19636').the
   console.log(data);
 })
 ```
-returns a promise which resolves into an array of episode servers. (*[`Promise<IEpisodeServer[]>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L115-L118)*)\
+returns a promise which resolves into an array of episode servers. (*[`Promise<IEpisodeServer[]>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L115-L118)*)\
 output:
 ```js
 [
@@ -195,7 +195,7 @@ output:
 ]
 ```
 
-<p align="end">(<a href="https://github.com/consumet/extensions/blob/master/docs/guides/movies.md#">back to movie providers list</a>)</p>
+<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs/guides/movies.md#">back to movie providers list</a>)</p>
 
 ### fetchRecentMovies
 
@@ -205,7 +205,7 @@ goku.fetchRecentMovies().then(data => {
 })
 ```
 
-returns a promise which resolves into an array of movies. (*[`Promise<IMovieResult[]>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L328-L336)*)\
+returns a promise which resolves into an array of movies. (*[`Promise<IMovieResult[]>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L328-L336)*)\
 output:
 ```js
 [
@@ -249,7 +249,7 @@ goku.fetchRecentTvShows().then(data => {
 })
 ```
 
-returns a promise which resolves into an array of tv shows. (*[`Promise<IMovieResult[]>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L328-L336)*)\
+returns a promise which resolves into an array of tv shows. (*[`Promise<IMovieResult[]>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L328-L336)*)\
 output:
 ```js
 [
@@ -293,7 +293,7 @@ goku.fetchTrendingMovies().then(data => {
 })
 ```
 
-returns a promise which resolves into an array of movies. (*[`Promise<IMovieResult[]>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L328-L336)*)\
+returns a promise which resolves into an array of movies. (*[`Promise<IMovieResult[]>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L328-L336)*)\
 output:
 ```js
 [
@@ -337,7 +337,7 @@ goku.fetchTrendingTvShows().then(data => {
 })
 ```
 
-returns a promise which resolves into an array of tv shows. (*[`Promise<IMovieResult[]>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L328-L336)*)\
+returns a promise which resolves into an array of tv shows. (*[`Promise<IMovieResult[]>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L328-L336)*)\
 output:
 ```js
 [
@@ -380,7 +380,7 @@ goku.fetchByCountrty('india-105').then(data => {
 })
 ```
 
-returns a promise which resolves into an array of tv shows. (*[`Promise<ISearch<IMovieResult>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L328-L336)*)\
+returns a promise which resolves into an array of tv shows. (*[`Promise<ISearch<IMovieResult>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L328-L336)*)\
 output:
 
 ```js
@@ -419,7 +419,7 @@ goku.fetchByGenre('action-1').then(data => {
 })
 ```
 
-returns a promise which resolves into an array of tv shows. (*[`Promise<ISearch<IMovieResult>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L328-L336)*)\
+returns a promise which resolves into an array of tv shows. (*[`Promise<ISearch<IMovieResult>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L328-L336)*)\
 output:
 
 ```js

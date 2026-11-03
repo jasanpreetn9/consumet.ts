@@ -8,8 +8,8 @@ consumet.ts is a Node library which provides high-level APIs to get information 
   <a href="https://www.npmjs.com/package/@consumet/extensions">
     <img src="https://img.shields.io/npm/v/@consumet/extensions" alt="npm (scoped)">
   </a>
-  <a href="https://github.com/consumet/consumet.ts/actions/workflows/npm-publish.yml">
-    <img src="https://github.com/consumet/consumet.ts/actions/workflows/npm-publish.yml/badge.svg" alt="npm (scoped)">
+  <a href="https://github.com/jasanpreetn9/consumet.ts/actions/workflows/npm-publish.yml">
+    <img src="https://github.com/jasanpreetn9/consumet.ts/actions/workflows/npm-publish.yml/badge.svg" alt="npm (scoped)">
   </a>
     <a href="https://discord.gg/qTPfvMxzNH">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="Prs are welcome">
@@ -17,7 +17,7 @@ consumet.ts is a Node library which provides high-level APIs to get information 
     <a href="https://discord.gg/qTPfvMxzNH">
       <img src="https://img.shields.io/discord/987492554486452315?color=7289da&label=discord&logo=discord&logoColor=7289da" alt="Discord">
     </a>
-      <a href="https://github.com/consumet/consumet.ts/blob/master/LICENSE">
+      <a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/License-GPL--3.0-blue.svg" alt="GitHub">
   </a>
 </p>
@@ -39,6 +39,8 @@ consumet.ts is a Node library which provides high-level APIs to get information 
 ## Quick Start
 
 ### Installation
+
+consumet.ts requires [Node.js](https://nodejs.org/) 24.22.2 or later.
 
 To use consumet.ts in your project, run:
 ```bash
@@ -74,11 +76,11 @@ const results = gogoanime.search("One Piece").then(data => {
 })
 ```
 
-Do you want to know more? Head to the [`Getting Started`](https://github.com/consumet/consumet.ts/tree/master/docs/guides/getting-started.md).
+Do you want to know more? Head to the [`Getting Started`](https://github.com/jasanpreetn9/consumet.ts/tree/master/docs/guides/getting-started.md).
 
 ## Documentation
 - [`Getting Started`](./docs/guides/getting-started.md)
-- [`Guides`](https://github.com/consumet/consumet.ts/tree/master/docs)
+- [`Guides`](https://github.com/jasanpreetn9/consumet.ts/tree/master/docs)
 - [`Anime`](./docs/guides/anime.md)
 - [`Manga`](./docs/guides/manga.md)
 - [`Books`](./docs/guides/books.md)
@@ -90,16 +92,16 @@ Do you want to know more? Head to the [`Getting Started`](https://github.com/con
 
 ## Ecosystem
 - [Rest-API Reference](https://docs.consumet.org/) - public rest api documentation
-- [Examples](https://github.com/consumet/consumet.ts/tree/master/examples) - examples of using consumet.ts.
+- [Examples](https://github.com/jasanpreetn9/consumet.ts/tree/master/examples) - examples of using consumet.ts.
 - [Provider Status](https://github.com/consumet/providers-status/blob/main/README.md) - A list of providers and their status.
-- [Changelog](https://github.com/consumet/consumet.ts/blob/master/CHANGELOG.md) - See the latest changes.
+- [Changelog](https://github.com/jasanpreetn9/consumet.ts/blob/master/CHANGELOG.md) - See the latest changes.
 - [Discord Server](https://discord.gg/qTPfvMxzNH) - Join our discord server and chat with the maintainers.
 
 ## Provider Request
-Make a new [issue](https://github.com/consumet/consumet.ts/issues/new?assignees=&labels=provider+request&template=provider-request.yml) with the name of the provider on the title, as well as a link to the provider in the body paragraph.
+Make a new [issue](https://github.com/jasanpreetn9/consumet.ts/issues/new?assignees=&labels=provider+request&template=provider-request.yml) with the name of the provider on the title, as well as a link to the provider in the body paragraph.
 
 ## Contributing
-Check out [contributing guide](https://github.com/consumet/consumet.ts/blob/master/CONTRIBUTING.md) to get an overview of consumet.ts development.
+Check out [contributing guide](https://github.com/jasanpreetn9/consumet.ts/blob/master/CONTRIBUTING.md) to get an overview of consumet.ts development.
 
 ## Support
 You can contact the maintainers of consumet.ts via [email](mailto:consumet.org@gmail.com), or [join the discord server](https://discord.gg/qTPfvMxzNH) (Recommended).
@@ -111,7 +113,7 @@ You can contact the maintainers of consumet.ts via [email](mailto:consumet.org@g
 ## Contributors ✨
 Thanks to the following people for keeping this project alive and thriving.
 
-[![](https://contrib.rocks/image?repo=consumet/consumet.ts)](https://github.com/consumet/consumet.ts/graphs/contributors)
+[![](https://contrib.rocks/image?repo=jasanpreetn9/consumet.ts)](https://github.com/jasanpreetn9/consumet.ts/graphs/contributors)
 
 ### Credits
 - [Anify API](https://github.com/Eltik/Anify) - Used as a caching layer for the meta/anilist provider to speed up responses. 

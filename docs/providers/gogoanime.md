@@ -19,7 +19,7 @@ const gogoanime = new ANIME.Gogoanime();
 - [fetchDirectDownloadLink](#fetchdirectdownloadlink)
 
 ### search
-> Note: This method is a subclass of the [`BaseParser`](https://github.com/consumet/extensions/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
+> Note: This method is a subclass of the [`BaseParser`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
 
 
 <h4>Parameters</h4>
@@ -35,7 +35,7 @@ gogoanime.search("One Piece").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```js
 {
@@ -276,7 +276,7 @@ gogoanime.fetchAnimeInfo("one-piece").then(data => {
 })
 ```
 
-returns a promise which resolves into an anime info object (including the episodes). (*[`Promise<IAnimeInfo>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L28-L42)*)\
+returns a promise which resolves into an anime info object (including the episodes). (*[`Promise<IAnimeInfo>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L28-L42)*)\
 output:
 ```js
 {
@@ -320,7 +320,7 @@ output:
 | Parameter         | Type                                                                                                 | Description                                                                                                                                               |
 | ----------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | episodeId         | `string`                                                                                             | takes episode id as a parameter. (*episode id can be found in the anime info object*)                                                                     |
-| server (optional) | [`StreamingServers`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L76-L82) | takes server enum as a parameter. *default: [`StreamingServers.GogoCDN`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L76-L82)* |
+| server (optional) | [`StreamingServers`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L76-L82) | takes server enum as a parameter. *default: [`StreamingServers.GogoCDN`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L76-L82)* |
 
 
 ```ts
@@ -328,7 +328,7 @@ gogoanime.fetchEpisodeSources("one-piece-episode-1022").then(data => {
   console.log(data);
 })
 ```
-returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L210-L214)*)\
+returns a promise which resolves into an array of episode sources. (*[`Promise<ISource>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L210-L214)*)\
 output:
 ```js
 {
@@ -384,7 +384,7 @@ gogoanime.fetchEpisodeServers("one-piece-episode-1022").then(data => {
   console.log(data);
 })
 ```
-returns a promise which resolves into an array of episode servers. (*[`Promise<IEpisodeServer[]>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L54-L57)*)\
+returns a promise which resolves into an array of episode servers. (*[`Promise<IEpisodeServer[]>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L54-L57)*)\
 output:
 ```js
 [
@@ -415,7 +415,7 @@ Fetch direct download link of an episode from an episode's download link
 | Parameter         | Type                                                                                                 | Description                                                                                                                                               |
 | ----------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | downloadUrl         | `string`                                                                                             | takes episode's download link url. (*can be found in the fetchEpisodeSources object*)                                                                     |
-| captchaToken (optional) | [`string`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L76-L82) | takes gogoanime recaptcha token(can be get via scanning network tools on download link). *only for advanced users* |
+| captchaToken (optional) | [`string`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L76-L82) | takes gogoanime recaptcha token(can be get via scanning network tools on download link). *only for advanced users* |
 ```ts
 gogoanime.fetchDirectDownloadLink("https://s3taku.com/download?id=MjI4Mzg0&typesub=Gogoanime-SUB&title=Hazurewaku+no+%22Joutai+Ijou+Skill%22+de+Saikyou+ni+Natta+Ore+ga+Subete+wo+Juurin+suru+made+Episode+4").then(data => {
   console.log(data);
@@ -443,4 +443,4 @@ output:
 ]
 ```
 
-<p align="end">(<a href="https://github.com/consumet/extensions/blob/master/docs/guides/anime.md#">back to anime providers list</a>)</p>
+<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs/guides/anime.md#">back to anime providers list</a>)</p>

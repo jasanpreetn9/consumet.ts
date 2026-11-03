@@ -33,10 +33,13 @@ const animeProvider = ANIME.<providerName>();
 
 ## Anime Providers List
 This list is in alphabetical order. (except the sub bullet points)
-- [Hianime](../providers/hianime.md)
-- [AnimePahe](../providers/animepahe.md)
-- [Animekai](../providers/animekai.md)
-- [Kickassanime](../providers/kickassanime.md)
-- [AnimeSaturn](../providers/animesaturn.md)
 
-<p align="end">(<a href="https://github.com/consumet/extensions/blob/master/docs">back to table of contents</a>)</p>
+> **Note:** Providers marked *(disabled)* are currently turned off because their sites are unreachable, blocked, or have changed. See [STATUS.md](../../STATUS.md) for details.
+
+- [Hianime](../providers/hianime.md) *(disabled)*
+- [AnimePahe](../providers/animepahe.md) *(disabled)*
+- [Animekai](../providers/animekai.md) *(disabled)*
+- [Kickassanime](../providers/kickassanime.md) *(disabled)*
+- [AnimeSaturn](../providers/animesaturn.md) *(disabled)*
+
+<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs">back to table of contents</a>)</p>

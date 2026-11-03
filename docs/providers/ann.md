@@ -16,12 +16,12 @@ const ann = new NEWS.ANN();
 
 | Parameter        | Type                                                                                        | Description                 |
 | ---------------- | ------------------------------------------------------------------------------------------- | --------------------------- |
-| topic (optional) | [`Topics`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L348-361) | topic for getting the feed. |
+| topic (optional) | [`Topics`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L348-361) | topic for getting the feed. |
 
 ```ts
 ann.fetchNewsFeeds().then(console.log)
 ```
-returns a promise which resolves into an array of the NewsFeed class. (*[`Promise<NewsFeed[]>`](https://github.com/consumet/extensions/blob/master/src/providers/news/animenewsnetwork.ts#L5-13)*)\
+returns a promise which resolves into an array of the NewsFeed class. (*[`Promise<NewsFeed[]>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/providers/news/animenewsnetwork.ts#L5-13)*)\
 output:
 ```js
 [
@@ -77,7 +77,7 @@ ann.fetchNewsFeeds().then((res) => {
 ```ts
 ann.fetchNewsInfo("2022-08-26/higurashi-no-naku-koro-ni-rei-oni-okoshi-hen-manga-ends/.188996" /* --> https://www.animenewsnetwork.com/news/2022-08-26/higurashi-no-naku-koro-ni-rei-oni-okoshi-hen-manga-ends/.188996*/ ).then(console.log)
 ```
-returns a promise which resolves into a news info object. (*[`Promise<INewsInfo>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L286-L291)*)\
+returns a promise which resolves into a news info object. (*[`Promise<INewsInfo>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L286-L291)*)\
 output:
 ```js
 {
@@ -91,4 +91,4 @@ output:
 }
 ```
 
-<p align="end">(<a href="https://github.com/consumet/extensions/blob/master/docs/guides/news.md#">back to news providers list</a>)</p>
+<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs/guides/news.md#">back to news providers list</a>)</p>

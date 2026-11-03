@@ -12,7 +12,7 @@ const kickass = new ANIME.KickAssAnime();
 - [fetchEpisodeSources](#fetchepisodesources)
 
 ### search
-> Note: This method is a subclass of the [`BaseParser`](https://github.com/consumet/extensions/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
+> Note: This method is a subclass of the [`BaseParser`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/base-parser.ts) class. meaning it is available across most categories.
 
 <h4>Parameters</h4>
 
@@ -27,7 +27,7 @@ kickass.search("Naruto").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L13-L26)*)\
+returns a promise which resolves into an array of anime. (*[`Promise<ISearch<IAnimeResult[]>>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L13-L26)*)\
 output:
 ```js
 {
@@ -73,7 +73,7 @@ kickass.fetchAnimeInfo("naruto-f3cf").then(data => {
 })
 ```
 
-returns a promise which resolves into an anime info object (including the episodes). (*[`Promise<IAnimeInfo>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L28-L42)*)\
+returns a promise which resolves into an anime info object (including the episodes). (*[`Promise<IAnimeInfo>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L28-L42)*)\
 output:
 ```js
 {
@@ -123,7 +123,7 @@ kickass.fetchEpisodeServers("naruto-f3cf/episode/ep-1-12cd96").then(data => {
 })
 ```
 
-returns a promise which resolves into an array of episode servers. (*[`Promise<IEpisodeServer[]>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L115-L118)*)\
+returns a promise which resolves into an array of episode servers. (*[`Promise<IEpisodeServer[]>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L115-L118)*)\
 output:
 ```js
 [
@@ -154,7 +154,7 @@ kickass.fetchEpisodeSources("naruto-f3cf/episode/ep-1-12cd96").then(data => {
 })
 ```
 
-returns a promise which resolves into an episode sources object. (*[`Promise<ISource>`](https://github.com/consumet/extensions/blob/master/src/models/types.ts#L210-L214)*)\
+returns a promise which resolves into an episode sources object. (*[`Promise<ISource>`](https://github.com/jasanpreetn9/consumet.ts/blob/master/src/models/types.ts#L210-L214)*)\
 output:
 ```js
 {
@@ -221,4 +221,4 @@ kickass.fetchEpisodeSources("naruto-f3cf/episode/ep-1-12cd96", StreamingServers.
 
 Make sure to check the `headers` property of the returned object. It contains the referer header, which might be needed to bypass the 403 error and allow you to stream the video without any issues.
 
-<p align="end">(<a href="https://github.com/consumet/extensions/blob/master/docs/guides/anime.md#">back to anime providers list</a>)</p>
+<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs/guides/anime.md#">back to anime providers list</a>)</p>

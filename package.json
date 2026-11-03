@@ -34,7 +34,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/consumet/consumet.ts.git"
+    "url": "git+https://github.com/jasanpreetn9/consumet.ts.git"
   },
   "keywords": [
     "consumet",
@@ -55,9 +55,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/consumet/consumet.ts/issues"
+    "url": "https://github.com/jasanpreetn9/consumet.ts/issues"
   },
-  "homepage": "https://github.com/consumet/consumet.ts#readme",
+  "homepage": "https://github.com/jasanpreetn9/consumet.ts#readme",
   "dependencies": {
     "ascii-url-encoder": "^1.2.0",
     "axios": "^1.21.0",
@@ -94,10 +94,10 @@
     "template": "keepachangelog",
     "preset": "typescript-preset-eslint",
     "output": "CHANGELOG.md",
-    "commitUrl": "https://github.com/consumet/consumet.ts/commit/{id}",
-    "compareUrl": "https://github.com/consumet/consumet.ts/compare/{from}...{to}",
-    "issueUrl": "https://github.com/consumet/consumet.ts/issues/{id}",
-    "mergeUrl": "https://github.com/consumet/consumet.ts/pull/{id}"
+    "commitUrl": "https://github.com/jasanpreetn9/consumet.ts/commit/{id}",
+    "compareUrl": "https://github.com/jasanpreetn9/consumet.ts/compare/{from}...{to}",
+    "issueUrl": "https://github.com/jasanpreetn9/consumet.ts/issues/{id}",
+    "mergeUrl": "https://github.com/jasanpreetn9/consumet.ts/pull/{id}"
   },
   "directories": {
     "doc": "docs",
