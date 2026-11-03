@@ -38,7 +38,7 @@ class ComicK extends MangaParser {
         altTitles: data.md_titles ? data.md_titles.map(title => title.title) : [],
         description: data.desc,
         genres: data.md_comic_md_genres?.map(genre => genre.md_genres.name),
-        status: data.status ?? 0 === 0 ? MediaStatus.ONGOING : MediaStatus.COMPLETED,
+        status: (data.status ?? 0 === 0) ? MediaStatus.ONGOING : MediaStatus.COMPLETED,
         image: data.default_thumbnail,
         malId: data.links?.mal,
         links: links,

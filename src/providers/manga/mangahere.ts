@@ -98,7 +98,7 @@ class MangaHere extends MangaParser {
             page: i,
             img: `https:${url}`,
             headerForImage: { Referer: url },
-          })
+          }),
         );
       } else {
         let sKey = this.extractKey(html);
@@ -165,21 +165,19 @@ class MangaHere extends MangaParser {
       searchRes.hasNextPage = $('div.pager-list-left > a.active').next().text() !== '>';
 
       searchRes.results = $('div.container > div > div > ul > li')
-        .map(
-          (i, el): IMangaResult => ({
-            id: $(el).find('a').attr('href')?.split('/')[2]!,
-            title: $(el).find('p.manga-list-4-item-title > a').text(),
-            headerForImage: { Referer: this.baseUrl },
-            image: $(el).find('a > img').attr('src'),
-            description: $(el).find('p').last().text(),
-            status:
-              $(el).find('p.manga-list-4-show-tag-list-2 > a').text() === 'Ongoing'
-                ? MediaStatus.ONGOING
-                : $(el).find('p.manga-list-4-show-tag-list-2 > a').text() === 'Completed'
+        .map((i, el): IMangaResult => ({
+          id: $(el).find('a').attr('href')?.split('/')[2]!,
+          title: $(el).find('p.manga-list-4-item-title > a').text(),
+          headerForImage: { Referer: this.baseUrl },
+          image: $(el).find('a > img').attr('src'),
+          description: $(el).find('p').last().text(),
+          status:
+            $(el).find('p.manga-list-4-show-tag-list-2 > a').text() === 'Ongoing'
+              ? MediaStatus.ONGOING
+              : $(el).find('p.manga-list-4-show-tag-list-2 > a').text() === 'Completed'
                 ? MediaStatus.COMPLETED
                 : MediaStatus.UNKNOWN,
-          })
-        )
+        }))
         .get();
       return searchRes;
     } catch (err) {
@@ -267,7 +265,7 @@ class MangaHere extends MangaParser {
   };
 
   browse = async (
-    options: { genre?: string; status?: MangaHereStatus; sort?: MangaHereSort; page?: number } = {}
+    options: { genre?: string; status?: MangaHereStatus; sort?: MangaHereSort; page?: number } = {},
   ): Promise<ISearch<IMangaResult>> => {
     const { genre, status, sort, page = 1 } = options;
 

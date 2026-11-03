@@ -26,7 +26,7 @@ class NovelUpdates extends LightNovelParser {
    */
   override fetchLightNovelInfo = async (
     lightNovelUrl: string,
-    chapterPage: number = -1
+    chapterPage: number = -1,
   ): Promise<ILightNovelInfo> => {
     if (!lightNovelUrl.startsWith(this.baseUrl)) {
       lightNovelUrl = `${this.baseUrl}/series/${lightNovelUrl}`;
@@ -63,11 +63,11 @@ class NovelUpdates extends LightNovelParser {
 
       lightNovelInfo.rating = parseFloat(
         $(
-          'div.col-xs-12.col-sm-8.col-md-8.desc > div.rate > div.small > em > strong:nth-child(1) > span'
-        ).text()
+          'div.col-xs-12.col-sm-8.col-md-8.desc > div.rate > div.small > em > strong:nth-child(1) > span',
+        ).text(),
       );
       lightNovelInfo.views = parseInt(
-        $('div.col-xs-12.col-sm-4.col-md-4.info-holder > div.info > div:nth-child(4) > span').text()
+        $('div.col-xs-12.col-sm-4.col-md-4.info-holder > div.info > div:nth-child(4) > span').text(),
       );
       lightNovelInfo.description = $('div#editdescription').text()?.trim();
 
@@ -165,13 +165,13 @@ class NovelUpdates extends LightNovelParser {
     try {
       const res = await fetch(
         `${this.proxyURL}${encodeURIComponent(
-          `${this.baseUrl}/series-finder/?sf=1&sh=${encodeURIComponent(query)}`
+          `${this.baseUrl}/series-finder/?sf=1&sh=${encodeURIComponent(query)}`,
         )}`,
         {
           headers: {
             Referer: this.baseUrl,
           },
-        }
+        },
       );
 
       const $ = load(await res.text());

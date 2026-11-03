@@ -1,5 +1,2 @@
-import GetComics from './getComics';
-declare const _default: {
-    GetComics: typeof GetComics;
-};
+declare const _default: {};
 export default _default;

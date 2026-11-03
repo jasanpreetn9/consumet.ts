@@ -31,7 +31,10 @@ class AsuraScans extends MangaParser {
         image: $(topInfoWrapper).find('img').attr('src'),
         rating: $(topInfoWrapper).find('div > div.px-2.py-1 > p').text().trim(),
         status: this.determineMediaState(
-          $(topInfoWrapper).find('div > div.flex.flex-row > div:nth-child(1) > h3:nth-child(2)').text().trim()
+          $(topInfoWrapper)
+            .find('div > div.flex.flex-row > div:nth-child(1) > h3:nth-child(2)')
+            .text()
+            .trim(),
         ),
         description: dom.find('span.font-medium.text-sm').text().trim(),
         authors: dom
@@ -70,7 +73,7 @@ class AsuraScans extends MangaParser {
         .match(/"chapters".*:(\[\{.*?\}\]),/);
       if (chapMatch) {
         const chap: { name: string; title: string; id: string; published_at: string }[] = JSON.parse(
-          chapMatch[1]
+          chapMatch[1],
         );
         info.chapters = chap.map((ele): IMangaChapter => {
           return {
@@ -92,12 +95,10 @@ class AsuraScans extends MangaParser {
       const chapMatch = data.replace(/\\/g, '').match(/pages.*:(\[{['"]order["'].*?}\])/);
       if (!chapMatch) throw new Error('Parsing error');
       const chap: { order: string; url: string }[] = JSON.parse(chapMatch[1]);
-      return chap.map(
-        (page, index): IMangaChapterPage => ({
-          page: index + 1,
-          img: page.url,
-        })
-      );
+      return chap.map((page, index): IMangaChapterPage => ({
+        page: index + 1,
+        img: page.url,
+      }));
     } catch (err) {
       throw new Error((err as Error).message);
     }
@@ -111,7 +112,7 @@ class AsuraScans extends MangaParser {
     try {
       const formattedQuery = encodeURI(query.toLowerCase());
       const { data }: AxiosResponse = await this.client.get(
-        `${this.baseUrl}/series?page=${page}&name=${formattedQuery}`
+        `${this.baseUrl}/series?page=${page}&name=${formattedQuery}`,
       );
 
       const $: CheerioAPI = load(data);
@@ -125,7 +126,7 @@ class AsuraScans extends MangaParser {
             title: $(ele).find('div > div > div:nth-child(2) > span:nth-child(1)').text().trim() as string,
             image: $(ele).find('div > div > div:nth-child(1) > img').attr('src') as string,
             status: this.determineMediaState(
-              $(ele).find('div > div > div:nth-child(1) > span').text().trim()
+              $(ele).find('div > div > div:nth-child(1) > span').text().trim(),
             ),
             latestChapter: $(ele).find('div > div > div:nth-child(2) > span:nth-child(2)').text().trim(),
             rating: $(ele).find('div > div > div:nth-child(2) > span:nth-child(3) > label').text().trim(),

@@ -20,7 +20,7 @@ test('fetchEpisodeSources: returns a filled object of streaming sources', async 
   const data = await flixhq.fetchEpisodeSources(
     '133474',
     'movie/watch-one-battle-after-another-133474',
-    StreamingServers.VidCloud
+    StreamingServers.VidCloud,
   );
   expect(data.sources).not.toEqual([]);
 });
@@ -28,7 +28,7 @@ test('fetchEpisodeSources: returns a filled object of streaming sources', async 
 test('fetchEpisodeServers: returns a filled object of streaming servers', async () => {
   const data = await flixhq.fetchEpisodeServers(
     '137695',
-    'tv/watch-angela-diniz-murdered-and-convicted-137695'
+    'tv/watch-angela-diniz-murdered-and-convicted-137695',
   );
   expect(data).not.toEqual([]);
 });

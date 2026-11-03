@@ -167,7 +167,7 @@ class MangaKakalot extends MangaParser {
 
   private async proxyRequest(
     url: string,
-    options: { isJson?: boolean; maxRetries?: number; retryDelay?: number } = {}
+    options: { isJson?: boolean; maxRetries?: number; retryDelay?: number } = {},
   ): Promise<any> {
     const domain = new URL(url).hostname;
     const isJson = url.includes('/json') || url.includes('/api/') || options.isJson;

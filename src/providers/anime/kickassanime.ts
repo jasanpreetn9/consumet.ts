@@ -65,7 +65,7 @@ class KickAssAnime extends AnimeParser {
         {
           headers,
           timeout: 10000,
-        }
+        },
       );
 
       const searchResults: IAnimeResult[] = response.data.result.map((anime: any) => ({
@@ -134,7 +134,7 @@ class KickAssAnime extends AnimeParser {
         {
           headers,
           timeout: 10000,
-        }
+        },
       );
 
       const episodes: IAnimeEpisode[] = episodesResponse.data.result.map((ep: any) => ({
@@ -253,7 +253,7 @@ class KickAssAnime extends AnimeParser {
   private async extractFromServer(
     url: string,
     serverName: string,
-    requestHeaders: any
+    requestHeaders: any,
   ): Promise<{ sources: IVideo[]; subtitles: ISubtitle[] }> {
     const sources: IVideo[] = [];
     const subtitles: ISubtitle[] = [];
@@ -288,7 +288,7 @@ class KickAssAnime extends AnimeParser {
   private async extractCatBirdStream(
     url: string,
     serverName: string,
-    requestHeaders: any
+    requestHeaders: any,
   ): Promise<{ sources: IVideo[]; subtitles: ISubtitle[] }> {
     const headers = {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0',
@@ -408,7 +408,7 @@ class KickAssAnime extends AnimeParser {
   private async extractEncryptedServer(
     url: string,
     serverName: string,
-    requestHeaders: any
+    requestHeaders: any,
   ): Promise<{ sources: IVideo[]; subtitles: ISubtitle[] }> {
     const host = new URL(url).hostname;
     const mid = serverName === 'DuckStream' ? 'mid' : 'id';

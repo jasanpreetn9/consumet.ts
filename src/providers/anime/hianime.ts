@@ -65,7 +65,7 @@ class Hianime extends AnimeParser {
     startDate?: { year: number; month: number; day: number },
     endDate?: { year: number; month: number; day: number },
     sort?: string,
-    genres?: string[]
+    genres?: string[],
   ): Promise<ISearch<IAnimeResult>> {
     if (page <= 0) page = 1;
 
@@ -487,7 +487,7 @@ class Hianime extends AnimeParser {
   async fetchWatchList(
     connectSid: string,
     page: number = 1,
-    sortListType?: WatchListType
+    sortListType?: WatchListType,
   ): Promise<ISearch<IAnimeResult>> {
     if (!(await this.verifyLoginState(connectSid))) {
       throw new Error('Invalid session ID');
@@ -512,7 +512,7 @@ class Hianime extends AnimeParser {
       `${this.baseUrl}/user/watch-list?page=${page}${type != 0 ? '&type=' + type : ''}`,
       {
         headers: { Cookie: `connect.sid=${connectSid}` },
-      }
+      },
     );
   }
   /**
@@ -623,7 +623,7 @@ class Hianime extends AnimeParser {
             'X-Requested-With': 'XMLHttpRequest',
             Referer: `${this.baseUrl}/watch/${id}`,
           },
-        }
+        },
       );
 
       const $$ = load(episodesAjax.data.html);
@@ -668,7 +668,7 @@ class Hianime extends AnimeParser {
   override fetchEpisodeSources = async (
     episodeId: string,
     server: StreamingServers = StreamingServers.VidCloud,
-    subOrDub: SubOrSub = SubOrSub.SUB
+    subOrDub: SubOrSub = SubOrSub.SUB,
   ): Promise<ISource> => {
     if (episodeId.startsWith('http')) {
       const serverUrl = new URL(episodeId);
@@ -715,7 +715,7 @@ class Hianime extends AnimeParser {
 
     try {
       const { data } = await this.client.get(
-        `${this.baseUrl}/ajax/v2/episode/servers?episodeId=${episodeId.split('?ep=')[1]}`
+        `${this.baseUrl}/ajax/v2/episode/servers?episodeId=${episodeId.split('?ep=')[1]}`,
       );
 
       const $ = load(data.html);

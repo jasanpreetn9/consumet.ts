@@ -330,10 +330,10 @@ class AnimeSaturn extends AnimeParser {
           const serverName = src.includes('streamtape')
             ? 'StreamTape'
             : src.includes('mixdrop')
-            ? 'MixDrop'
-            : src.includes('doodstream')
-            ? 'DoodStream'
-            : 'External Server';
+              ? 'MixDrop'
+              : src.includes('doodstream')
+                ? 'DoodStream'
+                : 'External Server';
 
           if (!servers.some(s => s.url === src)) {
             servers.push({

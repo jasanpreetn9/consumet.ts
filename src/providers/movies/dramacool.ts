@@ -32,7 +32,7 @@ class DramaCool extends MovieParser {
     try {
       const sanitizedQuery = query.replace(/[\W_]+/g, '+');
       const { data } = await this.client.get(
-        `${this.baseUrl}/search?type=drama&keyword=${sanitizedQuery}&page=${page}`
+        `${this.baseUrl}/search?type=drama&keyword=${sanitizedQuery}&page=${page}`,
       );
 
       const $ = load(data);
@@ -191,8 +191,8 @@ class DramaCool extends MovieParser {
             url: server.startsWith('//')
               ? server.replace('//', 'https://')
               : server.startsWith('/')
-              ? `${serverBaseUrl}${server}`
-              : server,
+                ? `${serverBaseUrl}${server}`
+                : server,
           });
         }
       });
@@ -210,7 +210,7 @@ class DramaCool extends MovieParser {
    */
   override fetchEpisodeSources = async (
     episodeId: string,
-    server: StreamingServers = StreamingServers.AsianLoad
+    server: StreamingServers = StreamingServers.AsianLoad,
   ): Promise<ISource> => {
     if (episodeId.startsWith('http')) {
       return this.extractFromServer(episodeId, server);
@@ -291,7 +291,7 @@ class DramaCool extends MovieParser {
   private async fetchListContent(
     url: string,
     page: number,
-    includeTvShowData: boolean = false
+    includeTvShowData: boolean = false,
   ): Promise<ISearch<IMovieResult>> {
     try {
       const { data } = await this.client.get(url);

@@ -30,7 +30,7 @@ class TMDB extends MovieParser {
     private apiKey: string = '5201b54eb0968700e693a30576d7d4dc',
     provider?: MovieParser,
     proxyConfig?: ProxyConfig,
-    adapter?: AxiosAdapter
+    adapter?: AxiosAdapter,
   ) {
     super(proxyConfig, adapter);
     this.provider = provider || new HiMovies();
@@ -44,16 +44,16 @@ class TMDB extends MovieParser {
   fetchTrending = async (
     type: string | 'all',
     timePeriod: 'day' | 'week' = 'day',
-    page: number = 1
+    page: number = 1,
   ): Promise<ISearch<IMovieResult | IAnimeResult | IPeopleResult>> => {
     const trendingUrl = `${this.apiUrl}/trending/${
       type.toLowerCase() === TvType.MOVIE.toLowerCase()
         ? 'movie'
         : type.toLowerCase() === TvType.TVSERIES.toLowerCase()
-        ? 'tv'
-        : type.toLowerCase() === TvType.PEOPLE.toLowerCase()
-        ? 'person'
-        : 'all'
+          ? 'tv'
+          : type.toLowerCase() === TvType.PEOPLE.toLowerCase()
+            ? 'person'
+            : 'all'
     }/${timePeriod}?page=${page}&api_key=${this.apiKey}&language=en-US`;
 
     const result: ISearch<IMovieResult | IAnimeResult | IPeopleResult> = {
@@ -126,7 +126,7 @@ class TMDB extends MovieParser {
    */
   override search = async (
     query: string,
-    page: number = 1
+    page: number = 1,
   ): Promise<ISearch<IMovieResult | IAnimeResult>> => {
     const searchUrl = `${this.apiUrl}/search/multi?api_key=${this.apiKey}&language=en-US&page=${page}&include_adult=false&query=${query}`;
 
@@ -215,7 +215,7 @@ class TMDB extends MovieParser {
           url: `https://image.tmdb.org/t/p/original${logo.file_path}`,
           aspectRatio: logo?.aspect_ratio,
           width: logo?.width,
-        })
+        }),
       );
 
       info.type = type === 'movie' ? TvType.MOVIE : TvType.TVSERIES;
@@ -313,7 +313,7 @@ class TMDB extends MovieParser {
               : seasonData?.episodes.map((episode: any): IMovieEpisode => {
                   //find episode in each season (seasonEpisodes)
                   const episodeFromProvider = seasonEpisodes?.find(
-                    ep => ep.number === episode.episode_number
+                    ep => ep.number === episode.episode_number,
                   );
 
                   return {
@@ -367,7 +367,7 @@ class TMDB extends MovieParser {
       totalSeasons?: number;
       totalEpisodes?: number;
       [key: string]: any;
-    }
+    },
   ): Promise<string | undefined> => {
     //clean title
     title = title.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();

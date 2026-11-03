@@ -4,7 +4,7 @@ export const anilistSearchQuery = (
   query: string,
   page: number,
   perPage: number,
-  type: 'ANIME' | 'MANGA' = 'ANIME'
+  type: 'ANIME' | 'MANGA' = 'ANIME',
 ) =>
   `query ($page: Int = ${page}, $id: Int, $type: MediaType = ${type}, $search: String = "${query}", $isAdult: Boolean = false, $size: Int = ${perPage}) { Page(page: $page, perPage: $size) { pageInfo { total perPage currentPage lastPage hasNextPage } media(id: $id, type: $type, search: $search, isAdult: $isAdult) { id idMal status(version: 2) title { userPreferred romaji english native } bannerImage popularity coverImage{ extraLarge large medium color } episodes format season description seasonYear chapters volumes averageScore genres nextAiringEpisode { airingAt timeUntilAiring episode }  } } }`;
 export const anilistMediaDetailQuery = (id: string) =>
@@ -12,25 +12,25 @@ export const anilistMediaDetailQuery = (id: string) =>
 export const anilistTrendingQuery = (
   page: number = 1,
   perPage: number = 20,
-  type: 'ANIME' | 'MANGA' = 'ANIME'
+  type: 'ANIME' | 'MANGA' = 'ANIME',
 ) =>
   `query ($page: Int = ${page}, $id: Int, $type: MediaType = ${type}, $isAdult: Boolean = false, $size: Int = ${perPage}, $sort: [MediaSort] = [TRENDING_DESC, POPULARITY_DESC]) { Page(page: $page, perPage: $size) { pageInfo { total perPage currentPage lastPage hasNextPage } media(id: $id, type: $type, isAdult: $isAdult, sort: $sort) { id idMal status(version: 2) title { userPreferred romaji english native } genres trailer { id site thumbnail } description format bannerImage coverImage{ extraLarge large medium color } episodes meanScore duration season seasonYear averageScore nextAiringEpisode { airingAt timeUntilAiring episode }  } } }`;
 export const anilistPopularQuery = (
   page: number = 1,
   perPage: number = 20,
-  type: 'ANIME' | 'MANGA' = 'ANIME'
+  type: 'ANIME' | 'MANGA' = 'ANIME',
 ) =>
   `query ($page: Int = ${page}, $id: Int, $type: MediaType = ${type}, $isAdult: Boolean = false, $size: Int = ${perPage}, $sort: [MediaSort] = [POPULARITY_DESC]) { Page(page: $page, perPage: $size) { pageInfo { total perPage currentPage lastPage hasNextPage } media(id: $id, type: $type, isAdult: $isAdult, sort: $sort) { id idMal status(version: 2) title { userPreferred romaji english native } trailer { id site thumbnail } format genres bannerImage description coverImage { extraLarge large medium color } episodes meanScore duration season seasonYear averageScore nextAiringEpisode { airingAt timeUntilAiring episode }  } } }`;
 export const anilistGenresQuery = (genres: string[], page: number = 1, perPage: number = 20) =>
   `query ($genres: [String] = ${JSON.stringify(
-    genres
+    genres,
   )}, $page: Int = ${page}, $type: MediaType = ANIME, $isAdult: Boolean = false, $size: Int = ${perPage}) {Page(page: $page, perPage: $size) { pageInfo { total perPage currentPage lastPage hasNextPage } media(type: $type, isAdult: $isAdult, genre_in: $genres) { id idMal status(version: 2) title { userPreferred romaji english native } trailer { id site thumbnail } format bannerImage description coverImage { extraLarge large medium color } episodes meanScore duration season seasonYear averageScore nextAiringEpisode { airingAt timeUntilAiring episode }  } } }`;
 export const anilistAiringScheduleQuery = (
   page: number = 1,
   perPage: number = 20,
   weekStart: number,
   weekEnd: number,
-  notYetAired: boolean
+  notYetAired: boolean,
 ) =>
   `query { Page(page: ${page}, perPage: ${perPage}) { pageInfo { total perPage currentPage lastPage hasNextPage } airingSchedules( notYetAired: ${notYetAired}, airingAt_greater: ${weekStart}, airingAt_lesser: ${weekEnd}) { airingAt episode media { id description idMal title { romaji english userPreferred native } countryOfOrigin description popularity bannerImage coverImage { extraLarge large medium color } genres averageScore seasonYear format } } } }`;
 export const anilistSiteStatisticsQuery = () => `query { SiteStatistics { anime { nodes { count } } } }`;
@@ -41,7 +41,7 @@ export const anilistStaffQuery = () =>
 export const kitsuSearchQuery = (query: string) =>
   `query{searchAnimeByTitle(first:5, title:"${query}"){ nodes {id season startDate titles { localized } episodes(first: 2000){ nodes { number createdAt titles { canonical } description thumbnail { original { url } } } } } } }`;
 export const anilistStaffInfoQuery = (
-  id: number
+  id: number,
 ) => `query($id: Int = ${id}) { Staff(id: $id) { id name { first last native full } image { large medium } description siteUrl staffMedia { edges { id node { id title { romaji english native } type coverImage { extraLarge large medium color } } } } } }
 `;
 

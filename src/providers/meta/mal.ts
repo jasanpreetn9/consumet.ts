@@ -48,7 +48,7 @@ class Myanimelist extends AnimeParser {
   private async populateEpisodeList(
     episodes: IAnimeEpisode[],
     url: string,
-    count: number = 1
+    count: number = 1,
   ): Promise<void> {
     try {
       const { data } = await this.client.request({
@@ -135,24 +135,24 @@ class Myanimelist extends AnimeParser {
             type == 'TV'
               ? MediaFormat.TV
               : type == 'TV_SHORT'
-              ? MediaFormat.TV_SHORT
-              : type == 'MOVIE'
-              ? MediaFormat.MOVIE
-              : type == 'SPECIAL'
-              ? MediaFormat.SPECIAL
-              : type == 'OVA'
-              ? MediaFormat.OVA
-              : type == 'ONA'
-              ? MediaFormat.ONA
-              : type == 'MUSIC'
-              ? MediaFormat.MUSIC
-              : type == 'MANGA'
-              ? MediaFormat.MANGA
-              : type == 'NOVEL'
-              ? MediaFormat.NOVEL
-              : type == 'ONE_SHOT'
-              ? MediaFormat.ONE_SHOT
-              : undefined,
+                ? MediaFormat.TV_SHORT
+                : type == 'MOVIE'
+                  ? MediaFormat.MOVIE
+                  : type == 'SPECIAL'
+                    ? MediaFormat.SPECIAL
+                    : type == 'OVA'
+                      ? MediaFormat.OVA
+                      : type == 'ONA'
+                        ? MediaFormat.ONA
+                        : type == 'MUSIC'
+                          ? MediaFormat.MUSIC
+                          : type == 'MANGA'
+                            ? MediaFormat.MANGA
+                            : type == 'NOVEL'
+                              ? MediaFormat.NOVEL
+                              : type == 'ONE_SHOT'
+                                ? MediaFormat.ONE_SHOT
+                                : undefined,
         });
       }
     });
@@ -168,7 +168,7 @@ class Myanimelist extends AnimeParser {
   fetchAnimeInfo = async (
     animeId: string,
     dub: boolean = false,
-    fetchFiller: boolean = false
+    fetchFiller: boolean = false,
   ): Promise<IAnimeInfo> => {
     try {
       const animeInfo = await this.fetchMalInfoById(animeId);
@@ -211,7 +211,7 @@ class Myanimelist extends AnimeParser {
             animeInfo.season!,
             animeInfo.startDate?.year!,
             animeId,
-            dub
+            dub,
           );
 
           animeInfo.episodes = animeInfo.episodes?.map((episode: IAnimeEpisode) => {
@@ -231,7 +231,7 @@ class Myanimelist extends AnimeParser {
           animeInfo.season!,
           animeInfo.startDate?.year!,
           animeId,
-          dub
+          dub,
         );
 
       if (fetchFiller) {
@@ -247,7 +247,7 @@ class Myanimelist extends AnimeParser {
             ...(fillerData.episodes as {
               number: string;
               'filler-bool': boolean;
-            }[])
+            }[]),
           );
         }
       }
@@ -321,7 +321,7 @@ class Myanimelist extends AnimeParser {
     startDate: number,
     malId: string,
     dub: boolean,
-    externalLinks?: any
+    externalLinks?: any,
   ): Promise<IAnimeEpisode[]> => {
     // console.log({ title });
     const slug = title?.replace(/[^0-9a-zA-Z]+/g, ' ');
@@ -342,7 +342,7 @@ class Myanimelist extends AnimeParser {
         if (possibleAnime.subOrDub === SubOrSub.BOTH) {
           possibleAnime.episodes[index].id = possibleAnime.episodes[index].id.replace(
             `$both`,
-            dub ? '$dub' : '$sub'
+            dub ? '$dub' : '$sub',
           );
         }
       });
@@ -371,7 +371,7 @@ class Myanimelist extends AnimeParser {
     possibleProviderEpisodes: IAnimeEpisode[],
     options: {},
     season?: string,
-    startDate?: number
+    startDate?: number,
   ) => {
     const kitsuEpisodes = await this.client.post(this.kitsuGraphqlUrl, options);
     const episodesList = new Map();
@@ -484,7 +484,7 @@ class Myanimelist extends AnimeParser {
       .split(',');
     animeInfo.studios = [];
     animeInfo.popularity = parseInt(
-      $('.numbers.popularity').text().trim().replace('Popularity #', '').trim()
+      $('.numbers.popularity').text().trim().replace('Popularity #', '').trim(),
     );
 
     const producers: string[] = [];

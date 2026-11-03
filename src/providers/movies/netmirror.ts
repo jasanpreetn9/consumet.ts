@@ -119,7 +119,7 @@ class NetMirror extends MovieParser {
             ...this.headers,
             Cookie: await this.getCookies(),
           },
-        }
+        },
       );
 
       if (!data.searchResult || !Array.isArray(data.searchResult)) {
@@ -246,7 +246,7 @@ class NetMirror extends MovieParser {
             ...this.headers,
             Cookie: await this.getCookies(),
           },
-        }
+        },
       );
 
       if (!data || !Array.isArray(data) || data.length === 0) {

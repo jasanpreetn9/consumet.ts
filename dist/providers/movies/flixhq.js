@@ -75,7 +75,7 @@ class FlixHQ extends models_1.MovieParser {
                         duration: (_b = $(el).find('div.film-detail > div.fd-infor > span.fdi-duration').text().replace('m', '')) !== null && _b !== void 0 ? _b : null,
                         type: $(el).find('div.film-detail > div.fd-infor > span.fdi-type').text().toLowerCase() === 'tv'
                             ? models_1.TvType.TVSERIES
-                            : (_c = models_1.TvType.MOVIE) !== null && _c !== void 0 ? _c : null,
+                            : ((_c = models_1.TvType.MOVIE) !== null && _c !== void 0 ? _c : null),
                     });
                 });
                 const uid = $('.watch_block').attr('data-id');

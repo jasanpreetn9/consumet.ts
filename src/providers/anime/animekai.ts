@@ -59,7 +59,7 @@ function assertNotCloudflareBlock(html: string, context: string): void {
     html.includes('Cloudflare')
   ) {
     throw new Error(
-      `[${context}] Cloudflare blocked the request. The response is a challenge/block page, not the actual site content.`
+      `[${context}] Cloudflare blocked the request. The response is a challenge/block page, not the actual site content.`,
     );
   }
 }
@@ -82,7 +82,7 @@ class AnimeKai extends AnimeParser {
       page = 1;
     }
     return this.scrapeCardPage(
-      `${this.baseUrl}/browser?keyword=${query.replace(/[\W_]+/g, '+')}&page=${page}`
+      `${this.baseUrl}/browser?keyword=${query.replace(/[\W_]+/g, '+')}&page=${page}`,
     );
   }
 
@@ -215,9 +215,9 @@ class AnimeKai extends AnimeParser {
       };
       const { data } = await this.client.get(
         `${this.baseUrl}/ajax/schedule/items?tz=5.5&time=${Math.floor(
-          new Date(`${date}T00:00:00Z`).getTime() / 1000
+          new Date(`${date}T00:00:00Z`).getTime() / 1000,
         )}`,
-        { headers: this.Headers() }
+        { headers: this.Headers() },
       );
 
       const parsed = parseAjaxResponse(data);
@@ -296,7 +296,7 @@ class AnimeKai extends AnimeParser {
     try {
       const { data } = await this.client.get(
         `${this.baseUrl}/ajax/anime/search?keyword=${query.replace(/[\W_]+/g, '+')}`,
-        { headers: this.Headers() }
+        { headers: this.Headers() },
       );
 
       const parsed = parseAjaxResponse(data);
@@ -318,7 +318,7 @@ class AnimeKai extends AnimeParser {
         const dub = parseInt(card.find('.info span.dub')?.text()) || 0;
         const episodes =
           parseInt(
-            card.find('.info').children().eq(-4).text().trim() ?? card.find('.info span.sub')?.text()
+            card.find('.info').children().eq(-4).text().trim() ?? card.find('.info span.sub')?.text(),
           ) || 0;
 
         res.results.push({
@@ -383,7 +383,7 @@ class AnimeKai extends AnimeParser {
           dub: parseInt(aTag.find('.info span.dub')?.text()) || 0,
           episodes:
             parseInt(
-              aTag.find('.info').children().eq(-2).text().trim() ?? aTag.find('.info span.sub')?.text()
+              aTag.find('.info').children().eq(-2).text().trim() ?? aTag.find('.info span.sub')?.text(),
             ) || 0,
         });
       });
@@ -499,7 +499,7 @@ class AnimeKai extends AnimeParser {
             'X-Requested-With': 'XMLHttpRequest',
             Referer: `${this.baseUrl}/watch/${animeSlug}`,
           },
-        }
+        },
       );
 
       const episodesParsed = parseAjaxResponse(episodesAjax.data);
@@ -552,7 +552,7 @@ class AnimeKai extends AnimeParser {
   override fetchEpisodeSources = async (
     episodeId: string,
     server: StreamingServers = StreamingServers.MegaUp,
-    subOrDub: SubOrSub = SubOrSub.SUB
+    subOrDub: SubOrSub = SubOrSub.SUB,
   ): Promise<ISource> => {
     if (episodeId.startsWith('http')) {
       const serverUrl = new URL(episodeId);
@@ -662,7 +662,7 @@ class AnimeKai extends AnimeParser {
           dub: parseInt(card.find('.info span.dub')?.text()) || 0,
           episodes:
             parseInt(
-              card.find('.info').children().eq(-2).text().trim() ?? card.find('.info span.sub')?.text()
+              card.find('.info').children().eq(-2).text().trim() ?? card.find('.info span.sub')?.text(),
             ) || 0, //if no direct episode count, then just use sub count
         });
       });
@@ -680,7 +680,7 @@ class AnimeKai extends AnimeParser {
    */
   override fetchEpisodeServers = async (
     episodeId: string,
-    subOrDub: SubOrSub = SubOrSub.SUB
+    subOrDub: SubOrSub = SubOrSub.SUB,
   ): Promise<IEpisodeServer[]> => {
     if (!episodeId.startsWith(this.baseUrl + '/ajax')) {
       const token = episodeId.split('$token=')[1];
@@ -708,7 +708,7 @@ class AnimeKai extends AnimeParser {
 
           const linkResp = await this.client.get(
             `${this.baseUrl}/ajax/links/view?id=${id}&_=${await GenerateToken(id!)}`,
-            { headers: this.Headers() }
+            { headers: this.Headers() },
           );
 
           const linkParsed = parseAjaxResponse(linkResp.data);
@@ -726,7 +726,7 @@ class AnimeKai extends AnimeParser {
               end: decodedIframeData?.skip.outro[1],
             },
           });
-        })
+        }),
       );
 
       return servers;

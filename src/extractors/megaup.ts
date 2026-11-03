@@ -7,7 +7,10 @@ export class MegaUp extends VideoExtractor {
   protected sources: IVideo[] = [];
   protected apiBase: string = 'https://enc-dec.app/api';
 
-  constructor(protected proxyConfig?: ProxyConfig, protected adapter?: AxiosAdapter) {
+  constructor(
+    protected proxyConfig?: ProxyConfig,
+    protected adapter?: AxiosAdapter,
+  ) {
     super(proxyConfig, adapter);
   }
 
@@ -21,7 +24,7 @@ export class MegaUp extends VideoExtractor {
   };
 
   DecodeIframeData = async (
-    n: string
+    n: string,
   ): Promise<{
     url: string;
     skip: {
@@ -38,7 +41,7 @@ export class MegaUp extends VideoExtractor {
   };
 
   Decode = async (
-    n: string
+    n: string,
   ): Promise<{
     sources: { file: string }[];
     tracks: { kind: string; file: string; label: string }[];
@@ -52,7 +55,7 @@ export class MegaUp extends VideoExtractor {
           agent:
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36',
         },
-        { headers: { 'Content-Type': 'application/json' } }
+        { headers: { 'Content-Type': 'application/json' } },
       );
       return res.data.result;
     } catch (error) {

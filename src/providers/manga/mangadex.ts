@@ -83,7 +83,7 @@ class MangaDex extends MangaParser {
   override search = async (
     query: string,
     page: number = 1,
-    limit: number = 20
+    limit: number = 20,
   ): Promise<ISearch<IMangaResult>> => {
     if (page <= 0) throw new Error('Page number must be greater than 0');
     if (limit > 100) throw new Error('Limit must be less than or equal to 100');
@@ -93,7 +93,7 @@ class MangaDex extends MangaParser {
       const res = await this.client.get(
         `${this.apiUrl}/manga?limit=${limit}&title=${encode(query)}&limit=${limit}&offset=${
           limit * (page - 1)
-        }&order[relevance]=desc`
+        }&order[relevance]=desc`,
       );
 
       if (res.data.result == 'ok') {
@@ -106,7 +106,7 @@ class MangaDex extends MangaParser {
           const findCoverArt = manga.relationships.find((item: any) => item.type === 'cover_art');
           const coverArtId = findCoverArt ? findCoverArt.id : null;
           const coverArt = await this.fetchCoverImage(
-            coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId
+            coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId,
           );
 
           results.results.push({
@@ -147,7 +147,7 @@ class MangaDex extends MangaParser {
         const findCoverArt = res.data.data.relationships.find((item: any) => item.type === 'cover_art');
         const coverArtId = findCoverArt ? findCoverArt.id : null;
         const coverArt = await this.fetchCoverImage(
-          coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId
+          coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId,
         );
 
         results.results.push({
@@ -182,7 +182,7 @@ class MangaDex extends MangaParser {
           this.apiUrl
         }/manga?includes[]=cover_art&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&order[createdAt]=desc&hasAvailableChapters=true&limit=${limit}&offset=${
           limit * (page - 1)
-        }`
+        }`,
       );
 
       if (res.data.result == 'ok') {
@@ -195,7 +195,7 @@ class MangaDex extends MangaParser {
           const findCoverArt = manga.relationships.find((item: any) => item.type === 'cover_art');
           const coverArtId = findCoverArt ? findCoverArt.id : null;
           const coverArt = await this.fetchCoverImage(
-            coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId
+            coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId,
           );
           results.results.push({
             id: manga.id,
@@ -226,7 +226,7 @@ class MangaDex extends MangaParser {
 
     try {
       const res = await this.client.get(
-        `${this.apiUrl}/manga?order[latestUploadedChapter]=desc&limit=${limit}&offset=${limit * (page - 1)}`
+        `${this.apiUrl}/manga?order[latestUploadedChapter]=desc&limit=${limit}&offset=${limit * (page - 1)}`,
       );
 
       if (res.data.result == 'ok') {
@@ -239,7 +239,7 @@ class MangaDex extends MangaParser {
           const findCoverArt = manga.relationships.find((item: any) => item.type === 'cover_art');
           const coverArtId = findCoverArt ? findCoverArt.id : null;
           const coverArt = await this.fetchCoverImage(
-            coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId
+            coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId,
           );
 
           results.results.push({
@@ -275,7 +275,7 @@ class MangaDex extends MangaParser {
           this.apiUrl
         }/manga?includes[]=cover_art&includes[]=artist&includes[]=author&order[followedCount]=desc&contentRating[]=safe&contentRating[]=suggestive&hasAvailableChapters=true&limit=${limit}&offset=${
           limit * (page - 1)
-        }`
+        }`,
       );
 
       if (res.data.result == 'ok') {
@@ -288,7 +288,7 @@ class MangaDex extends MangaParser {
           const findCoverArt = manga.relationships.find((item: any) => item.type === 'cover_art');
           const coverArtId = findCoverArt ? findCoverArt.id : null;
           const coverArt = await this.fetchCoverImage(
-            coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId
+            coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId,
           );
 
           results.results.push({
@@ -316,14 +316,14 @@ class MangaDex extends MangaParser {
   private fetchAllChapters = async (
     mangaId: string,
     offset: number,
-    res?: AxiosResponse<any, any>
+    res?: AxiosResponse<any, any>,
   ): Promise<any[]> => {
     if (res?.data?.offset + 96 >= res?.data?.total) {
       return [];
     }
 
     const response = await this.client.get(
-      `${this.apiUrl}/manga/${mangaId}/feed?offset=${offset}&limit=96&order[volume]=desc&order[chapter]=desc&translatedLanguage[]=en`
+      `${this.apiUrl}/manga/${mangaId}/feed?offset=${offset}&limit=96&order[volume]=desc&order[chapter]=desc&translatedLanguage[]=en`,
     );
 
     return [...response.data.data, ...(await this.fetchAllChapters(mangaId, offset + 96, response))];

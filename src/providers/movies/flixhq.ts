@@ -83,7 +83,7 @@ class FlixHQ extends MovieParser {
       const recommendationsArray: IMovieResult[] = [];
 
       $(
-        'div.movie_information > div.container > div.m_i-related > div.film-related > section.block_area > div.block_area-content > div.film_list-wrap > div.flw-item'
+        'div.movie_information > div.container > div.m_i-related > div.film-related > section.block_area > div.block_area-content > div.film_list-wrap > div.flw-item',
       ).each((i, el) => {
         recommendationsArray.push({
           id: $(el).find('div.film-poster > a').attr('href')?.slice(1)!,
@@ -94,7 +94,7 @@ class FlixHQ extends MovieParser {
           type:
             $(el).find('div.film-detail > div.fd-infor > span.fdi-type').text().toLowerCase() === 'tv'
               ? TvType.TVSERIES
-              : TvType.MOVIE ?? null,
+              : (TvType.MOVIE ?? null),
         });
       });
 
@@ -179,8 +179,8 @@ class FlixHQ extends MovieParser {
     const serverUrl = isMovie
       ? `${this.baseUrl}/ajax/movie/episodes/${episodeId}`
       : episodeId.startsWith(this.baseUrl + '/ajax')
-      ? episodeId
-      : `${this.baseUrl}/ajax/v2/episode/servers/${episodeId}`;
+        ? episodeId
+        : `${this.baseUrl}/ajax/v2/episode/servers/${episodeId}`;
 
     try {
       const { data } = await this.client.get(serverUrl);
@@ -217,7 +217,7 @@ class FlixHQ extends MovieParser {
   override fetchEpisodeSources = async (
     episodeId: string,
     mediaId: string,
-    server: StreamingServers = StreamingServers.UpCloud
+    server: StreamingServers = StreamingServers.UpCloud,
   ): Promise<ISource> => {
     if (episodeId.startsWith('http')) {
       const serverUrl = new URL(episodeId);
@@ -255,7 +255,7 @@ class FlixHQ extends MovieParser {
       }
 
       const { data } = await this.client.get(
-        `${this.baseUrl}/ajax/episode/sources/${servers[i].url.split('.').slice(-1).shift()}`
+        `${this.baseUrl}/ajax/episode/sources/${servers[i].url.split('.').slice(-1).shift()}`,
       );
 
       const serverUrl: URL = new URL(data.link);
@@ -362,7 +362,7 @@ class FlixHQ extends MovieParser {
       const $ = load(data);
 
       const results = $(
-        `section.block_area:contains("${sectionTitle}") > div:nth-child(2) > div:nth-child(1) > div.flw-item`
+        `section.block_area:contains("${sectionTitle}") > div:nth-child(2) > div:nth-child(1) > div.flw-item`,
       )
         .map((_, el) => {
           const $el = $(el);
@@ -444,7 +444,7 @@ class FlixHQ extends MovieParser {
   private async fetchByFilter(
     filterType: 'genre' | 'country',
     filterValue: string,
-    page: number
+    page: number,
   ): Promise<ISearch<IMovieResult>> {
     try {
       const { data } = await this.client.get(`${this.baseUrl}/${filterType}/${filterValue}?page=${page}`);
@@ -469,7 +469,7 @@ class FlixHQ extends MovieParser {
         const season = $el.find('div.film-detail > div.fd-infor > span:nth-child(1)').text();
         const latestEpisode = $el.find('div.film-detail > div.fd-infor > span:nth-child(3)').text() || null;
         const type = this.parseMediaType(
-          $el.find('div.film-detail > div.fd-infor > span.float-right').text()
+          $el.find('div.film-detail > div.fd-infor > span.float-right').text(),
         );
 
         const resultItem: IMovieResult = {

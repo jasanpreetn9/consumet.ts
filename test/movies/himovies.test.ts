@@ -20,7 +20,7 @@ test('fetchEpisodeSources: returns a filled object of streaming sources', async 
   const data = await himovies.fetchEpisodeSources(
     '1167571',
     'tv/watch-vincenzo-67955',
-    StreamingServers.MegaCloud
+    StreamingServers.MegaCloud,
   );
   expect(data.sources).not.toEqual([]);
 });

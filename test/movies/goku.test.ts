@@ -25,7 +25,7 @@ test('fetchEpisodeSources: returns a filled object of streaming movie sources', 
   const data = await goku.fetchEpisodeSources(
     '1613017',
     'watch-movie/watch-batman-begins-19636',
-    StreamingServers.VidCloud
+    StreamingServers.VidCloud,
   );
   expect(data.sources).not.toEqual([]);
 });
@@ -45,7 +45,7 @@ test('fetchEpisodeSources: returns a filled object of streaming tv sources', asy
   const data = await goku.fetchEpisodeSources(
     '46259',
     'watch-series/watch-batman-39276',
-    StreamingServers.VidCloud
+    StreamingServers.VidCloud,
   );
   expect(data.sources).not.toEqual([]);
 });

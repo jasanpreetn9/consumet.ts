@@ -139,7 +139,7 @@ class AnimePahe extends AnimeParser {
         .split('\n');
 
       animeInfo.totalEpisodes = parseInt(
-        $('div.anime-info > p:contains("Episodes:")').text().replace('Episodes:', '')
+        $('div.anime-info > p:contains("Episodes:")').text().replace('Episodes:', ''),
       );
       animeInfo.recommendations = [];
       $('div.anime-recommendation .col-sm-6').each((i, el) => {
@@ -188,8 +188,8 @@ class AnimePahe extends AnimeParser {
                 image: item.snapshot,
                 duration: item.duration,
                 url: `${this.baseUrl}/play/${id}/${item.session}`,
-              } as IAnimeEpisode)
-          )
+              }) as IAnimeEpisode,
+          ),
         );
 
         for (let i = 1; i < last_page; i++) {
@@ -264,22 +264,20 @@ class AnimePahe extends AnimeParser {
   private fetchEpisodes = async (session: string, page: number): Promise<IAnimeEpisode[]> => {
     const res = await this.client.get(
       `${this.baseUrl}/api?m=release&id=${session}&sort=episode_asc&page=${page}`,
-      { headers: this.Headers(session) }
+      { headers: this.Headers(session) },
     );
 
     const epData = res.data.data;
 
     return [
-      ...epData.map(
-        (item: any): IAnimeEpisode => ({
-          id: `${session}/${item.session}`,
-          number: item.episode,
-          title: item.title,
-          image: item.snapshot,
-          duration: item.duration,
-          url: `${this.baseUrl}/play/${session}/${item.session}`,
-        })
-      ),
+      ...epData.map((item: any): IAnimeEpisode => ({
+        id: `${session}/${item.session}`,
+        number: item.episode,
+        title: item.title,
+        image: item.snapshot,
+        duration: item.duration,
+        url: `${this.baseUrl}/play/${session}/${item.session}`,
+      })),
     ] as IAnimeEpisode[];
   };
 

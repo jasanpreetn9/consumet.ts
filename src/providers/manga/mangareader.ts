@@ -25,17 +25,15 @@ class MangaReader extends MangaParser {
       const $ = load(data);
 
       const results = $('div.manga_list-sbs div.mls-wrap div.item')
-        .map(
-          (i, el): IMangaResult => ({
-            id: $(el).find('a.manga-poster').attr('href')?.split('/')[1]!,
-            title: $(el).find('div.manga-detail h3.manga-name a').text().trim(),
-            image: $(el).find('a.manga-poster img').attr('src'),
-            genres: $(el)
-              .find(`div.manga-detail div.fd-infor span > a`)
-              .map((i, genre) => $(genre).text())
-              .get(),
-          })
-        )
+        .map((i, el): IMangaResult => ({
+          id: $(el).find('a.manga-poster').attr('href')?.split('/')[1]!,
+          title: $(el).find('div.manga-detail h3.manga-name a').text().trim(),
+          image: $(el).find('a.manga-poster img').attr('src'),
+          genres: $(el)
+            .find(`div.manga-detail div.fd-infor span > a`)
+            .map((i, genre) => $(genre).text())
+            .get(),
+        }))
         .get();
 
       return {
@@ -68,13 +66,11 @@ class MangaReader extends MangaParser {
 
       mangaInfo.chapters = container
         .find(`div.chapters-list-ul ul li`)
-        .map(
-          (i, el): IMangaChapter => ({
-            id: $(el).find('a').attr('href')?.split('/read/')[1]!,
-            title: $(el).find('a').attr('title')!.trim(),
-            chapter: $(el).find('a span.name').text().split('Chapter ')[1]!.split(':')[0],
-          })
-        )
+        .map((i, el): IMangaChapter => ({
+          id: $(el).find('a').attr('href')?.split('/read/')[1]!,
+          title: $(el).find('a').attr('title')!.trim(),
+          chapter: $(el).find('a span.name').text().split('Chapter ')[1]!.split(':')[0],
+        }))
         .get();
 
       return mangaInfo;
@@ -101,12 +97,10 @@ class MangaReader extends MangaParser {
       const pagesSelector = $PagesHTML('div#main-wrapper div.container-reader-chapter div.iv-card');
 
       const pages = pagesSelector
-        .map(
-          (i, el): IMangaChapterPage => ({
-            img: $(el).attr('data-url')!.replace('&amp;', '&'),
-            page: i + 1,
-          })
-        )
+        .map((i, el): IMangaChapterPage => ({
+          img: $(el).attr('data-url')!.replace('&amp;', '&'),
+          page: i + 1,
+        }))
         .get();
 
       return pages;

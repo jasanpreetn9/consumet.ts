@@ -1,5 +1,2 @@
-import NovelUpdates from './novelupdates';
-declare const _default: {
-    NovelUpdates: typeof NovelUpdates;
-};
+declare const _default: {};
 export default _default;

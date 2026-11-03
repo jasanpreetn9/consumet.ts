@@ -61,14 +61,14 @@ class Kwik extends VideoExtractor {
       const data = await response.text();
 
       const obfuscatedParams = data.match(
-        `\\\}\\\("([^"]+)".*?"([^"]+)"\\\s*,\\\s*([^,]+)\\\s*,\\\s*([^,]+)`
+        `\\\}\\\("([^"]+)".*?"([^"]+)"\\\s*,\\\s*([^,]+)\\\s*,\\\s*([^,]+)`,
       );
 
       const formScript = this.deobfuscate(
         obfuscatedParams![1],
         obfuscatedParams![2],
         Number(obfuscatedParams![3]),
-        Number(obfuscatedParams![4])
+        Number(obfuscatedParams![4]),
       );
 
       const formActionUrl = formScript.match(/form action="([^"]+)/)![1];

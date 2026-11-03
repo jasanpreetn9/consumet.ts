@@ -308,7 +308,7 @@ class AnimeSama extends AnimeParser {
   private fetchEpisodesData = async (
     id: string,
     season: string = 'saison1',
-    language: string = 'vf'
+    language: string = 'vf',
   ): Promise<EpisodeData[]> => {
     try {
       const animeUrl = `${this.baseUrl}/catalogue/${id}/`;

@@ -169,7 +169,7 @@ class HiMovies extends MovieParser {
   override fetchEpisodeSources = async (
     episodeId: string,
     mediaId: string,
-    server: StreamingServers = StreamingServers.MegaCloud
+    server: StreamingServers = StreamingServers.MegaCloud,
   ): Promise<ISource> => {
     if (episodeId.startsWith('http')) {
       return this.extractFromServer(episodeId, server);
@@ -184,7 +184,7 @@ class HiMovies extends MovieParser {
       }
 
       const { data } = await this.client.get(
-        `${this.baseUrl}/ajax/episode/sources/${selectedServer.url.split('.').pop()}`
+        `${this.baseUrl}/ajax/episode/sources/${selectedServer.url.split('.').pop()}`,
       );
 
       if (!data?.link) {
@@ -327,7 +327,7 @@ class HiMovies extends MovieParser {
       const $ = load(data);
 
       const results = $(
-        `section.block_area:contains("${sectionTitle}") > div:nth-child(2) > div:nth-child(1) > div.flw-item`
+        `section.block_area:contains("${sectionTitle}") > div:nth-child(2) > div:nth-child(1) > div.flw-item`,
       )
         .map((_, el) => {
           const $el = $(el);
@@ -417,7 +417,7 @@ class HiMovies extends MovieParser {
   private async fetchByFilter(
     filterType: 'genre' | 'country',
     filterValue: string,
-    page: number
+    page: number,
   ): Promise<ISearch<IMovieResult>> {
     try {
       const { data } = await this.client.get(`${this.baseUrl}/${filterType}/${filterValue}?page=${page}`);
@@ -448,7 +448,7 @@ class HiMovies extends MovieParser {
           $el.find('div.film-detail > div.fd-infor > span:nth-child(3)').text().replace('EPS', '').trim() ||
           null;
         const type = this.parseMediaType(
-          $el.find('div.film-detail > div.fd-infor > span.float-right').text()
+          $el.find('div.film-detail > div.fd-infor > span.float-right').text(),
         );
 
         const resultItem: IMovieResult = {

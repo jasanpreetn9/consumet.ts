@@ -8,7 +8,10 @@ export class Proxy {
    * @param proxyConfig The proxy config (optional)
    * @param adapter The axios adapter (optional)
    */
-  constructor(protected proxyConfig?: ProxyConfig, protected adapter?: AxiosAdapter) {
+  constructor(
+    protected proxyConfig?: ProxyConfig,
+    protected adapter?: AxiosAdapter,
+  ) {
     this.client = axios.create();
 
     if (proxyConfig) this.setProxy(proxyConfig);

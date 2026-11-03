@@ -7,8 +7,8 @@ const mangadex_1 = __importDefault(require("./mangadex"));
 const comick_1 = __importDefault(require("./comick"));
 const mangahere_1 = __importDefault(require("./mangahere"));
 const mangapill_1 = __importDefault(require("./mangapill"));
-const mangareader_1 = __importDefault(require("./mangareader"));
-const asurascans_1 = __importDefault(require("./asurascans"));
+// import MangaReader from './mangareader';
+// import AsuraScans from './asurascans';
 const weebcentral_1 = __importDefault(require("./weebcentral"));
 const mangakakalot_1 = __importDefault(require("./mangakakalot"));
 const comix_1 = __importDefault(require("./comix"));
@@ -17,8 +17,8 @@ exports.default = {
     ComicK: comick_1.default,
     MangaHere: mangahere_1.default,
     MangaPill: mangapill_1.default,
-    MangaReader: mangareader_1.default,
-    AsuraScans: asurascans_1.default,
+    // MangaReader,
+    // AsuraScans,
     WeebCentral: weebcentral_1.default,
     MangaKakalot: mangakakalot_1.default,
     Comix: comix_1.default,

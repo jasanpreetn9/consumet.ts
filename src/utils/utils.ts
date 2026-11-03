@@ -258,7 +258,7 @@ export function findSimilarTitles(inputTitle: string, titles: any[]): any[] {
       titleObj?.title
         ?.toLowerCase()
         ?.replace(/\([^\)]*\)/g, '')
-        .trim() || ''
+        .trim() || '',
     );
 
     // Calculate similarity score between inputTitle and title
@@ -344,7 +344,7 @@ export function cleanTitle(title: string | undefined | null): string {
         .replace(/\b(IX|IV|V?I{0,3})\b/gi, (match: any) => romanToArabic(match).toString())
         .replace(/ {2}/g, ' ')
         .replace(/"/g, '')
-        .trimEnd()
-    )
+        .trimEnd(),
+    ),
   );
 }

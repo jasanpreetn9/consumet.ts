@@ -25,7 +25,7 @@ test('fetchEpisodeSources: returns a filled object of streaming sources', async 
   const data = await sflix.fetchEpisodeSources(
     '18729',
     'movie/free-superbad-hd-18729',
-    StreamingServers.MegaCloud
+    StreamingServers.MegaCloud,
   );
   expect(data.sources).not.toEqual([]);
   expect(data.subtitles).not.toEqual([]);

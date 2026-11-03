@@ -26,13 +26,11 @@ class MangaPill extends MangaParser {
       const $ = load(data);
 
       const results = $('div.container div.my-3.justify-end > div')
-        .map(
-          (i, el): IMangaResult => ({
-            id: $(el).find('a').attr('href')?.split('/manga/')[1]!,
-            title: $(el).find('div > a > div').text().trim(),
-            image: $(el).find('a img').attr('data-src'),
-          })
-        )
+        .map((i, el): IMangaResult => ({
+          id: $(el).find('a').attr('href')?.split('/manga/')[1]!,
+          title: $(el).find('div > a > div').text().trim(),
+          image: $(el).find('a img').attr('data-src'),
+        }))
         .get();
 
       return {
@@ -69,13 +67,11 @@ class MangaPill extends MangaParser {
         .map(genre => genre.trim());
 
       mangaInfo.chapters = $('div.container div.border-border div#chapters div.grid-cols-1 a')
-        .map(
-          (i, el): IMangaChapter => ({
-            id: $(el).attr('href')?.split('/chapters/')[1]!,
-            title: $(el).text().trim(),
-            chapter: $(el).text().split('Chapter ')[1],
-          })
-        )
+        .map((i, el): IMangaChapter => ({
+          id: $(el).attr('href')?.split('/chapters/')[1]!,
+          title: $(el).text().trim(),
+          chapter: $(el).text().split('Chapter ')[1],
+        }))
         .get();
 
       return mangaInfo;
@@ -92,12 +88,10 @@ class MangaPill extends MangaParser {
       const chapterSelector = $('chapter-page');
 
       const pages = chapterSelector
-        .map(
-          (i, el): IMangaChapterPage => ({
-            img: $(el).find('div picture img').attr('data-src')!,
-            page: parseFloat($(el).find(`div[data-summary] > div`).text().split('page ')[1]),
-          })
-        )
+        .map((i, el): IMangaChapterPage => ({
+          img: $(el).find('div picture img').attr('data-src')!,
+          page: parseFloat($(el).find(`div[data-summary] > div`).text().split('page ')[1]),
+        }))
         .get();
 
       return pages;

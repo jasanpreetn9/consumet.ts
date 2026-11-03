@@ -20,7 +20,10 @@ class AsuraScans extends models_1.MangaParser {
                     title: dom.find('.text-xl.font-bold:nth-child(1)').text().trim(),
                     image: $(topInfoWrapper).find('img').attr('src'),
                     rating: $(topInfoWrapper).find('div > div.px-2.py-1 > p').text().trim(),
-                    status: this.determineMediaState($(topInfoWrapper).find('div > div.flex.flex-row > div:nth-child(1) > h3:nth-child(2)').text().trim()),
+                    status: this.determineMediaState($(topInfoWrapper)
+                        .find('div > div.flex.flex-row > div:nth-child(1) > h3:nth-child(2)')
+                        .text()
+                        .trim()),
                     description: dom.find('span.font-medium.text-sm').text().trim(),
                     authors: dom
                         .find('.grid.grid-cols-1.gap-5.mt-8 > div:nth-child(2) > h3:nth-child(2)')

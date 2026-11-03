@@ -188,7 +188,7 @@ class SFlix extends MovieParser {
   override fetchEpisodeSources = async (
     episodeId: string,
     mediaId: string,
-    server: StreamingServers = StreamingServers.UpCloud
+    server: StreamingServers = StreamingServers.UpCloud,
   ): Promise<ISource> => {
     if (episodeId.startsWith('http')) {
       return this.extractFromServer(episodeId, server);
@@ -361,7 +361,7 @@ class SFlix extends MovieParser {
             $el.find('div.film-detail > div.fd-infor > span.fdi-duration').text().replace('m', '') || null,
           type: typeText === 'tv' ? TvType.TVSERIES : TvType.MOVIE,
         });
-      }
+      },
     );
 
     return recommendations;
@@ -378,7 +378,7 @@ class SFlix extends MovieParser {
       const $ = load(data);
 
       const results = $(
-        `section.block_area:contains("${sectionTitle}") > div:nth-child(2) > div:nth-child(1) > div.flw-item`
+        `section.block_area:contains("${sectionTitle}") > div:nth-child(2) > div:nth-child(1) > div.flw-item`,
       )
         .map((_, el) => {
           const $el = $(el);
@@ -460,7 +460,7 @@ class SFlix extends MovieParser {
   private async fetchByFilter(
     filterType: 'genre' | 'country',
     filterValue: string,
-    page: number
+    page: number,
   ): Promise<ISearch<IMovieResult>> {
     try {
       const { data } = await this.client.get(`${this.baseUrl}/${filterType}/${filterValue}?page=${page}`);

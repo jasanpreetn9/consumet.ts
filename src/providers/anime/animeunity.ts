@@ -75,7 +75,7 @@ class AnimeUnity extends AnimeParser {
 
       if (page < 1 || page > totalPages)
         throw new Error(
-          `Argument 'page' for ${id} must be between 1 and ${totalPages}! (You passed ${page})`
+          `Argument 'page' for ${id} must be between 1 and ${totalPages}! (You passed ${page})`,
         );
 
       const animeInfo: IAnimeInfo = {

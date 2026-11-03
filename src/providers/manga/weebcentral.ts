@@ -46,7 +46,7 @@ class WeebCentral extends MangaParser {
           ...this.headers,
           'HX-Request': 'true',
           'HX-Current-URL': `${this.baseUrl}/search?text=${encodeURIComponent(
-            query
+            query,
           )}&sort=Best+Match&order=Descending&official=Any&anime=Any&adult=Any&display_mode=Full+Display`,
         },
         decompress: true,
@@ -167,7 +167,7 @@ class WeebCentral extends MangaParser {
             'HX-Current-URL': `${this.baseUrl}/chapters/${chapterId}`,
           },
           decompress: true,
-        }
+        },
       );
       const $ = load(data);
 

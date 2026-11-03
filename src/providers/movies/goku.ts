@@ -147,7 +147,7 @@ class Goku extends MovieParser {
 
       for (const server of servers) {
         const { data } = await this.client.get(
-          `${this.baseUrl}/ajax/movie/episode/server/sources/${server.id}`
+          `${this.baseUrl}/ajax/movie/episode/server/sources/${server.id}`,
         );
 
         episodeServers.push({
@@ -171,7 +171,7 @@ class Goku extends MovieParser {
   override fetchEpisodeSources = async (
     episodeId: string,
     mediaId: string,
-    server: StreamingServers = StreamingServers.UpCloud
+    server: StreamingServers = StreamingServers.UpCloud,
   ): Promise<ISource> => {
     if (episodeId.startsWith('http')) {
       const serverUrl = new URL(episodeId);
@@ -286,7 +286,7 @@ class Goku extends MovieParser {
 
     for (const season of seasonIds) {
       const { data: seasonData } = await this.client.get(
-        `${this.baseUrl}/ajax/movie/season/episodes/${season.id}`
+        `${this.baseUrl}/ajax/movie/season/episodes/${season.id}`,
       );
       const $$ = load(seasonData);
 
@@ -316,7 +316,7 @@ class Goku extends MovieParser {
   private async fetchHomeSection(
     selector: string,
     isMovie: boolean = false,
-    useLast: boolean = false
+    useLast: boolean = false,
   ): Promise<IMovieResult[]> {
     try {
       const { data } = await this.client.get(`${this.baseUrl}/home`);
@@ -344,8 +344,8 @@ class Goku extends MovieParser {
                 ? TvType.MOVIE
                 : TvType.TVSERIES
               : isMovie
-              ? TvType.MOVIE
-              : TvType.TVSERIES,
+                ? TvType.MOVIE
+                : TvType.TVSERIES,
           };
 
           if (isMovie) {
@@ -376,7 +376,7 @@ class Goku extends MovieParser {
   private async fetchByFilter(
     filterType: 'genre' | 'country',
     filterValue: string,
-    page: number
+    page: number,
   ): Promise<ISearch<IMovieResult>> {
     try {
       const url =

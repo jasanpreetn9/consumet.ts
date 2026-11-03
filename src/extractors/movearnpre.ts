@@ -43,7 +43,7 @@ class MoveArnPre extends VideoExtractor {
       let masterUrl = '';
 
       const packedMatch = data.match(
-        /eval\(function\(p,a,c,k,e,d\)[\s\S]*?}\('(.+)',(\d+),(\d+),'(.+?)'\.split\('\|'\)\)\)/
+        /eval\(function\(p,a,c,k,e,d\)[\s\S]*?}\('(.+)',(\d+),(\d+),'(.+?)'\.split\('\|'\)\)\)/,
       );
 
       if (packedMatch) {

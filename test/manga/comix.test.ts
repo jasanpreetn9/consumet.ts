@@ -17,7 +17,7 @@ test('fetchMangaInfo: returns filled manga info when given a mangaId.', async ()
 
 test('fetchChapterPages: returns filled page data when given a chapterId.', async () => {
   const data = await comix.fetchChapterPages(
-    'rm2xv-the-grand-dukes-bride-is-a-hellborn-warrior/7288301-chapter-43'
+    'rm2xv-the-grand-dukes-bride-is-a-hellborn-warrior/7288301-chapter-43',
   );
   expect(data).not.toEqual([]);
 });
