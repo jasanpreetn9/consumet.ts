@@ -1,4 +1,4 @@
-import { ANIME, MANGA, BOOKS, COMICS, LIGHT_NOVELS, MOVIES, META, NEWS } from '../providers';
+import { ANIME, MANGA, MOVIES } from '../providers';
 
 // List of providers
 export const PROVIDERS_LIST = {
@@ -20,11 +20,6 @@ export const PROVIDERS_LIST = {
     new MANGA.ComicK(),
     new MANGA.Comix(),
   ],
-  BOOKS: [],
-  COMICS: [
-    // new COMICS.GetComics()
-  ],
-  LIGHT_NOVELS: [],
   MOVIES: [
     // new MOVIES.DramaCool(),
     // new MOVIES.FlixHQ(),
@@ -33,7 +28,4 @@ export const PROVIDERS_LIST = {
     // new MOVIES.HiMovies(),
     // new MOVIES.Turkish(),
   ],
-  NEWS: [new NEWS.ANN()],
-  META: [new META.Anilist(), new META.TMDB(), new META.Myanimelist()],
-  OTHERS: [],
 };

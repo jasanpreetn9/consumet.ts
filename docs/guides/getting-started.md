@@ -22,56 +22,33 @@ yarn add @consumet/extensions
 
 ### Usage
 
-**Example** - searching for a book using the libgen provider.
+**Example** - searching for manga using the MangaPill provider.
 ```ts
 // ESM
-import { BOOKS } from "@consumet/extensions"
+import { MANGA } from "@consumet/extensions"
 // CommonJS
-const { BOOKS } = require("@consumet/extensions");
+const { MANGA } = require("@consumet/extensions");
 
 const main = async () => {
-  // Create a new instance of the Libgen provider
-  const books = new BOOKS.Libgen();
-  // Search for a book. In this case, "Pride and Prejudice"
-  const results = await books.search('pride and prejudice');
+  // Create a new instance of the MangaPill provider
+  const mangapill = new MANGA.MangaPill();
+  // Search for a manga. In this case, "One Piece"
+  const results = await mangapill.search("One Piece");
   // Print the results
   console.log(results);
-  // Get the first book info
-  const firstBook = results[0];
-  const bookInfo = await books.scrapePage(firstBook.link);
+  // Get the first manga info
+  const firstManga = results.results[0];
+  const mangaInfo = await mangapill.fetchMangaInfo(firstManga.id);
   // Print the info
-  console.log(bookInfo);
+  console.log(mangaInfo);
+  // Get the pages of the first chapter
+  const pages = await mangapill.fetchChapterPages(mangaInfo.chapters![0].id);
+  console.log(pages);
 };
 
 main();
 ```
-*see also [BOOKS documentation](./books.md#books) for more information.*\
-**Example** - searching for anime using the gogoanime provider.
-```ts
-// ESM
-import { ANIME } from "@consumet/extensions"
-// CommonJS
-const { ANIME } = require("@consumet/extensions");
-
-const main = async () => {
-  // Create a new instance of the Gogoanime provider
-  const gogoanime = new ANIME.Gogoanime();
-  // Search for a anime. In this case, "One Piece"
-  const results = await gogoanime.search("One Piece");
-  // Print the results
-  console.log(results);
-  // Get the first anime info
-  const firstAnime = results.results[0];
-  const animeInfo = await gogoanime.fetchAnimeInfo(firstAnime.id);
-  // Print the info
-  console.log(animeInfo);
-  // get the first episode stream link. By default, it chooses goload server.
-  const episodes = await gogoanime.fetchEpisodeSources(animeInfo.episodes[0].id);
-  // get the available streaming servers for the first episode
-  const streamingServers = await gogoanime.fetchEpisodeServers(animeInfo.episodes[0].id);
-}
-``` 
-*see also [ANIME documentation](./anime.md#anime) for more information.*\
+*see also [MANGA documentation](./manga.md#manga) for more information.*\
 Awesome, that was easy.
 
 if you want to use different providers, you can check the providers list [here](https://consumet.org/extensions/list/) or in [json format](https://github.com/consumet/providers-status/blob/main/providers-list.json).

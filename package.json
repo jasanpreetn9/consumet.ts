@@ -15,15 +15,8 @@
     "test": "jest",
     "test:anime": "jest ./test/anime",
     "test:anime:kaa": "jest ./test/anime/kickassanime.test.ts",
-    "test:books": "jest ./test/books",
-    "test:comics": "jest ./test/comics",
     "test:movies": "jest ./test/movies",
-    "test:manga": "jest ./test/manga",
-    "test:lightnovels": "jest ./test/light-novels",
-    "test:news": "jest ./test/news",
-    "test:meta": "jest ./test/meta",
-    "test:meta:anilist": "jest ./test/meta/anilist.test.ts",
-    "test:meta:tmdb": "jest ./test/meta/tmdb.test.ts"
+    "test:manga": "jest ./test/manga"
   },
   "pre-commit": [
     "lint",

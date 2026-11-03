@@ -1,4 +1,4 @@
-import { ANIME, BOOKS, COMICS, LIGHT_NOVELS, MANGA, MOVIES, META, NEWS } from './providers';
+import { ANIME, MANGA, MOVIES } from './providers';
 import { PROVIDERS_LIST } from './utils/providers-list';
 import {
   IProviderStats,
@@ -8,19 +8,12 @@ import {
   IAnimeResult,
   IEpisodeServer,
   IVideo,
-  LibgenBook,
   StreamingServers,
   MediaStatus,
   SubOrSub,
   IMangaResult,
   IMangaChapter,
   IMangaInfo,
-  ILightNovelResult,
-  ILightNovelInfo,
-  ILightNovelChapter,
-  ILightNovelChapterContent,
-  GetComicsComics,
-  ComicRes,
   IMangaChapterPage,
   TvType,
   IMovieEpisode,
@@ -30,16 +23,14 @@ import {
   IMovieResult,
   Intro,
   Genres,
-  INewsFeed,
   Topics,
-  INewsInfo,
   FuzzyDate,
   ITitle,
   MediaFormat,
   ProxyConfig,
 } from './models';
 
-export { ANIME, BOOKS, COMICS, MANGA, LIGHT_NOVELS, MOVIES, META, NEWS };
+export { ANIME, MANGA, MOVIES };
 export { PROVIDERS_LIST };
 export {
   Topics,
@@ -53,16 +44,9 @@ export {
   IAnimeResult,
   IEpisodeServer,
   IVideo,
-  LibgenBook,
   IMangaResult,
   IMangaChapter,
   IMangaInfo,
-  ILightNovelResult,
-  ILightNovelInfo,
-  ILightNovelChapter,
-  ILightNovelChapterContent,
-  GetComicsComics,
-  ComicRes,
   ISearch,
   IMangaChapterPage,
   TvType,
@@ -72,8 +56,6 @@ export {
   ISubtitle,
   IMovieResult,
   Intro,
-  INewsFeed,
-  INewsInfo,
   FuzzyDate,
   ITitle,
   MediaFormat,
