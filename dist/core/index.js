@@ -1,24 +1,34 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WatchListType = exports.MediaFormat = exports.Topics = exports.Genres = exports.MovieParser = exports.TvType = exports.MangaParser = exports.SubOrSub = exports.MediaStatus = exports.StreamingServers = exports.AnimeParser = exports.BaseProvider = void 0;
-const provider_1 = __importDefault(require("./provider"));
-exports.BaseProvider = provider_1.default;
-const anime_1 = __importDefault(require("./parsers/anime"));
-exports.AnimeParser = anime_1.default;
-const manga_1 = __importDefault(require("./parsers/manga"));
-exports.MangaParser = manga_1.default;
-const movie_1 = __importDefault(require("./parsers/movie"));
-exports.MovieParser = movie_1.default;
-const types_1 = require("./types");
-Object.defineProperty(exports, "StreamingServers", { enumerable: true, get: function () { return types_1.StreamingServers; } });
-Object.defineProperty(exports, "MediaStatus", { enumerable: true, get: function () { return types_1.MediaStatus; } });
-Object.defineProperty(exports, "SubOrSub", { enumerable: true, get: function () { return types_1.SubOrSub; } });
-Object.defineProperty(exports, "TvType", { enumerable: true, get: function () { return types_1.TvType; } });
-Object.defineProperty(exports, "Genres", { enumerable: true, get: function () { return types_1.Genres; } });
-Object.defineProperty(exports, "Topics", { enumerable: true, get: function () { return types_1.Topics; } });
-Object.defineProperty(exports, "MediaFormat", { enumerable: true, get: function () { return types_1.MediaFormat; } });
-Object.defineProperty(exports, "WatchListType", { enumerable: true, get: function () { return types_1.WatchListType; } });
+exports.ProviderError = exports.MovieParser = exports.MangaParser = exports.AnimeParser = exports.BaseProvider = void 0;
+// Everything a provider needs. Providers import from here, never from deeper paths.
+var provider_1 = require("./provider");
+Object.defineProperty(exports, "BaseProvider", { enumerable: true, get: function () { return __importDefault(provider_1).default; } });
+var anime_1 = require("./parsers/anime");
+Object.defineProperty(exports, "AnimeParser", { enumerable: true, get: function () { return __importDefault(anime_1).default; } });
+var manga_1 = require("./parsers/manga");
+Object.defineProperty(exports, "MangaParser", { enumerable: true, get: function () { return __importDefault(manga_1).default; } });
+var movie_1 = require("./parsers/movie");
+Object.defineProperty(exports, "MovieParser", { enumerable: true, get: function () { return __importDefault(movie_1).default; } });
+var errors_1 = require("./errors");
+Object.defineProperty(exports, "ProviderError", { enumerable: true, get: function () { return errors_1.ProviderError; } });
+__exportStar(require("./types"), exports);
+__exportStar(require("./utils"), exports);
 //# sourceMappingURL=index.js.map
