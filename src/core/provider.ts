@@ -1,50 +1,74 @@
-import { IProviderStats } from './types';
-import Proxy from './http';
+import { AxiosAdapter, AxiosInstance } from 'axios';
 
-abstract class BaseProvider extends Proxy {
-  /**
-   * Name of the provider
-   */
+import { createHttpClient, ProxyRouter } from './http';
+import { IProviderStats, ProxyConfig } from './types';
+
+export type ProviderCategory = 'ANIME' | 'MANGA' | 'MOVIES';
+
+/**
+ * Base class for every provider. Category parsers (`MangaParser`, ...) extend
+ * it, and providers extend those, so a provider never needs to touch this file.
+ */
+abstract class BaseProvider {
+  /** Name of the provider, e.g. `MangaDex`. */
   abstract readonly name: string;
 
-  /**
-   * The main URL of the provider
-   */
+  /** The main URL of the provider. */
   protected abstract readonly baseUrl: string;
 
+  /** Set by the category parser, e.g. `MANGA`. */
+  protected abstract readonly category: ProviderCategory;
+
   /**
-   * Most providers are english based, but if the provider is not english based override this value.
-   * must be in [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format
+   * Languages the provider serves, in
+   * [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format.
    */
   protected readonly languages: string[] | string = 'en';
 
-  /**
-   * override as `true` if the provider **only** supports NSFW content
-   */
+  /** Set to `true` if the provider **only** serves NSFW content. */
   readonly isNSFW: boolean = false;
 
-  /**
-   * Logo of the provider (used in the website) or `undefined` if not available. ***128x128px is preferred***\
-   * Must be a valid URL (not a data URL)
-   */
-  protected readonly logo: string =
-    'https://png.pngtree.com/png-vector/20210221/ourmid/pngtree-error-404-not-found-neon-effect-png-image_2928214.jpg';
+  /** Logo URL (128x128px preferred), if the provider has one. */
+  protected readonly logo?: string;
 
-  /**
-   * The class's path is determined by the provider's directory structure for example:\
-   * MangaDex class path is `MANGA.MangaDex`. **(case sensitive)**
-   */
-  protected abstract readonly classPath: string;
-
-  /**
-   * override as `false` if the provider is **down** or **not working**
-   */
+  /** Set to `false` if the provider is down or not working. */
   readonly isWorking: boolean = true;
 
+  /** HTTP client for all requests. Applies the proxy, a timeout, and error tagging. */
+  protected readonly client: AxiosInstance;
+
+  private readonly proxy = new ProxyRouter();
+
   /**
-   * returns provider stats
+   * @param proxyConfig Proxy to send requests through (optional)
+   * @param adapter Custom axios adapter, e.g. for fixtures in tests (optional)
    */
-  get toString(): IProviderStats {
+  constructor(proxyConfig?: ProxyConfig, adapter?: AxiosAdapter) {
+    this.client = createHttpClient(() => this.name, this.proxy);
+    if (proxyConfig) this.setProxy(proxyConfig);
+    if (adapter) this.setAxiosAdapter(adapter);
+  }
+
+  /** Search the provider. */
+  abstract search(query: string, ...args: any[]): Promise<unknown>;
+
+  /** Set or change the proxy. Pass an array of URLs to rotate between them. */
+  setProxy(proxyConfig: ProxyConfig): void {
+    this.proxy.set(proxyConfig);
+  }
+
+  /** Set or change the axios adapter. */
+  setAxiosAdapter(adapter: AxiosAdapter): void {
+    this.client.defaults.adapter = adapter;
+  }
+
+  /** Where the provider lives in the public API, e.g. `MANGA.MangaDex`. */
+  get classPath(): string {
+    return `${this.category}.${this.constructor.name}`;
+  }
+
+  /** Provider metadata. */
+  get stats(): IProviderStats {
     return {
       name: this.name,
       baseUrl: this.baseUrl,
@@ -54,6 +78,11 @@ abstract class BaseProvider extends Proxy {
       classPath: this.classPath,
       isWorking: this.isWorking,
     };
+  }
+
+  /** @deprecated Use `stats` instead. */
+  get toString(): IProviderStats {
+    return this.stats;
   }
 }
 

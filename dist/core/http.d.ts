@@ -1,25 +1,23 @@
-import { AxiosAdapter, AxiosInstance } from 'axios';
+import { AxiosInstance } from 'axios';
 import { ProxyConfig } from './types';
-export declare class Proxy {
-    protected proxyConfig?: ProxyConfig | undefined;
-    protected adapter?: AxiosAdapter | undefined;
-    /**
-     *
-     * @param proxyConfig The proxy config (optional)
-     * @param adapter The axios adapter (optional)
-     */
-    constructor(proxyConfig?: ProxyConfig | undefined, adapter?: AxiosAdapter | undefined);
-    private validUrl;
-    /**
-     * Set or Change the proxy config
-     */
-    setProxy(proxyConfig: ProxyConfig): void;
-    /**
-     * Set or Change the axios adapter
-     */
-    setAxiosAdapter(adapter: AxiosAdapter): void;
-    private rotateProxy;
-    private toMap;
-    protected client: AxiosInstance;
+/**
+ * Holds the active proxy settings. The HTTP client reads from it on every
+ * request, so changing or rotating the proxy never adds interceptors.
+ */
+export declare class ProxyRouter {
+    private urls;
+    private timer?;
+    key?: string;
+    encodeUrl: boolean;
+    set(config?: ProxyConfig): void;
+    /** Stops proxy rotation, if it is running. */
+    stop(): void;
+    /** The proxy URL requests currently go through, if any. */
+    get current(): string | undefined;
 }
-export default Proxy;
+/**
+ * Creates the axios instance a provider uses for every request. It applies the
+ * proxy from `proxy`, sets a default timeout, and turns failed requests into
+ * `ProviderError`s tagged with the provider's name.
+ */
+export declare const createHttpClient: (providerName: () => string, proxy: ProxyRouter) => AxiosInstance;

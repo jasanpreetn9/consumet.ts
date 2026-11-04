@@ -1,7 +1,9 @@
-import BaseParser from '../base-parser';
+import BaseProvider from '../provider';
 import { IAnimeInfo, ISource, IEpisodeServer } from '../types';
 
-abstract class AnimeParser extends BaseParser {
+abstract class AnimeParser extends BaseProvider {
+  protected readonly category = 'ANIME';
+
   /**
    * if the provider has dub and it's avialable seperatly from sub set this to `true`
    */

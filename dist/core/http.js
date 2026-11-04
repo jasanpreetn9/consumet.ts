@@ -3,81 +3,87 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Proxy = void 0;
+exports.createHttpClient = exports.ProxyRouter = void 0;
 const axios_1 = __importDefault(require("axios"));
-class Proxy {
-    /**
-     *
-     * @param proxyConfig The proxy config (optional)
-     * @param adapter The axios adapter (optional)
-     */
-    constructor(proxyConfig, adapter) {
-        this.proxyConfig = proxyConfig;
-        this.adapter = adapter;
-        this.validUrl = /^https?:\/\/.+/;
-        this.rotateProxy = (proxy) => {
-            var _a;
-            setInterval(() => {
-                const url = proxy.urls.shift();
-                if (url)
-                    proxy.urls.push(url);
-                this.setProxy({ url: proxy.urls[0], key: proxy.key });
-            }, (_a = proxy === null || proxy === void 0 ? void 0 : proxy.rotateInterval) !== null && _a !== void 0 ? _a : 5000);
-        };
-        this.toMap = (arr) => arr.map((v, i) => [i, v]);
-        this.client = axios_1.default.create();
-        if (proxyConfig)
-            this.setProxy(proxyConfig);
-        if (adapter)
-            this.setAxiosAdapter(adapter);
-    }
-    /**
-     * Set or Change the proxy config
-     */
-    setProxy(proxyConfig) {
-        if (!(proxyConfig === null || proxyConfig === void 0 ? void 0 : proxyConfig.url))
-            return;
-        if (typeof (proxyConfig === null || proxyConfig === void 0 ? void 0 : proxyConfig.url) === 'string')
-            if (!this.validUrl.test(proxyConfig.url))
-                throw new Error('Proxy URL is invalid!');
-        if (Array.isArray(proxyConfig === null || proxyConfig === void 0 ? void 0 : proxyConfig.url)) {
-            for (const [i, url] of this.toMap(proxyConfig.url))
-                if (!this.validUrl.test(url))
-                    throw new Error(`Proxy URL at index ${i} is invalid!`);
-            this.rotateProxy({ ...proxyConfig, urls: proxyConfig.url });
-            return;
-        }
-        this.client.interceptors.request.use(config => {
-            var _a, _b;
-            if (proxyConfig === null || proxyConfig === void 0 ? void 0 : proxyConfig.url) {
-                config.headers.set('x-api-key', (_a = proxyConfig === null || proxyConfig === void 0 ? void 0 : proxyConfig.key) !== null && _a !== void 0 ? _a : '');
-                const targetUrl = (config === null || config === void 0 ? void 0 : config.url) ? config.url : '';
-                config.url = proxyConfig.encodeUrl
-                    ? `${proxyConfig.url}${encodeURIComponent(targetUrl)}`
-                    : `${proxyConfig.url}${targetUrl}`;
-            }
-            if ((_b = config === null || config === void 0 ? void 0 : config.url) === null || _b === void 0 ? void 0 : _b.includes('anify'))
-                config.headers.set('User-Agent', 'consumet');
-            return config;
+const errors_1 = require("./errors");
+const VALID_URL = /^https?:\/\/.+/;
+const DEFAULT_TIMEOUT_MS = 20_000;
+const DEFAULT_ROTATE_INTERVAL_MS = 5_000;
+/**
+ * Holds the active proxy settings. The HTTP client reads from it on every
+ * request, so changing or rotating the proxy never adds interceptors.
+ */
+class ProxyRouter {
+    urls = [];
+    timer;
+    key;
+    encodeUrl = false;
+    set(config) {
+        this.stop();
+        const urls = config?.url ? [].concat(config.url) : [];
+        urls.forEach((url, i) => {
+            if (!VALID_URL.test(url))
+                throw new Error(urls.length > 1 ? `Proxy URL at index ${i} is invalid!` : 'Proxy URL is invalid!');
         });
-        // For CORS proxies that wrap the response in { contents: "..." },
-        // unwrap it automatically so consumers get the actual content.
-        if (proxyConfig.encodeUrl) {
-            this.client.interceptors.response.use(response => {
-                if (response.data && typeof response.data === 'object' && 'contents' in response.data) {
-                    response.data = response.data.contents;
-                }
-                return response;
-            });
+        this.urls = urls;
+        this.key = config?.key;
+        this.encodeUrl = Boolean(config?.encodeUrl);
+        if (urls.length > 1) {
+            this.timer = setInterval(() => this.urls.push(this.urls.shift()), config?.rotateInterval ?? DEFAULT_ROTATE_INTERVAL_MS);
+            // Don't keep the Node process alive just to rotate proxies.
+            this.timer.unref?.();
         }
     }
-    /**
-     * Set or Change the axios adapter
-     */
-    setAxiosAdapter(adapter) {
-        this.client.defaults.adapter = adapter;
+    /** Stops proxy rotation, if it is running. */
+    stop() {
+        if (this.timer)
+            clearInterval(this.timer);
+        this.timer = undefined;
+    }
+    /** The proxy URL requests currently go through, if any. */
+    get current() {
+        return this.urls[0];
     }
 }
-exports.Proxy = Proxy;
-exports.default = Proxy;
+exports.ProxyRouter = ProxyRouter;
+/**
+ * Creates the axios instance a provider uses for every request. It applies the
+ * proxy from `proxy`, sets a default timeout, and turns failed requests into
+ * `ProviderError`s tagged with the provider's name.
+ */
+const createHttpClient = (providerName, proxy) => {
+    const client = axios_1.default.create({ timeout: DEFAULT_TIMEOUT_MS });
+    client.interceptors.request.use(config => {
+        const proxyUrl = proxy.current;
+        if (!proxyUrl)
+            return config;
+        // Resolve baseURL + url + params into one absolute URL before wrapping it.
+        const target = client.getUri(config);
+        config.url = proxy.encodeUrl ? `${proxyUrl}${encodeURIComponent(target)}` : `${proxyUrl}${target}`;
+        config.baseURL = undefined;
+        config.params = undefined;
+        config.headers.set('x-api-key', proxy.key ?? '');
+        return config;
+    });
+    client.interceptors.response.use(response => {
+        // CORS proxies like allorigins wrap the body as { contents: "..." }.
+        if (proxy.current &&
+            proxy.encodeUrl &&
+            response.data &&
+            typeof response.data === 'object' &&
+            'contents' in response.data) {
+            response.data = response.data.contents;
+        }
+        return response;
+    }, error => {
+        if (!axios_1.default.isAxiosError(error))
+            throw error;
+        const status = error.response?.status;
+        const url = error.config ? client.getUri(error.config) : undefined;
+        const method = error.config?.method?.toUpperCase() ?? 'GET';
+        throw new errors_1.ProviderError(`[${providerName()}] ${error.message} (${method} ${url ?? 'unknown URL'})`, providerName(), url, status, { cause: error });
+    });
+    return client;
+};
+exports.createHttpClient = createHttpClient;
 //# sourceMappingURL=http.js.map
