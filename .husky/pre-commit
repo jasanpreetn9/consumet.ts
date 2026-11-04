@@ -1,2 +1,2 @@
-
-yarn lint && yarn build && git add .
+# Format and build, then re-stage only the files that were already staged.
+yarn lint && yarn build && git update-index --again

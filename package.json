@@ -9,16 +9,13 @@
   },
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "prepublishOnly": "yarn build",
     "version": "auto-changelog -p && git add CHANGELOG.md",
     "lint": "prettier --write \"src/**/*.ts\" \"jest.config.ts\"",
     "prepare": "husky || true",
     "test": "jest",
     "test:manga": "jest src/providers/manga"
   },
-  "pre-commit": [
-    "lint",
-    "build"
-  ],
   "files": [
     "dist"
   ],
@@ -51,9 +48,7 @@
   "dependencies": {
     "ascii-url-encoder": "^1.2.0",
     "axios": "^1.21.0",
-    "cheerio": "^1.2.0",
-    "husky": "^9.1.7",
-    "yarn": "^1.22.22"
+    "cheerio": "^1.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.4",
@@ -63,15 +58,16 @@
     "@types/ws": "^8.18.2",
     "auto-changelog": "^2.7.0",
     "cloudscraper": "^4.6.0",
+    "husky": "^9.1.7",
     "is-ci": "^4.1.0",
     "jest": "^30.5.2",
-    "pre-commit": "^2.0.0",
     "prettier": "^3.9.10",
     "request": "^2.88.2",
     "rimraf": "^6.1.4",
     "ts-jest": "^29.4.15",
     "ts-node": "^10.9.2",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "yarn": "^1.22.22"
   },
   "auto-changelog": {
     "template": "keepachangelog",
