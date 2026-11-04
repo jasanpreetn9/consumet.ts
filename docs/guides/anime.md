@@ -9,7 +9,7 @@ By using `ANIME` category you can interact with the anime providers. And get acc
 import { ANIME } from '@consumet/extensions';
 
 // <providerName> is the name of the provider you want to use. list of the proivders is below.
-const animeProvider = ANIME.<providerName>();
+const animeProvider = new ANIME.<providerName>();
 ```
 
 ## Common Methods
@@ -34,7 +34,9 @@ const animeProvider = ANIME.<providerName>();
 ## Anime Providers List
 This list is in alphabetical order. (except the sub bullet points)
 
-> **Note:** There are currently no working anime providers. The previous ones were removed because their sites are unreachable, blocked, or have changed. See [status](../status.md) for details.
+- [ReAnime](../../src/providers/anime/reanime/README.md)
+
+> Earlier anime providers were removed because their sites are unreachable, blocked, or have changed. See [status](../status.md) for details.
 
 
 <p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs">back to table of contents</a>)</p>

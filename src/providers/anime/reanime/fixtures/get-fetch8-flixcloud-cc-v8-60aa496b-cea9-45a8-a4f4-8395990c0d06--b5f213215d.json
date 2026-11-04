@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "https://fetch8.flixcloud.cc/_v8/60aa496b-cea9-45a8-a4f4-8395990c0d06/master.m3u8?token=REDACTED_JWT",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/vnd.apple.mpegurl"
+  },
+  "data": "IuyjnOO8cjmCNDKG51QdURyw2k9yD4hKJTDimFGG8uJM7L+B77VzavE0V5OfSHlIdaXbSWgRnzBrLoWhcM/DoCOFt4ngyHJy5jRX8KB8XiV1rMhLeHyQN05nzrZgiYaLRO+6neLbGmrkIkaTn1h/VByuzEVpfOs8fD/ykkyWiOEvhq+6+rhVAMchDr2eekduIIHqXHoV/z9EWNW6Rsz5ukvZn4v3oEZGxRgF/aRtRG4vh6drDjSKWyUw4phRhvLiTOy/ge+1c2rxNFeTn0h5SHWl20loEZ8way6FoXDPw6AjhbeJ4MhycuY0V/CvYlcldazIS3h8kDxBdMupdsOI40XsvYn7w3MO7z5Gk59Yf1QcrsxFaXzrPHw/8pJMlojhL4avuvq4VQDHIQ69nnpHbiCB6lx6Ff8/RFjVukbM+bpL2Z+L96BGRsUYBf2vYldrMJHhKFByx0ENGYSFXf+Hlyz6r5rrzmoe6D8s6IhNfkMOq81SdXyHSBcni5JA+OWDVP2yh+CyFgqTQRLj+jQAKxi3zU9yfJAYWnfOryeH6YBF7Libk61GRcJAROT+PAA2P87kdgkgnE0fPZXiD4WE4FXbr//cvEFjxR4+pL1lSWQ6uM5ScAfZMl1p5KdW3uC/Zeqi59jmQ1bOXwfhvzQ6JBy63StlbOEtfVbmjSji5Ik767qG6thud/U5V+P6PgQrC6faSXEU5jBgXZr4MJ/S+zmZ14n7y258nFMLp65lXyV1ocZCeALhRA1y0aM0hZz7MZnKroLiVwfAX17i5D4SDXfMplJPFYULHHX3pGr/3Lho0Jir9MhzfucaIaCwT1dULKj5Yn4YnQ9Gd8KvKJ+S/3GHlvvbty0="
+}
