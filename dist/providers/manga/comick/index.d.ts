@@ -5,7 +5,7 @@ declare class ComicK extends MangaParser {
     protected logo: string;
     private readonly apiUrl;
     referer: string;
-    private _axios;
+    private get requestOptions();
     /**
      * @description Fetches info about the manga
      * @param mangaId Comic slug
