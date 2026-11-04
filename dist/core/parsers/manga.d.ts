@@ -1,6 +1,7 @@
-import BaseParser from '../base-parser';
+import BaseProvider from '../provider';
 import { IMangaInfo, IMangaChapterPage } from '../types';
-declare abstract class MangaParser extends BaseParser {
+declare abstract class MangaParser extends BaseProvider {
+    protected readonly category = "MANGA";
     /**
      * takes manga id
      *

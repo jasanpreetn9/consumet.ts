@@ -3,7 +3,6 @@ declare class WeebCentral extends MangaParser {
     readonly name = "WeebCentral";
     protected baseUrl: string;
     protected logo: string;
-    protected classPath: string;
     private headers;
     search: (query: string, page?: number) => Promise<ISearch<IMangaResult>>;
     fetchMangaInfo: (mangaId: string) => Promise<IMangaInfo>;

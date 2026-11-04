@@ -3,7 +3,6 @@ declare class ComicK extends MangaParser {
     readonly name = "ComicK";
     protected baseUrl: string;
     protected logo: string;
-    protected classPath: string;
     private readonly apiUrl;
     referer: string;
     private _axios;

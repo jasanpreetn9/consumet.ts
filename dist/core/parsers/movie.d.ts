@@ -1,6 +1,7 @@
-import BaseParser from '../base-parser';
+import BaseProvider from '../provider';
 import { TvType, ISource, IEpisodeServer, IMovieInfo, IAnimeInfo } from '../types';
-declare abstract class MovieParser extends BaseParser {
+declare abstract class MovieParser extends BaseProvider {
+    protected readonly category = "MOVIES";
     /**
      * The supported types of the provider (e.g. `TV`, `Movie`)
      */

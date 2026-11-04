@@ -1,35 +1,50 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const http_1 = __importDefault(require("./http"));
-class BaseProvider extends http_1.default {
-    constructor() {
-        super(...arguments);
-        /**
-         * Most providers are english based, but if the provider is not english based override this value.
-         * must be in [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format
-         */
-        this.languages = 'en';
-        /**
-         * override as `true` if the provider **only** supports NSFW content
-         */
-        this.isNSFW = false;
-        /**
-         * Logo of the provider (used in the website) or `undefined` if not available. ***128x128px is preferred***\
-         * Must be a valid URL (not a data URL)
-         */
-        this.logo = 'https://png.pngtree.com/png-vector/20210221/ourmid/pngtree-error-404-not-found-neon-effect-png-image_2928214.jpg';
-        /**
-         * override as `false` if the provider is **down** or **not working**
-         */
-        this.isWorking = true;
-    }
+const http_1 = require("./http");
+/**
+ * Base class for every provider. Category parsers (`MangaParser`, ...) extend
+ * it, and providers extend those, so a provider never needs to touch this file.
+ */
+class BaseProvider {
     /**
-     * returns provider stats
+     * Languages the provider serves, in
+     * [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format.
      */
-    get toString() {
+    languages = 'en';
+    /** Set to `true` if the provider **only** serves NSFW content. */
+    isNSFW = false;
+    /** Logo URL (128x128px preferred), if the provider has one. */
+    logo;
+    /** Set to `false` if the provider is down or not working. */
+    isWorking = true;
+    /** HTTP client for all requests. Applies the proxy, a timeout, and error tagging. */
+    client;
+    proxy = new http_1.ProxyRouter();
+    /**
+     * @param proxyConfig Proxy to send requests through (optional)
+     * @param adapter Custom axios adapter, e.g. for fixtures in tests (optional)
+     */
+    constructor(proxyConfig, adapter) {
+        this.client = (0, http_1.createHttpClient)(() => this.name, this.proxy);
+        if (proxyConfig)
+            this.setProxy(proxyConfig);
+        if (adapter)
+            this.setAxiosAdapter(adapter);
+    }
+    /** Set or change the proxy. Pass an array of URLs to rotate between them. */
+    setProxy(proxyConfig) {
+        this.proxy.set(proxyConfig);
+    }
+    /** Set or change the axios adapter. */
+    setAxiosAdapter(adapter) {
+        this.client.defaults.adapter = adapter;
+    }
+    /** Where the provider lives in the public API, e.g. `MANGA.MangaDex`. */
+    get classPath() {
+        return `${this.category}.${this.constructor.name}`;
+    }
+    /** Provider metadata. */
+    get stats() {
         return {
             name: this.name,
             baseUrl: this.baseUrl,
@@ -39,6 +54,10 @@ class BaseProvider extends http_1.default {
             classPath: this.classPath,
             isWorking: this.isWorking,
         };
+    }
+    /** @deprecated Use `stats` instead. */
+    get toString() {
+        return this.stats;
     }
 }
 exports.default = BaseProvider;

@@ -1,1 +1,1 @@
-{"version":3,"file":"manga.js","sourceRoot":"","sources":["../../../src/core/parsers/manga.ts"],"names":[],"mappings":";;;;;AAAA,iEAAwC;AAGxC,MAAe,WAAY,SAAQ,qBAAU;CAc5C;AAED,kBAAe,WAAW,CAAC"}
+{"version":3,"file":"manga.js","sourceRoot":"","sources":["../../../src/core/parsers/manga.ts"],"names":[],"mappings":";;;;;AAAA,2DAAuC;AAGvC,MAAe,WAAY,SAAQ,kBAAY;IAC1B,QAAQ,GAAG,OAAO,CAAC;CAevC;AAED,kBAAe,WAAW,CAAC"}
