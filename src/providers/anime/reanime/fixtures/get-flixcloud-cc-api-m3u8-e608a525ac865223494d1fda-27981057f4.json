@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "https://flixcloud.cc/api/m3u8/e608a525ac865223494d1fda",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "data": "{\"38eb7b0c98\":\"vptea2vkcpj/ihFMiAxAQ/xBnjsL3NA/jlu1rpjGNXHou2XTD3qldJ/TwdHXwvtaKOlzz1Hs67grINh4OPi6NhmKJVWkihAcgV51u+TJZXzk6M/6Dm8eg/T4UqwzMpEftBX5mjz1KqpXOi0NHxssEb0YZ+TeMmq2vfaXo4uhg5WpkOvMyDJpD1y8RJ3wSWqEPkz4RyT/vFgGqOUlaeNIsfYO2SeseSxiCzD0x71DWDJiZp5JIOsmlpvdM+N1gux2IzI2JTp58XNAw6gs5gtv02vcXZs32vmDu4+sDLKmHJb5sx0tE6F/mVOKztI1RqnPuaw4bjCY5fb3gTm6qNcgD332hZvOMW5BIztvEY6zksHq8q/luHCkdAfq+ghTWVP0an6u8Mkoki7HzSfevtqn+KpvtEtGrJcYB5Y2IjUDeUiOvdKEORfymU+G/N+mulOsFS5vydrQL9ozpqJwpxhFApBsgtkmb3iPiaNGhEvaZ60=\",\"0094dd08ac\":\"ldEFZnBFvqN+DZmTqqDOTOhNkP/YEHnjXXMkZ6SSk84=\",\"j1uk5x5ufkj\":\"0.tvoysnfvcgo\",\"jv39n477ue\":\"1793815908760\",\"ltkf8k19qep\":\"6l2ul86qiy8\",\"metadata\":{\"timestamp\":1793815908760,\"version\":\"2.1\"}}"
+}
