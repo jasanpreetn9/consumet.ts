@@ -3,11 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WatchListType = exports.MediaFormat = exports.Topics = exports.Genres = exports.MovieParser = exports.TvType = exports.MangaParser = exports.SubOrSub = exports.MediaStatus = exports.StreamingServers = exports.AnimeParser = exports.BaseParser = exports.BaseProvider = void 0;
+exports.WatchListType = exports.MediaFormat = exports.Topics = exports.Genres = exports.MovieParser = exports.TvType = exports.MangaParser = exports.SubOrSub = exports.MediaStatus = exports.StreamingServers = exports.AnimeParser = exports.BaseProvider = void 0;
 const provider_1 = __importDefault(require("./provider"));
 exports.BaseProvider = provider_1.default;
-const base_parser_1 = __importDefault(require("./base-parser"));
-exports.BaseParser = base_parser_1.default;
 const anime_1 = __importDefault(require("./parsers/anime"));
 exports.AnimeParser = anime_1.default;
 const manga_1 = __importDefault(require("./parsers/manga"));

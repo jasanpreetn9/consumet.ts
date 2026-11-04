@@ -15,7 +15,6 @@ class MangaDex extends MangaParser {
   override readonly name = 'MangaDex';
   protected override baseUrl = 'https://mangadex.org';
   protected override logo = 'https://pbs.twimg.com/profile_images/1391016345714757632/xbt_jW78_400x400.jpg';
-  protected override classPath = 'MANGA.MangaDex';
 
   private readonly apiUrl = 'https://api.mangadex.org';
 

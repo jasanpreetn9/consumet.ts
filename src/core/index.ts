@@ -1,5 +1,4 @@
 import BaseProvider from './provider';
-import BaseParser from './base-parser';
 import AnimeParser from './parsers/anime';
 import MangaParser from './parsers/manga';
 import MovieParser from './parsers/movie';
@@ -39,7 +38,6 @@ import {
 export {
   BaseProvider,
   IProviderStats,
-  BaseParser,
   AnimeParser,
   IAnimeEpisode,
   IAnimeInfo,

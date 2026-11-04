@@ -6,7 +6,6 @@ declare class MangaHere extends MangaParser {
     readonly name = "MangaHere";
     protected baseUrl: string;
     protected logo: string;
-    protected classPath: string;
     fetchMangaInfo: (mangaId: string) => Promise<IMangaInfo>;
     fetchChapterPages: (chapterId: string) => Promise<IMangaChapterPage[]>;
     search: (query: string, page?: number) => Promise<ISearch<IMangaResult>>;

@@ -3,7 +3,7 @@ export interface IProviderStats {
   baseUrl: string;
   lang: string[] | string;
   isNSFW: boolean;
-  logo: string;
+  logo?: string;
   classPath: string;
   isWorking: boolean;
 }

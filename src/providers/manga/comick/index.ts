@@ -13,7 +13,6 @@ class ComicK extends MangaParser {
   override readonly name = 'ComicK';
   protected override baseUrl = 'https://comick.art';
   protected override logo = 'https://th.bing.com/th/id/OIP.fw4WrmAoA2PmKitiyMzUIgAAAA?pid=ImgDet&rs=1';
-  protected override classPath = 'MANGA.ComicK';
 
   private readonly apiUrl = 'https://comick.art/api';
   public referer = 'https://comick.art';

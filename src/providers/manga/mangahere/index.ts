@@ -18,7 +18,6 @@ class MangaHere extends MangaParser {
   override readonly name = 'MangaHere';
   protected override baseUrl = 'https://mangahere.cc';
   protected override logo = 'https://i.pinimg.com/564x/51/08/62/51086247ed16ff8abae2df0bb06448e4.jpg';
-  protected override classPath = 'MANGA.MangaHere';
 
   override fetchMangaInfo = async (mangaId: string): Promise<IMangaInfo> => {
     const mangaInfo: IMangaInfo = {

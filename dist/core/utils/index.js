@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.safeUnpack = exports.substringBefore = exports.capitalizeFirstLetter = void 0;
-const capitalizeFirstLetter = (s) => (s === null || s === void 0 ? void 0 : s.charAt(0).toUpperCase()) + s.slice(1);
+const capitalizeFirstLetter = (s) => s?.charAt(0).toUpperCase() + s.slice(1);
 exports.capitalizeFirstLetter = capitalizeFirstLetter;
 const substringBefore = (str, toFind) => {
     const index = str.indexOf(toFind);

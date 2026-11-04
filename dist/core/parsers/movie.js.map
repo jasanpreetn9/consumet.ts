@@ -1,1 +1,1 @@
-{"version":3,"file":"movie.js","sourceRoot":"","sources":["../../../src/core/parsers/movie.ts"],"names":[],"mappings":";;;;;AAAA,iEAAwC;AAGxC,MAAe,WAAY,SAAQ,qBAAU;CA0B5C;AAED,kBAAe,WAAW,CAAC"}
+{"version":3,"file":"movie.js","sourceRoot":"","sources":["../../../src/core/parsers/movie.ts"],"names":[],"mappings":";;;;;AAAA,2DAAuC;AAGvC,MAAe,WAAY,SAAQ,kBAAY;IAC1B,QAAQ,GAAG,QAAQ,CAAC;CA2BxC;AAED,kBAAe,WAAW,CAAC"}

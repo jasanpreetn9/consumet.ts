@@ -13,7 +13,6 @@ class WeebCentral extends MangaParser {
   override readonly name = 'WeebCentral';
   protected override baseUrl = 'https://weebcentral.com';
   protected override logo = 'https://weebcentral.com/static/images/brand.png';
-  protected override classPath = 'MANGA.WeebCentral';
 
   private headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0',

@@ -3,7 +3,6 @@ declare class MangaDex extends MangaParser {
     readonly name = "MangaDex";
     protected baseUrl: string;
     protected logo: string;
-    protected classPath: string;
     private readonly apiUrl;
     fetchMangaInfo: (mangaId: string) => Promise<IMangaInfo>;
     /**
