@@ -196,9 +196,7 @@ Feel free to propose additions to the abstract classes if you believe they would
 ### Provider Examples
 
 For reference, check existing providers:
-- Anime: `src/providers/anime/hianime.ts`
 - Manga: `src/providers/manga/mangadex.ts`
-- Light Novels: `src/providers/light-novels/novelupdates.ts`
 
 
 ## Updating the Codebase

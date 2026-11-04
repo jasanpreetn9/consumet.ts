@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/providers/anime/index.ts"],"names":[],"mappings":";AAAA,uCAAuC;AACvC,mCAAmC;AACnC,2CAA2C;AAC3C,qCAAqC;AACrC,6CAA6C;AAC7C,yCAAyC;AACzC,uCAAuC;;AAEvC,kBAAe;AACb,WAAW;AACX,aAAa;AACb,YAAY;AACZ,gBAAgB;AAChB,eAAe;AACf,cAAc;AACd,aAAa;CACd,CAAC"}
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/providers/anime/index.ts"],"names":[],"mappings":";;AAAA,kBAAe,EAAE,CAAC"}

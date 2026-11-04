@@ -32,15 +32,10 @@ const mangaProvider = MANGA.<providerName>();
 ## Manga Providers List
 This list is in alphabetical order. (except the sub bullet points)
 
-> **Note:** Providers marked *(disabled)* are currently turned off because their sites are unreachable, blocked, or have changed. See [STATUS.md](../../STATUS.md) for details.
-
 - [WeebCentral](../providers/weebcentral.md)
 - [Mangapill](../providers/mangapill.md)
 - [MangaHere](../providers/mangahere.md)
 - [MangaDex](../providers/mangadex.md)
-- [MangaKakalot](../providers/mangakakalot.md)
-- [MangaReader](../providers/mangareader.md) *(disabled)*
-- [AsuraScans](../providers/asurascans.md) *(disabled)*
 - [ComicK](../providers/comick.md)
 
 

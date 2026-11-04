@@ -1,7 +1,6 @@
 import BaseProvider from './base-provider';
 import BaseParser from './base-parser';
 import AnimeParser from './anime-parser';
-import VideoExtractor from './video-extractor';
 import MangaParser from './manga-parser';
 import MovieParser from './movie-parser';
 import {
@@ -47,7 +46,6 @@ export {
   IAnimeResult,
   IEpisodeServer,
   IVideo,
-  VideoExtractor,
   StreamingServers,
   MediaStatus,
   SubOrSub,

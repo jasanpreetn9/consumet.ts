@@ -34,12 +34,7 @@ const animeProvider = ANIME.<providerName>();
 ## Anime Providers List
 This list is in alphabetical order. (except the sub bullet points)
 
-> **Note:** Providers marked *(disabled)* are currently turned off because their sites are unreachable, blocked, or have changed. See [STATUS.md](../../STATUS.md) for details.
+> **Note:** There are currently no working anime providers. The previous ones were removed because their sites are unreachable, blocked, or have changed. See [STATUS.md](../../STATUS.md) for details.
 
-- [Hianime](../providers/hianime.md) *(disabled)*
-- [AnimePahe](../providers/animepahe.md) *(disabled)*
-- [Animekai](../providers/animekai.md) *(disabled)*
-- [Kickassanime](../providers/kickassanime.md) *(disabled)*
-- [AnimeSaturn](../providers/animesaturn.md) *(disabled)*
 
 <p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs">back to table of contents</a>)</p>
