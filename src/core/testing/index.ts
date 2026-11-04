@@ -79,6 +79,16 @@ const fixtureName = (method: string, url: string, body: unknown): string => {
   return `${method.toLowerCase()}-${slug}-${hash}.json`;
 };
 
+// JSON Web Tokens, e.g. signed stream URLs. They can embed the recorder's IP
+// address, and fixtures are committed to a public repo.
+const JWT = /eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]*/g;
+
+/**
+ * Replaces tokens before a fixture is written. Lookups use the file name,
+ * which is a hash of the real URL, so replay still finds redacted fixtures.
+ */
+export const redactFixture = (text: string): string => text.replace(JWT, 'REDACTED_JWT');
+
 const save = (file: string, method: string, url: string, response: AxiosResponse): void => {
   mkdirSync(join(file, '..'), { recursive: true });
   const contentType = response.headers?.['content-type'];
@@ -90,5 +100,5 @@ const save = (file: string, method: string, url: string, response: AxiosResponse
     headers: contentType ? { 'content-type': String(contentType) } : {},
     data: response.data,
   };
-  writeFileSync(file, JSON.stringify(fixture, null, 2) + '\n');
+  writeFileSync(file, redactFixture(JSON.stringify(fixture, null, 2)) + '\n');
 };
