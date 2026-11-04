@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "https://api.mangadex.org/cover/2d39ed00-fc08-4275-bdc9-c3bbdb0d16ce",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "data": "{\"result\":\"ok\",\"response\":\"entity\",\"data\":{\"id\":\"2d39ed00-fc08-4275-bdc9-c3bbdb0d16ce\",\"type\":\"cover_art\",\"attributes\":{\"description\":\"Bookwalker\",\"volume\":\"6\",\"fileName\":\"4d34538d-e76b-44db-ba7e-f7e7d13c9ade.jpg\",\"locale\":\"ja\",\"createdAt\":\"2026-07-26T11:20:47+00:00\",\"updatedAt\":\"2026-07-26T11:20:47+00:00\",\"version\":1},\"relationships\":[{\"id\":\"878634d2-ea39-4001-a4bf-31458020d16a\",\"type\":\"manga\"},{\"id\":\"0218ac4d-c69e-4670-8ea0-3bb161a3ef8d\",\"type\":\"user\"}]}}"
+}

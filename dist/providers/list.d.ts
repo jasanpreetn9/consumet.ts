@@ -1,5 +1,10 @@
+import { AnimeParser, MangaParser, MovieParser } from '../core';
+/**
+ * One instance of every provider, by category. Built on first access so
+ * importing the package doesn't construct every provider up front.
+ */
 export declare const PROVIDERS_LIST: {
-    ANIME: never[];
-    MANGA: (import("./manga/mangadex").default | import("./manga/comick").default | import("./manga/mangahere").default | import("./manga/mangapill").default | import("./manga/weebcentral").default)[];
-    MOVIES: never[];
+    readonly ANIME: AnimeParser[];
+    readonly MANGA: MangaParser[];
+    readonly MOVIES: MovieParser[];
 };

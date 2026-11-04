@@ -4,7 +4,7 @@ Thank you for your interest in contributing to consumet.ts! This guide will help
 
 If you have any questions or suggestions, please open an [issue](https://github.com/jasanpreetn9/consumet.ts/issues/new?assignees=&labels=Bug&template=bug-report.yml) or join our [Discord server](https://discord.gg/qTPfvMxzNH).
 
-For additional details, see our [informal contributing guide](./docs/guides/contributing.md).
+No contribution is too small: typo fixes, docs, bug fixes and new providers are all welcome. For a small change (a typo, a fix, a new provider), open a pull request. For a big one, like a refactor, open an issue first so others can weigh in before you start.
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@ For additional details, see our [informal contributing guide](./docs/guides/cont
   - [Running the Project](#running-the-project)
 - [Project Structure](#project-structure)
 - [Writing a Provider](#writing-a-provider)
-  - [Setting up the Provider](#setting-up-the-provider)
+  - [Adding a Provider](#adding-a-provider)
   - [Provider Examples](#provider-examples)
 - [Updating the Codebase](#updating-the-codebase)
   - [Updating Documentation](#updating-documentation)
@@ -59,151 +59,96 @@ git checkout -b <new-branch-name>
 
 ### Installing Dependencies
 
-Install the required dependencies using npm:
+Install the required dependencies using yarn:
 
 ```sh
-npm install
+yarn install
 ```
 
 ### Running the Project
 
 Build the project:
 ```sh
-npm run build
+yarn build
 ```
 
 Run tests:
 ```sh
-npm test
-```
-
-For development with auto-rebuild:
-```sh
-npm run dev
+yarn test
 ```
 
 ## Project Structure
 
-Understanding the project structure will help you navigate and contribute more effectively.
-
-**Key terminology:**
-- **`<category>`** - The category of the provider (e.g., `anime`, `manga`, `book`, `movie`)
-- **`<provider-name>`** - The name of the provider in camelCase (e.g., `gogoanime`, `libgen`, `anilist`)
+The code is split into the **framework** (`src/core/`) and the **providers** (`src/providers/`). If you're adding or fixing a provider, you only need to work in `src/providers/`.
 
 ```sh
-> tree
-docs/
-├── guides/
-|   ├── ...
-|   ├── anime.md
-|   ├── getting-started.md
-│   └── contributing.md (informal guide)
-├── providers/
-│   └── <provider-name>.md (provider documentation)
-├── README.md
 src/
-├── index.ts
-|── models
-├── providers
-│   ├── <category>
-│   │   ├── index.ts
-│   │   └── <provider-name>.ts
-│   └── <category>
-└── utils
+├── index.ts                  # public API
+├── core/                     # framework: base classes, HTTP client, types
+│   ├── index.ts              # everything a provider imports comes from here
+│   ├── provider.ts           # BaseProvider
+│   ├── http.ts               # shared HTTP client (proxy, timeout, errors)
+│   ├── errors.ts             # ProviderError
+│   ├── parsers/              # MangaParser, AnimeParser, MovieParser
+│   ├── types/                # IMangaInfo, ISearch, ...
+│   ├── utils/
+│   └── testing/              # fixtureAdapter for tests (not published)
+└── providers/
+    ├── index.ts              # ANIME, MANGA, MOVIES
+    └── <category>/           # anime, manga, movies
+        ├── index.ts          # lists the category's providers
+        ├── _template/        # copy this to start a new provider
+        └── <provider-name>/  # lowercase, e.g. mangadex
+            ├── index.ts      # the provider class
+            ├── index.test.ts # its tests
+            ├── fixtures/     # saved responses its tests replay
+            └── README.md     # its docs
+docs/
+├── guides/                   # usage guides per category
+└── status.md                 # why removed providers were removed
 ```
 
 ## Writing a Provider
 
-Each provider is a class that extends an abstract parser class. For example, the `Libgen` provider extends the `BookParser` class, and `Gogoanime` extends `AnimeParser`.
+Each provider is a class that extends the parser for its category:
 
-The parser abstract classes can be found in the `src/models/` folder:
-```sh
-src/models/anime-parser.ts # AnimeParser
-src/models/book-parser.ts  # BookParser
-src/models/lightnovel-parser.ts  # LightNovelParser
-src/models/comic-parser.ts # ComicParser
-src/models/manga-parser.ts # MangaParser
-src/models/movie-parser.ts # MovieParser
-```
-Feel free to propose additions to the abstract classes if you believe they would be beneficial to other providers.
+| Category | Parser        | Methods to implement                                               |
+| -------- | ------------- | ------------------------------------------------------------------ |
+| Manga    | `MangaParser` | `search`, `fetchMangaInfo`, `fetchChapterPages`                    |
+| Anime    | `AnimeParser` | `search`, `fetchAnimeInfo`, `fetchEpisodeSources`, `fetchEpisodeServers` |
+| Movies   | `MovieParser` | `search`, `fetchMediaInfo`, `fetchEpisodeSources`, `fetchEpisodeServers` |
 
-<details>
-   <summary>
-   visualization of the abstract classes hierarchy
-   </summary>
+Import the parser and the types you need from `src/core` (`'../../../core'` from a provider folder). You shouldn't need to open anything in `src/core/`; if you think a parser is missing something other providers would also need, open an issue.
 
-   ```mermaid
-   classDiagram
-         Proxy <|-- BaseProvider
-         BaseProvider <|-- BaseParser
-         BaseProvider : +String name
-         BaseProvider : +String baseUrl
-         BaseProvider: +toString()
-         BaseParser <|-- AnimeParser
-         BaseParser <|-- BookParser
-         BaseParser <|-- MangaParser
-         BaseParser <|-- LightNovelParser
-         BaseParser <|-- ComicParser
-         BaseParser <|-- MovieParser
-         class Proxy{
-            ProxyConfig
-         }
-         class BaseParser{
-            +search(String query)
-         }
-         class AnimeParser{
-            +fetchAnimeInfo(String animeId)
-            +fetchEpisodeSources(String episodeId)
-            +fetchEpisodeServers(String episodeId)
-         }
-         class MovieParser{
-            +fetchMediaInfo(String mediaId)
-            +fetchEpisodeSources(String episodeId)
-            +fetchEpisodeServers(String episodeId)
-         }
-         class BookParser{
-            empty
-         }
-         class MangaParser{
-            +fetchMangaInfo(String mangaId)
-            +fetchChapterPages(String chapterId)
-         }
-         class ComicParser{
-            empty
-         }
-         class LightNovelParser{
-            +fetchLighNovelInfo(String lightNovelId)
-            +fetchChapterContent(String chapterId)
-         }
+A few rules that keep providers simple:
+
+- **Use `this.client` for every request.** It applies the user's proxy config, a 20 second timeout, and turns failed requests into a `ProviderError` with the provider name, URL and status.
+- **Don't wrap methods in `try/catch` just to rethrow.** Errors already carry the details. Only catch an error if you're going to handle it, for example by trying a fallback URL.
+- **Don't create your own axios instance.** Pass per-request headers instead: `this.client.get(url, { headers: { Referer: this.baseUrl } })`.
+
+### Adding a Provider
+
+1. **Copy the template.** Copy `src/providers/manga/_template/` to `src/providers/<category>/<provider-name>/`.
+2. **Write the provider** in `index.ts`: rename the class, set `name` and `baseUrl`, and implement the methods for its category.
+3. **Register it** with one line in `src/providers/<category>/index.ts`.
+4. **Write tests** in `index.test.ts`, then record fixtures against the live site:
+   ```sh
+   RECORD=1 yarn test src/providers/<category>/<provider-name>
    ```
-</details>
-
-
-### Setting up the Provider
-
-1. **Create the provider file**: Create a new file in `src/providers/<category>/<provider-name>.ts`
-
-2. **Import the abstract class**: Import the appropriate parser class from `src/models/<category>-parser.ts`. For example, if you're writing an anime provider, import `AnimeParser` from `src/models/anime-parser.ts`.
-
-3. **Implement the provider**: Extend the abstract class and implement all required methods:
-   - `search()` - Search for content
-   - Category-specific methods (e.g., `fetchAnimeInfo()`, `fetchEpisodeSources()` for anime)
-
-4. **Export the provider**: Add your provider to `src/providers/<category>/index.ts`
-
-5. **Document the provider**: Create documentation in `docs/providers/<provider-name>.md`
+   This saves every response into `fixtures/`. After that, `yarn test` replays them offline, so the tests don't break when the site is down.
+5. **Document it** in `README.md`, and add it to the list in `docs/guides/<category>.md`.
 
 ### Provider Examples
 
 For reference, check existing providers:
-- Manga: `src/providers/manga/mangadex.ts`
-
+- Manga (HTML scraping): `src/providers/manga/mangapill/`
+- Manga (JSON API): `src/providers/manga/mangadex/`
 
 ## Updating the Codebase
 
 ### Updating Documentation
 
-1. Make your changes to the relevant documentation files in `docs/`
+1. Make your changes to the relevant documentation files: `docs/` for guides, or the provider's own `README.md`
 2. Ensure all links and references are correct
 3. Follow the existing documentation style
 4. Test any code examples you include
@@ -212,9 +157,9 @@ For reference, check existing providers:
 ### Fixing a Provider
 
 1. Identify the issue (e.g., selector changes, API updates)
-2. Update the provider code in `src/providers/<category>/<provider-name>.ts`
-3. Test the provider to ensure it works correctly
-4. Update the provider's documentation if needed
+2. Update the provider code in `src/providers/<category>/<provider-name>/index.ts`
+3. Re-record its fixtures so the tests use the site's current responses: `RECORD=1 yarn test src/providers/<category>/<provider-name>`
+4. Update the provider's `README.md` if needed
 5. [Commit your changes](#commit-guidelines)
 
 ## Testing
@@ -222,17 +167,20 @@ For reference, check existing providers:
 Before submitting your changes, make sure to test them:
 
 ```sh
-# Run all tests
-npm test
+# Run all tests (replays saved fixtures, no network)
+yarn test
 
-# Run tests for a specific provider (if available)
-npm test -- <provider-name>
+# Run one provider's tests
+yarn test src/providers/manga/mangadex
 
-# Build the project to check for TypeScript errors
-npm run build
+# Re-record one provider's fixtures against the live site
+RECORD=1 yarn test src/providers/manga/mangadex
+
+# Type-check and build
+yarn build
 ```
 
-If you're adding a new provider, consider adding tests in the `test/` directory.
+Every provider should have an `index.test.ts` next to it, with fixtures recorded.
 
 ## Code Style
 
@@ -241,14 +189,15 @@ If you're adding a new provider, consider adding tests in the `test/` directory.
 - Add comments for complex logic
 - Maintain consistency with existing code
 - Use async/await for asynchronous operations
-- Handle errors appropriately
+- Let errors from `this.client` propagate instead of catching and rethrowing them
 
-The project uses ESLint and Prettier for code formatting. Run:
+The project uses Prettier for formatting. Run:
 
 ```sh
-npm run format  # Format code with Prettier
-npm run lint    # Check for linting issues
+yarn lint  # Format code with Prettier
 ```
+
+The pre-commit hook runs `yarn lint` and `yarn build` for you.
 
 ## Commit Guidelines
 
@@ -278,10 +227,10 @@ Each commit message should have a **type** and a **description**:
 ### Examples
 
 ```
-feat: add support for Crunchyroll provider
-fix: resolve search issue in Gogoanime
+feat: add MangaFire provider
+fix: resolve search issue in MangaPill
 docs: update contributing guidelines
-refactor: simplify episode fetching logic in Anilist
+refactor: simplify chapter fetching logic in MangaHere
 test: add tests for Mangadex provider
 chore: update dependencies
 ```

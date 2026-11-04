@@ -11,7 +11,8 @@ class MangaDex extends core_1.MangaParser {
         const { data } = await this.client.get(`${this.apiUrl}/manga/${mangaId}`);
         const mangaInfo = {
             id: data.data.id,
-            title: data.data.attributes.title.en,
+            // Some titles have no English key (e.g. Berserk is only `ja-ro`).
+            title: data.data.attributes.title.en ?? Object.values(data.data.attributes.title)[0],
             altTitles: data.data.attributes.altTitles,
             description: data.data.attributes.description,
             genres: data.data.attributes.tags
