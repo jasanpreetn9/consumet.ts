@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "https://api.mangadex.org/cover/f8e2f663-31a5-4c4b-86e6-d1e0514dfe19",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "data": "{\"result\":\"ok\",\"response\":\"entity\",\"data\":{\"id\":\"f8e2f663-31a5-4c4b-86e6-d1e0514dfe19\",\"type\":\"cover_art\",\"attributes\":{\"description\":\"Format: Digital\\nImprint: Magazine Pocket Comics \\nPublisher: Kodansha\\nYear: 2018\",\"volume\":\"20.1\",\"fileName\":\"5e4a4e0e-b2a6-4e7e-8e6e-169a8d26c7a8.jpg\",\"locale\":\"ja\",\"createdAt\":\"2024-07-30T12:41:50+00:00\",\"updatedAt\":\"2024-09-23T16:25:24+00:00\",\"version\":2},\"relationships\":[{\"id\":\"d86cf65b-5f6c-437d-a0af-19a31f94ec55\",\"type\":\"manga\"},{\"id\":\"f73d34f6-f678-4f8b-9dff-5c759d5fc767\",\"type\":\"user\"}]}}"
+}

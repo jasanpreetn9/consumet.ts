@@ -1,9 +1,9 @@
-import { MANGA } from '../..';
-import { MangaHereRankingType } from '.';
+import MangaHere from '.';
+import { fixtureAdapter } from '../../../core/testing';
 
 jest.setTimeout(120000);
 
-const mangahere = new MANGA.MangaHere();
+const mangahere = new MangaHere(undefined, fixtureAdapter(__dirname));
 
 test('returns a filled array of trending manga', async () => {
   const data = await mangahere.fetchMangaTrending();

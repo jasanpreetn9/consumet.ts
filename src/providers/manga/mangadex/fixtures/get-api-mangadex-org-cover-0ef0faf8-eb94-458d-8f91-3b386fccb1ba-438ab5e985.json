@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "https://api.mangadex.org/cover/0ef0faf8-eb94-458d-8f91-3b386fccb1ba",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "data": "{\"result\":\"ok\",\"response\":\"entity\",\"data\":{\"id\":\"0ef0faf8-eb94-458d-8f91-3b386fccb1ba\",\"type\":\"cover_art\",\"attributes\":{\"description\":\"Source: BookLive\",\"volume\":\"37\",\"fileName\":\"f8f44329-1dd7-4301-9ec7-a4a76182e8eb.jpg\",\"locale\":\"ja\",\"createdAt\":\"2025-03-14T14:43:59+00:00\",\"updatedAt\":\"2025-03-14T14:43:59+00:00\",\"version\":1},\"relationships\":[{\"id\":\"a96676e5-8ae2-425e-b549-7f15dd34a6d8\",\"type\":\"manga\"},{\"id\":\"29069e0a-5525-468c-a3d6-b138bf16afba\",\"type\":\"user\"}]}}"
+}

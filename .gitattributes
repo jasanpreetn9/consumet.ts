@@ -3,3 +3,6 @@
 
 # Require Unix line endings
 * text eol=lf
+
+# Recorded HTTP responses for tests: hide from diffs and language stats
+src/providers/**/fixtures/** linguist-generated=true -diff

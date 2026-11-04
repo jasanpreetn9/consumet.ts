@@ -6,4 +6,5 @@
 - [Manga](./guides/manga.md): How to use manga providers.
 - [Movie](./guides/movies.md): How to use movie providers.
 - [Benchmarks](https://github.com/consumet/providers-status#readme): Real-time benchmarking of providers.
-- [Contributing](./guides/contributing.md): Details about how to contribute to consumet.ts.
+- [Contributing](../CONTRIBUTING.md): How to contribute to consumet.ts.
+- [Status](./status.md): Why removed providers were removed.

@@ -34,7 +34,7 @@ const movieProvider = new MOVIES.<providerName>();
 ## Movies Providers List
 This list is in alphabetical order. (except the sub bullet points)
 
-> **Note:** There are currently no working movie providers. The previous ones were removed because their sites are unreachable, blocked, or have changed. See [STATUS.md](../../STATUS.md) for details.
+> **Note:** There are currently no working movie providers. The previous ones were removed because their sites are unreachable, blocked, or have changed. See [status](../status.md) for details.
 
 
 <p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs">back to table of contents</a>)</p>

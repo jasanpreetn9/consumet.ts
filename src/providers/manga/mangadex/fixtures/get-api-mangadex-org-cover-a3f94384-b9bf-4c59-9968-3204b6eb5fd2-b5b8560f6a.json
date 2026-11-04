@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "https://api.mangadex.org/cover/a3f94384-b9bf-4c59-9968-3204b6eb5fd2",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "data": "{\"result\":\"ok\",\"response\":\"entity\",\"data\":{\"id\":\"a3f94384-b9bf-4c59-9968-3204b6eb5fd2\",\"type\":\"cover_art\",\"attributes\":{\"description\":\"Volume 18 cover from BookLive\",\"volume\":\"18\",\"fileName\":\"6079dd31-838b-4d61-87c4-121f3ad19158.jpg\",\"locale\":\"ja\",\"createdAt\":\"2026-06-06T22:58:25+00:00\",\"updatedAt\":\"2026-06-06T22:58:25+00:00\",\"version\":1},\"relationships\":[{\"id\":\"77bee52c-d2d6-44ad-a33a-1734c1fe696a\",\"type\":\"manga\"},{\"id\":\"f56aa6ad-6e44-4018-8a3d-43aaa00bc383\",\"type\":\"user\"}]}}"
+}
