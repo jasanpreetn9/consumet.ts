@@ -1,19 +1,4 @@
 "use strict";
-// import DramaCool from './dramacool';
-// import FlixHQ from './flixhq';
-// import Goku from './goku';
-// import Turkish from './turkish123';
-// import SFlix from './sflix';
-// import HiMovies from './himovies';
-// import NetMirror from './netmirror';
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-// DramaCool,
-// FlixHQ,
-// Goku,
-// Turkish,
-// SFlix,
-// HiMovies,
-// NetMirror,
-};
+exports.default = {};
 //# sourceMappingURL=index.js.map

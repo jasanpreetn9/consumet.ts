@@ -3,6 +3,8 @@
 **Observed:** 2026-11-03
 **Scope:** Live Jest integration tests in `test/`
 
+> **Update:** Every provider below that did not pass has since been removed from the codebase, along with its tests, docs, and the extractors only it used.
+
 
 ## Provider results
 
@@ -23,7 +25,7 @@
 | Movies | NetMirror | Site unavailable | Provider reported `fetch failed` for its `net20.cc` request path. |
 | Movies | SFlix | Site unavailable | `getaddrinfo ENOTFOUND sflix.ps`; direct probe could not resolve the domain. |
 | Movies | Turkish123 | Inconclusive: transient upstream/network reset | Tests reported `read ECONNRESET`; this is a connection interruption, not evidence of changed selectors. |
-| Movies | Comix | Response/API changed | The site itself responded, but provider requests returned HTTP 404, consistent with a changed route/API or stale endpoint. |
+| Manga | Comix | Response/API changed | The site itself responded, but provider requests returned HTTP 404, consistent with a changed route/API or stale endpoint. |
 | Manga | MangaKakalot | Site protection/response changed | Search and info failed because the Cloudflare challenge persisted after retries; latest/ suggestions still passed. This is a reachable-site access/response change, not a DNS outage. |
 | Manga | MangaHere | **Passed** | Suite passed. |
 | Manga | MangaPill | **Passed** | Suite passed. |
