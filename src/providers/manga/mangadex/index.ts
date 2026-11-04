@@ -8,8 +8,9 @@ import {
   ISearch,
   MangaParser,
   MediaStatus,
+  capitalizeFirstLetter,
+  substringBefore,
 } from '../../../core';
-import { capitalizeFirstLetter, substringBefore } from '../../../core/utils';
 
 class MangaDex extends MangaParser {
   override readonly name = 'MangaDex';
