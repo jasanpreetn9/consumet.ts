@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "https://api.mangadex.org/cover/5f81a95a-cf5f-480b-82e1-93b390e66f94",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "data": "{\"result\":\"ok\",\"response\":\"entity\",\"data\":{\"id\":\"5f81a95a-cf5f-480b-82e1-93b390e66f94\",\"type\":\"cover_art\",\"attributes\":{\"description\":\"Volume 4 Cover from BookLive\",\"volume\":\"4\",\"fileName\":\"fac191d0-96c1-4ebb-bf79-b7616d7162ac.jpg\",\"locale\":\"ja\",\"createdAt\":\"2026-03-14T02:22:27+00:00\",\"updatedAt\":\"2026-03-14T02:22:27+00:00\",\"version\":1},\"relationships\":[{\"id\":\"9d3d3403-1a87-4737-9803-bc3d99db1424\",\"type\":\"manga\"},{\"id\":\"5f4d89be-fdd2-4395-accb-d8cee7173494\",\"type\":\"user\"}]}}"
+}

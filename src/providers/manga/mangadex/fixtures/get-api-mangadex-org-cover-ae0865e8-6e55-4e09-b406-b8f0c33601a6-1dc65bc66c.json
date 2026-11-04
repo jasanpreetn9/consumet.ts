@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "https://api.mangadex.org/cover/ae0865e8-6e55-4e09-b406-b8f0c33601a6",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "data": "{\"result\":\"ok\",\"response\":\"entity\",\"data\":{\"id\":\"ae0865e8-6e55-4e09-b406-b8f0c33601a6\",\"type\":\"cover_art\",\"attributes\":{\"description\":\"\",\"volume\":\"15\",\"fileName\":\"1790f17f-9184-4a48-8928-c45de48b778e.jpg\",\"locale\":\"ja\",\"createdAt\":\"2026-04-24T23:32:44+00:00\",\"updatedAt\":\"2026-04-24T23:32:44+00:00\",\"version\":1},\"relationships\":[{\"id\":\"30196491-8fc2-4961-8886-a58f898b1b3e\",\"type\":\"manga\"},{\"id\":\"f73d34f6-f678-4f8b-9dff-5c759d5fc767\",\"type\":\"user\"}]}}"
+}

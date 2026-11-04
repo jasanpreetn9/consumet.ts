@@ -1,8 +1,9 @@
-import { MANGA } from '../..';
+import WeebCentral from '.';
+import { fixtureAdapter } from '../../../core/testing';
 
 jest.setTimeout(120000);
 
-const weebcentral = new MANGA.WeebCentral();
+const weebcentral = new WeebCentral(undefined, fixtureAdapter(__dirname));
 
 test('Search: returns a filled array of manga.', async () => {
   const data = await weebcentral.search('one piece');

@@ -1,10 +1,9 @@
-import { MANGA } from '../..';
+import MangaPill from '.';
+import { fixtureAdapter } from '../../../core/testing';
 
 jest.setTimeout(120000);
 
-// run: yarn test --watch --verbose false mangapill.test.ts
-
-const mangaPill = new MANGA.MangaPill();
+const mangaPill = new MangaPill(undefined, fixtureAdapter(__dirname));
 
 test('Search: returns a filled array of manga.', async () => {
   const data = await mangaPill.search('one piece');
