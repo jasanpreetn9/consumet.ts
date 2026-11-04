@@ -8,12 +8,12 @@
     "node": ">=24.22.2"
   },
   "scripts": {
-    "build": "rimraf dist && tsc -p tsconfig.json",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
     "version": "auto-changelog -p && git add CHANGELOG.md",
-    "lint": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"jest.config.ts\"",
+    "lint": "prettier --write \"src/**/*.ts\" \"jest.config.ts\"",
     "prepare": "husky || true",
     "test": "jest",
-    "test:manga": "jest ./test/manga"
+    "test:manga": "jest src/providers/manga"
   },
   "pre-commit": [
     "lint",

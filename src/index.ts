@@ -1,5 +1,5 @@
 import { ANIME, MANGA, MOVIES } from './providers';
-import { PROVIDERS_LIST } from './utils/providers-list';
+import { PROVIDERS_LIST } from './providers/list';
 import {
   IProviderStats,
   ISearch,
@@ -28,7 +28,7 @@ import {
   ITitle,
   MediaFormat,
   ProxyConfig,
-} from './models';
+} from './core';
 
 export { ANIME, MANGA, MOVIES };
 export { PROVIDERS_LIST };
