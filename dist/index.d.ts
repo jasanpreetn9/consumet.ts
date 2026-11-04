@@ -1,6 +1,6 @@
 import { ANIME, MANGA, MOVIES } from './providers';
-import { PROVIDERS_LIST } from './utils/providers-list';
-import { IProviderStats, ISearch, IAnimeEpisode, IAnimeInfo, IAnimeResult, IEpisodeServer, IVideo, StreamingServers, MediaStatus, SubOrSub, IMangaResult, IMangaChapter, IMangaInfo, IMangaChapterPage, TvType, IMovieEpisode, IMovieInfo, ISource, ISubtitle, IMovieResult, Intro, Genres, Topics, FuzzyDate, ITitle, MediaFormat, ProxyConfig } from './models';
+import { PROVIDERS_LIST } from './providers/list';
+import { IProviderStats, ISearch, IAnimeEpisode, IAnimeInfo, IAnimeResult, IEpisodeServer, IVideo, StreamingServers, MediaStatus, SubOrSub, IMangaResult, IMangaChapter, IMangaInfo, IMangaChapterPage, TvType, IMovieEpisode, IMovieInfo, ISource, ISubtitle, IMovieResult, Intro, Genres, Topics, FuzzyDate, ITitle, MediaFormat, ProxyConfig } from './core';
 export { ANIME, MANGA, MOVIES };
 export { PROVIDERS_LIST };
 export { Topics, Genres, SubOrSub, StreamingServers, MediaStatus, IProviderStats, IAnimeEpisode, IAnimeInfo, IAnimeResult, IEpisodeServer, IVideo, IMangaResult, IMangaChapter, IMangaInfo, ISearch, IMangaChapterPage, TvType, IMovieEpisode, IMovieInfo, ISource, ISubtitle, IMovieResult, Intro, FuzzyDate, ITitle, MediaFormat, ProxyConfig, };
