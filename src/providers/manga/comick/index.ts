@@ -1,4 +1,3 @@
-import axios, { AxiosError } from 'axios';
 import {
   IMangaChapterPage,
   IMangaInfo,
@@ -17,14 +16,14 @@ class ComicK extends MangaParser {
   private readonly apiUrl = 'https://comick.art/api';
   public referer = 'https://comick.art';
 
-  private _axios() {
-    return axios.create({
-      baseURL: this.apiUrl,
+  // Sent with every request; ComicK rejects requests without a Referer.
+  private get requestOptions() {
+    return {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
         Referer: this.referer,
       },
-    });
+    };
   }
 
   /**
@@ -33,43 +32,36 @@ class ComicK extends MangaParser {
    * @returns Promise<IMangaInfo>
    */
   override fetchMangaInfo = async (mangaId: string): Promise<IMangaInfo> => {
-    try {
-      const data: Comic = await this.getComicData(mangaId);
+    const data: Comic = await this.getComicData(mangaId);
 
-      const links = Object.values(data.links ?? []).filter(link => link !== null);
+    const links = Object.values(data.links ?? []).filter(link => link !== null);
 
-      const mangaInfo: IMangaInfo = {
-        id: data.slug,
-        title: data.title,
-        altTitles: data.md_titles ? data.md_titles.map(title => title.title) : [],
-        description: data.desc,
-        genres: data.md_comic_md_genres?.map(genre => genre.md_genres.name),
-        status: (data.status ?? 0 === 0) ? MediaStatus.ONGOING : MediaStatus.COMPLETED,
-        image: data.default_thumbnail,
-        malId: data.links?.mal,
-        links: links,
-        chapters: [],
-      };
+    const mangaInfo: IMangaInfo = {
+      id: data.slug,
+      title: data.title,
+      altTitles: data.md_titles ? data.md_titles.map(title => title.title) : [],
+      description: data.desc,
+      genres: data.md_comic_md_genres?.map(genre => genre.md_genres.name),
+      status: (data.status ?? 0 === 0) ? MediaStatus.ONGOING : MediaStatus.COMPLETED,
+      image: data.default_thumbnail,
+      malId: data.links?.mal,
+      links: links,
+      chapters: [],
+    };
 
-      const allChapters: ChapterData[] = await this.fetchAllChapters(mangaInfo.id, 1);
-      for (const chapter of allChapters) {
-        mangaInfo.chapters?.push({
-          id: `${mangaInfo.id}/${chapter.hid}-chapter-${chapter.chap}-${chapter.lang}`,
-          title: chapter.title ?? chapter.chap,
-          chapterNumber: chapter.chap,
-          volumeNumber: chapter.vol,
-          releaseDate: chapter.created_at,
-          lang: chapter.lang,
-        });
-      }
-
-      return mangaInfo;
-    } catch (err) {
-      if ((err as AxiosError).code == 'ERR_BAD_REQUEST')
-        throw new Error(`[${this.name}] Bad request. Make sure you have entered a valid query.`);
-
-      throw new Error((err as Error).message);
+    const allChapters: ChapterData[] = await this.fetchAllChapters(mangaInfo.id, 1);
+    for (const chapter of allChapters) {
+      mangaInfo.chapters?.push({
+        id: `${mangaInfo.id}/${chapter.hid}-chapter-${chapter.chap}-${chapter.lang}`,
+        title: chapter.title ?? chapter.chap,
+        chapterNumber: chapter.chap,
+        volumeNumber: chapter.vol,
+        releaseDate: chapter.created_at,
+        lang: chapter.lang,
+      });
     }
+
+    return mangaInfo;
   };
 
   /**
@@ -78,21 +70,17 @@ class ComicK extends MangaParser {
    * @returns Promise<IMangaChapterPage[]>
    */
   override fetchChapterPages = async (chapterId: string): Promise<IMangaChapterPage[]> => {
-    try {
-      const data = await this._axios().get(`/comics/${chapterId}`);
+    const data = await this.client.get(`${this.apiUrl}/comics/${chapterId}`, this.requestOptions);
 
-      const pages: { img: string; page: number }[] = [];
-      data.data.chapter.images.map((image: { url: string }, index: number) => {
-        pages.push({
-          img: image.url,
-          page: index,
-        });
+    const pages: { img: string; page: number }[] = [];
+    data.data.chapter.images.map((image: { url: string }, index: number) => {
+      pages.push({
+        img: image.url,
+        page: index,
       });
+    });
 
-      return pages;
-    } catch (err) {
-      throw new Error((err as Error).message);
-    }
+    return pages;
   };
 
   // also need to implement and advanced search with filters
@@ -102,42 +90,44 @@ class ComicK extends MangaParser {
    * @param limit limit of results to return (default: 20) (max: 100) (min: 1)
    */
   override search = async (query: string, cursor?: string): Promise<Search<IMangaResult>> => {
-    try {
-      const req = await this._axios().get(`/search?q=${encodeURIComponent(query)}&cursor=${cursor}`);
+    const req = await this.client.get(
+      `${this.apiUrl}/search?q=${encodeURIComponent(query)}&cursor=${cursor}`,
+      this.requestOptions,
+    );
 
-      const results: Search<IMangaResult> = {
-        results: [],
-        prev_cursor: req.data.prev_cursor,
-        next_cursor: req.data.next_cursor,
-      };
+    const results: Search<IMangaResult> = {
+      results: [],
+      prev_cursor: req.data.prev_cursor,
+      next_cursor: req.data.next_cursor,
+    };
 
-      const data: SearchResult[] = await req.data.data;
+    const data: SearchResult[] = await req.data.data;
 
-      for (const manga of data) {
-        results.results.push({
-          id: manga.slug,
-          title: manga.title ?? manga.slug,
-          altTitles: manga.md_titles ? manga.md_titles.map(title => title.title) : [],
-          image: manga.default_thumbnail,
-        });
-      }
-
-      return results;
-    } catch (err) {
-      throw new Error((err as Error).message);
+    for (const manga of data) {
+      results.results.push({
+        id: manga.slug,
+        title: manga.title ?? manga.slug,
+        altTitles: manga.md_titles ? manga.md_titles.map(title => title.title) : [],
+        image: manga.default_thumbnail,
+      });
     }
+
+    return results;
   };
 
   private fetchAllChapters = async (hid: string, page: number): Promise<any[]> => {
     if (page <= 0) {
       page = 1;
     }
-    const req = await this._axios().get(`/comics/${hid}/chapter-list?page=${page}`);
+    const req = await this.client.get(
+      `${this.apiUrl}/comics/${hid}/chapter-list?page=${page}`,
+      this.requestOptions,
+    );
     return req.data.data;
   };
 
   private getComicData = async (mangaId: string): Promise<Comic> => {
-    const req = await this._axios().get(`${this.baseUrl}/comic/${mangaId}`);
+    const req = await this.client.get(`${this.baseUrl}/comic/${mangaId}`, this.requestOptions);
     const $ = load(req.data);
 
     return JSON.parse($("script[id='comic-data']").text()) as Comic;

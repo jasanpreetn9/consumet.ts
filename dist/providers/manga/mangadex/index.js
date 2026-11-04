@@ -9,62 +9,50 @@ class MangaDex extends core_1.MangaParser {
     logo = 'https://pbs.twimg.com/profile_images/1391016345714757632/xbt_jW78_400x400.jpg';
     apiUrl = 'https://api.mangadex.org';
     fetchMangaInfo = async (mangaId) => {
-        try {
-            const { data } = await this.client.get(`${this.apiUrl}/manga/${mangaId}`);
-            const mangaInfo = {
-                id: data.data.id,
-                title: data.data.attributes.title.en,
-                altTitles: data.data.attributes.altTitles,
-                description: data.data.attributes.description,
-                genres: data.data.attributes.tags
-                    .filter((tag) => tag.attributes.group === 'genre')
-                    .map((tag) => tag.attributes.name.en),
-                themes: data.data.attributes.tags
-                    .filter((tag) => tag.attributes.group === 'theme')
-                    .map((tag) => tag.attributes.name.en),
-                status: (0, utils_1.capitalizeFirstLetter)(data.data.attributes.status),
-                releaseDate: data.data.attributes.year,
-                chapters: [],
-            };
-            const allChapters = await this.fetchAllChapters(mangaId, 0);
-            for (const chapter of allChapters) {
-                mangaInfo.chapters?.push({
-                    id: chapter.id,
-                    title: chapter.attributes.title ? chapter.attributes.title : chapter.attributes.chapter,
-                    chapterNumber: chapter.attributes.chapter,
-                    volumeNumber: chapter.attributes.volume,
-                    pages: chapter.attributes.pages,
-                });
-            }
-            const findCoverArt = data.data.relationships.find((rel) => rel.type === 'cover_art');
-            const coverArt = await this.fetchCoverImage(findCoverArt?.id);
-            mangaInfo.image = `${this.baseUrl}/covers/${mangaInfo.id}/${coverArt}`;
-            return mangaInfo;
+        const { data } = await this.client.get(`${this.apiUrl}/manga/${mangaId}`);
+        const mangaInfo = {
+            id: data.data.id,
+            title: data.data.attributes.title.en,
+            altTitles: data.data.attributes.altTitles,
+            description: data.data.attributes.description,
+            genres: data.data.attributes.tags
+                .filter((tag) => tag.attributes.group === 'genre')
+                .map((tag) => tag.attributes.name.en),
+            themes: data.data.attributes.tags
+                .filter((tag) => tag.attributes.group === 'theme')
+                .map((tag) => tag.attributes.name.en),
+            status: (0, utils_1.capitalizeFirstLetter)(data.data.attributes.status),
+            releaseDate: data.data.attributes.year,
+            chapters: [],
+        };
+        const allChapters = await this.fetchAllChapters(mangaId, 0);
+        for (const chapter of allChapters) {
+            mangaInfo.chapters?.push({
+                id: chapter.id,
+                title: chapter.attributes.title ? chapter.attributes.title : chapter.attributes.chapter,
+                chapterNumber: chapter.attributes.chapter,
+                volumeNumber: chapter.attributes.volume,
+                pages: chapter.attributes.pages,
+            });
         }
-        catch (err) {
-            if (err.code == 'ERR_BAD_REQUEST')
-                throw new Error(`[${this.name}] Bad request. Make sure you have entered a valid query.`);
-            throw new Error(err.message);
-        }
+        const findCoverArt = data.data.relationships.find((rel) => rel.type === 'cover_art');
+        const coverArt = await this.fetchCoverImage(findCoverArt?.id);
+        mangaInfo.image = `${this.baseUrl}/covers/${mangaInfo.id}/${coverArt}`;
+        return mangaInfo;
     };
     /**
      * @currently only supports english
      */
     fetchChapterPages = async (chapterId) => {
-        try {
-            const res = await this.client.get(`${this.apiUrl}/at-home/server/${chapterId}`);
-            const pages = [];
-            for (const id of res.data.chapter.data) {
-                pages.push({
-                    img: `${res.data.baseUrl}/data/${res.data.chapter.hash}/${id}`,
-                    page: parseInt((0, utils_1.substringBefore)(id, '-').replace(/[^0-9.]/g, '')),
-                });
-            }
-            return pages;
+        const res = await this.client.get(`${this.apiUrl}/at-home/server/${chapterId}`);
+        const pages = [];
+        for (const id of res.data.chapter.data) {
+            pages.push({
+                img: `${res.data.baseUrl}/data/${res.data.chapter.hash}/${id}`,
+                page: parseInt((0, utils_1.substringBefore)(id, '-').replace(/[^0-9.]/g, '')),
+            });
         }
-        catch (err) {
-            throw new Error(err.message);
-        }
+        return pages;
     };
     /**
      * @param query search query
@@ -78,74 +66,61 @@ class MangaDex extends core_1.MangaParser {
             throw new Error('Limit must be less than or equal to 100');
         if (limit * (page - 1) >= 10000)
             throw new Error('not enough results');
-        try {
-            const res = await this.client.get(`${this.apiUrl}/manga?limit=${limit}&title=${(0, ascii_url_encoder_1.encode)(query)}&limit=${limit}&offset=${limit * (page - 1)}&order[relevance]=desc`);
-            if (res.data.result == 'ok') {
-                const results = {
-                    currentPage: page,
-                    results: [],
-                };
-                for (const manga of res.data.data) {
-                    const findCoverArt = manga.relationships.find((item) => item.type === 'cover_art');
-                    const coverArtId = findCoverArt ? findCoverArt.id : null;
-                    const coverArt = await this.fetchCoverImage(coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId);
-                    results.results.push({
-                        id: manga.id,
-                        title: Object.values(manga.attributes.title)[0],
-                        altTitles: manga.attributes.altTitles,
-                        description: Object.values(manga.attributes.description)[0],
-                        status: manga.attributes.status,
-                        releaseDate: manga.attributes.year,
-                        contentRating: manga.attributes.contentRating,
-                        lastVolume: manga.attributes.lastVolume,
-                        lastChapter: manga.attributes.lastChapter,
-                        image: `${this.baseUrl}/covers/${manga.id}/${coverArt}`,
-                    });
-                }
-                return results;
-            }
-            else {
-                throw new Error(res.data.message);
-            }
-        }
-        catch (err) {
-            if (err.code == 'ERR_BAD_REQUEST') {
-                throw new Error('Bad request. Make sure you have entered a valid query.');
-            }
-            throw new Error(err.message);
-        }
-    };
-    fetchRandom = async () => {
-        try {
-            const res = await this.client.get(`${this.apiUrl}/manga/random`);
-            if (res.data.result == 'ok') {
-                const results = {
-                    currentPage: 1,
-                    results: [],
-                };
-                const findCoverArt = res.data.data.relationships.find((item) => item.type === 'cover_art');
+        const res = await this.client.get(`${this.apiUrl}/manga?limit=${limit}&title=${(0, ascii_url_encoder_1.encode)(query)}&limit=${limit}&offset=${limit * (page - 1)}&order[relevance]=desc`);
+        if (res.data.result == 'ok') {
+            const results = {
+                currentPage: page,
+                results: [],
+            };
+            for (const manga of res.data.data) {
+                const findCoverArt = manga.relationships.find((item) => item.type === 'cover_art');
                 const coverArtId = findCoverArt ? findCoverArt.id : null;
                 const coverArt = await this.fetchCoverImage(coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId);
                 results.results.push({
-                    id: res.data.data.id,
-                    title: Object.values(res.data.data.attributes.title)[0],
-                    altTitles: res.data.data.attributes.altTitles,
-                    description: Object.values(res.data.data.attributes.description)[0],
-                    status: res.data.data.attributes.status,
-                    releaseDate: res.data.data.attributes.year,
-                    contentRating: res.data.data.attributes.contentRating,
-                    lastVolume: res.data.data.attributes.lastVolume,
-                    lastChapter: res.data.data.attributes.lastChapter,
-                    image: `${this.baseUrl}/covers/${res.data.data.id}/${coverArt}`,
+                    id: manga.id,
+                    title: Object.values(manga.attributes.title)[0],
+                    altTitles: manga.attributes.altTitles,
+                    description: Object.values(manga.attributes.description)[0],
+                    status: manga.attributes.status,
+                    releaseDate: manga.attributes.year,
+                    contentRating: manga.attributes.contentRating,
+                    lastVolume: manga.attributes.lastVolume,
+                    lastChapter: manga.attributes.lastChapter,
+                    image: `${this.baseUrl}/covers/${manga.id}/${coverArt}`,
                 });
-                return results;
             }
-            else {
-                throw new Error(res.data.message);
-            }
+            return results;
         }
-        catch (err) {
-            throw new Error(err.message);
+        else {
+            throw new Error(res.data.message);
+        }
+    };
+    fetchRandom = async () => {
+        const res = await this.client.get(`${this.apiUrl}/manga/random`);
+        if (res.data.result == 'ok') {
+            const results = {
+                currentPage: 1,
+                results: [],
+            };
+            const findCoverArt = res.data.data.relationships.find((item) => item.type === 'cover_art');
+            const coverArtId = findCoverArt ? findCoverArt.id : null;
+            const coverArt = await this.fetchCoverImage(coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId);
+            results.results.push({
+                id: res.data.data.id,
+                title: Object.values(res.data.data.attributes.title)[0],
+                altTitles: res.data.data.attributes.altTitles,
+                description: Object.values(res.data.data.attributes.description)[0],
+                status: res.data.data.attributes.status,
+                releaseDate: res.data.data.attributes.year,
+                contentRating: res.data.data.attributes.contentRating,
+                lastVolume: res.data.data.attributes.lastVolume,
+                lastChapter: res.data.data.attributes.lastChapter,
+                image: `${this.baseUrl}/covers/${res.data.data.id}/${coverArt}`,
+            });
+            return results;
+        }
+        else {
+            throw new Error(res.data.message);
         }
     };
     fetchRecentlyAdded = async (page = 1, limit = 20) => {
@@ -155,38 +130,33 @@ class MangaDex extends core_1.MangaParser {
             throw new Error('Limit must be less than or equal to 100');
         if (limit * (page - 1) >= 10000)
             throw new Error('not enough results');
-        try {
-            const res = await this.client.get(`${this.apiUrl}/manga?includes[]=cover_art&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&order[createdAt]=desc&hasAvailableChapters=true&limit=${limit}&offset=${limit * (page - 1)}`);
-            if (res.data.result == 'ok') {
-                const results = {
-                    currentPage: page,
-                    results: [],
-                };
-                for (const manga of res.data.data) {
-                    const findCoverArt = manga.relationships.find((item) => item.type === 'cover_art');
-                    const coverArtId = findCoverArt ? findCoverArt.id : null;
-                    const coverArt = await this.fetchCoverImage(coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId);
-                    results.results.push({
-                        id: manga.id,
-                        title: Object.values(manga.attributes.title)[0],
-                        altTitles: manga.attributes.altTitles,
-                        description: Object.values(manga.attributes.description)[0],
-                        status: manga.attributes.status,
-                        releaseDate: manga.attributes.year,
-                        contentRating: manga.attributes.contentRating,
-                        lastVolume: manga.attributes.lastVolume,
-                        lastChapter: manga.attributes.lastChapter,
-                        image: `${this.baseUrl}/covers/${manga.id}/${coverArt}`,
-                    });
-                }
-                return results;
+        const res = await this.client.get(`${this.apiUrl}/manga?includes[]=cover_art&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&order[createdAt]=desc&hasAvailableChapters=true&limit=${limit}&offset=${limit * (page - 1)}`);
+        if (res.data.result == 'ok') {
+            const results = {
+                currentPage: page,
+                results: [],
+            };
+            for (const manga of res.data.data) {
+                const findCoverArt = manga.relationships.find((item) => item.type === 'cover_art');
+                const coverArtId = findCoverArt ? findCoverArt.id : null;
+                const coverArt = await this.fetchCoverImage(coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId);
+                results.results.push({
+                    id: manga.id,
+                    title: Object.values(manga.attributes.title)[0],
+                    altTitles: manga.attributes.altTitles,
+                    description: Object.values(manga.attributes.description)[0],
+                    status: manga.attributes.status,
+                    releaseDate: manga.attributes.year,
+                    contentRating: manga.attributes.contentRating,
+                    lastVolume: manga.attributes.lastVolume,
+                    lastChapter: manga.attributes.lastChapter,
+                    image: `${this.baseUrl}/covers/${manga.id}/${coverArt}`,
+                });
             }
-            else {
-                throw new Error(res.data.message);
-            }
+            return results;
         }
-        catch (err) {
-            throw new Error(err.message);
+        else {
+            throw new Error(res.data.message);
         }
     };
     fetchLatestUpdates = async (page = 1, limit = 20) => {
@@ -196,38 +166,33 @@ class MangaDex extends core_1.MangaParser {
             throw new Error('Limit must be less than or equal to 100');
         if (limit * (page - 1) >= 10000)
             throw new Error('not enough results');
-        try {
-            const res = await this.client.get(`${this.apiUrl}/manga?order[latestUploadedChapter]=desc&limit=${limit}&offset=${limit * (page - 1)}`);
-            if (res.data.result == 'ok') {
-                const results = {
-                    currentPage: page,
-                    results: [],
-                };
-                for (const manga of res.data.data) {
-                    const findCoverArt = manga.relationships.find((item) => item.type === 'cover_art');
-                    const coverArtId = findCoverArt ? findCoverArt.id : null;
-                    const coverArt = await this.fetchCoverImage(coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId);
-                    results.results.push({
-                        id: manga.id,
-                        title: Object.values(manga.attributes.title)[0],
-                        altTitles: manga.attributes.altTitles,
-                        description: Object.values(manga.attributes.description)[0],
-                        status: manga.attributes.status,
-                        releaseDate: manga.attributes.year,
-                        contentRating: manga.attributes.contentRating,
-                        lastVolume: manga.attributes.lastVolume,
-                        lastChapter: manga.attributes.lastChapter,
-                        image: `${this.baseUrl}/covers/${manga.id}/${coverArt}`,
-                    });
-                }
-                return results;
+        const res = await this.client.get(`${this.apiUrl}/manga?order[latestUploadedChapter]=desc&limit=${limit}&offset=${limit * (page - 1)}`);
+        if (res.data.result == 'ok') {
+            const results = {
+                currentPage: page,
+                results: [],
+            };
+            for (const manga of res.data.data) {
+                const findCoverArt = manga.relationships.find((item) => item.type === 'cover_art');
+                const coverArtId = findCoverArt ? findCoverArt.id : null;
+                const coverArt = await this.fetchCoverImage(coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId);
+                results.results.push({
+                    id: manga.id,
+                    title: Object.values(manga.attributes.title)[0],
+                    altTitles: manga.attributes.altTitles,
+                    description: Object.values(manga.attributes.description)[0],
+                    status: manga.attributes.status,
+                    releaseDate: manga.attributes.year,
+                    contentRating: manga.attributes.contentRating,
+                    lastVolume: manga.attributes.lastVolume,
+                    lastChapter: manga.attributes.lastChapter,
+                    image: `${this.baseUrl}/covers/${manga.id}/${coverArt}`,
+                });
             }
-            else {
-                throw new Error(res.data.message);
-            }
+            return results;
         }
-        catch (err) {
-            throw new Error(err.message);
+        else {
+            throw new Error(res.data.message);
         }
     };
     fetchPopular = async (page = 1, limit = 20) => {
@@ -237,38 +202,33 @@ class MangaDex extends core_1.MangaParser {
             throw new Error('Limit must be less than or equal to 100');
         if (limit * (page - 1) >= 10000)
             throw new Error('not enough results');
-        try {
-            const res = await this.client.get(`${this.apiUrl}/manga?includes[]=cover_art&includes[]=artist&includes[]=author&order[followedCount]=desc&contentRating[]=safe&contentRating[]=suggestive&hasAvailableChapters=true&limit=${limit}&offset=${limit * (page - 1)}`);
-            if (res.data.result == 'ok') {
-                const results = {
-                    currentPage: page,
-                    results: [],
-                };
-                for (const manga of res.data.data) {
-                    const findCoverArt = manga.relationships.find((item) => item.type === 'cover_art');
-                    const coverArtId = findCoverArt ? findCoverArt.id : null;
-                    const coverArt = await this.fetchCoverImage(coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId);
-                    results.results.push({
-                        id: manga.id,
-                        title: Object.values(manga.attributes.title)[0],
-                        altTitles: manga.attributes.altTitles,
-                        description: Object.values(manga.attributes.description)[0],
-                        status: manga.attributes.status,
-                        releaseDate: manga.attributes.year,
-                        contentRating: manga.attributes.contentRating,
-                        lastVolume: manga.attributes.lastVolume,
-                        lastChapter: manga.attributes.lastChapter,
-                        image: `${this.baseUrl}/covers/${manga.id}/${coverArt}`,
-                    });
-                }
-                return results;
+        const res = await this.client.get(`${this.apiUrl}/manga?includes[]=cover_art&includes[]=artist&includes[]=author&order[followedCount]=desc&contentRating[]=safe&contentRating[]=suggestive&hasAvailableChapters=true&limit=${limit}&offset=${limit * (page - 1)}`);
+        if (res.data.result == 'ok') {
+            const results = {
+                currentPage: page,
+                results: [],
+            };
+            for (const manga of res.data.data) {
+                const findCoverArt = manga.relationships.find((item) => item.type === 'cover_art');
+                const coverArtId = findCoverArt ? findCoverArt.id : null;
+                const coverArt = await this.fetchCoverImage(coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId);
+                results.results.push({
+                    id: manga.id,
+                    title: Object.values(manga.attributes.title)[0],
+                    altTitles: manga.attributes.altTitles,
+                    description: Object.values(manga.attributes.description)[0],
+                    status: manga.attributes.status,
+                    releaseDate: manga.attributes.year,
+                    contentRating: manga.attributes.contentRating,
+                    lastVolume: manga.attributes.lastVolume,
+                    lastChapter: manga.attributes.lastChapter,
+                    image: `${this.baseUrl}/covers/${manga.id}/${coverArt}`,
+                });
             }
-            else {
-                throw new Error(res.data.message);
-            }
+            return results;
         }
-        catch (err) {
-            throw new Error(err.message);
+        else {
+            throw new Error(res.data.message);
         }
     };
     fetchAllChapters = async (mangaId, offset, res) => {
