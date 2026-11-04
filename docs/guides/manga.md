@@ -32,11 +32,11 @@ const mangaProvider = MANGA.<providerName>();
 ## Manga Providers List
 This list is in alphabetical order. (except the sub bullet points)
 
-- [WeebCentral](../providers/weebcentral.md)
-- [Mangapill](../providers/mangapill.md)
-- [MangaHere](../providers/mangahere.md)
-- [MangaDex](../providers/mangadex.md)
-- [ComicK](../providers/comick.md)
+- [WeebCentral](../../src/providers/manga/weebcentral/README.md)
+- [Mangapill](../../src/providers/manga/mangapill/README.md)
+- [MangaHere](../../src/providers/manga/mangahere/README.md)
+- [MangaDex](../../src/providers/manga/mangadex/README.md)
+- [ComicK](../../src/providers/manga/comick/README.md)
 
 
 <p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs">back to table of contents</a>)</p>
