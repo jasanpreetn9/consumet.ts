@@ -10,39 +10,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: ["24.22.2"]
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4.1.0
+      - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version-file: .nvmrc
+          cache: yarn
 
-      - name: Set Yarn registry
-        run: yarn config set registry https://registry.npmjs.org/
+      - run: yarn install --frozen-lockfile
 
-      - name: Cache Yarn dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.yarn/cache
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      # Type-checks src/ including tests (the build config excludes them).
+      - run: npx tsc --noEmit -p tsconfig.json
 
-      - name: Install dependencies & build
-        run: |
-          if [ -f yarn.lock ]; then
-            echo "yarn.lock found, using cache"
-          else
-            echo "yarn.lock not found, proceeding without cache"
-          fi
-          for i in {1..3}; do
-            yarn install --ignore-engines && break || sleep 10
-          done
-          yarn build
+      - run: yarn build
+
+      # Replays recorded fixtures, so this doesn't depend on the live sites.
+      - run: yarn test
