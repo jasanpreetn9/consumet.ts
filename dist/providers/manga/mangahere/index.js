@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const cheerio_1 = require("cheerio");
 const core_1 = require("../../../core");
-const utils_1 = require("../../../core/utils");
 class MangaHere extends core_1.MangaParser {
     name = 'MangaHere';
     baseUrl = 'https://mangahere.cc';
@@ -69,7 +68,7 @@ class MangaHere extends core_1.MangaParser {
             const ss = html.indexOf('eval(function(p,a,c,k,e,d)');
             const se = html.indexOf('</script>', ss);
             const s = html.substring(ss, se);
-            const ds = (0, utils_1.safeUnpack)(s);
+            const ds = (0, core_1.safeUnpack)(s);
             const urls = ds.split("['")[1].split("']")[0].split("','");
             urls.map((url, i) => chapterPages.push({
                 page: i,
@@ -101,7 +100,7 @@ class MangaHere extends core_1.MangaParser {
                     else
                         sKey = '';
                 }
-                const ds = (0, utils_1.safeUnpack)(resText);
+                const ds = (0, core_1.safeUnpack)(resText);
                 const baseLinksp = ds.indexOf('pix=') + 5;
                 const baseLinkes = ds.indexOf(';', baseLinksp) - 1;
                 const baseLink = ds.substring(baseLinksp, baseLinkes);
@@ -320,7 +319,7 @@ class MangaHere extends core_1.MangaParser {
         const skss = html.indexOf('eval(function(p,a,c,k,e,d)');
         const skse = html.indexOf('</script>', skss);
         const sks = html.substring(skss, skse);
-        const skds = (0, utils_1.safeUnpack)(sks);
+        const skds = (0, core_1.safeUnpack)(sks);
         const sksl = skds.indexOf("'");
         const skel = skds.indexOf(';');
         const skrs = skds.substring(sksl, skel);

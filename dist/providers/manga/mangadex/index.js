@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ascii_url_encoder_1 = require("ascii-url-encoder");
 const core_1 = require("../../../core");
-const utils_1 = require("../../../core/utils");
 class MangaDex extends core_1.MangaParser {
     name = 'MangaDex';
     baseUrl = 'https://mangadex.org';
@@ -21,7 +20,7 @@ class MangaDex extends core_1.MangaParser {
             themes: data.data.attributes.tags
                 .filter((tag) => tag.attributes.group === 'theme')
                 .map((tag) => tag.attributes.name.en),
-            status: (0, utils_1.capitalizeFirstLetter)(data.data.attributes.status),
+            status: (0, core_1.capitalizeFirstLetter)(data.data.attributes.status),
             releaseDate: data.data.attributes.year,
             chapters: [],
         };
@@ -49,7 +48,7 @@ class MangaDex extends core_1.MangaParser {
         for (const id of res.data.chapter.data) {
             pages.push({
                 img: `${res.data.baseUrl}/data/${res.data.chapter.hash}/${id}`,
-                page: parseInt((0, utils_1.substringBefore)(id, '-').replace(/[^0-9.]/g, '')),
+                page: parseInt((0, core_1.substringBefore)(id, '-').replace(/[^0-9.]/g, '')),
             });
         }
         return pages;
