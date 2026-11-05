@@ -3,9 +3,26 @@
 **Observed:** 2026-11-03
 **Scope:** Live Jest integration tests in the 1.x `test/` folder
 
-> **Update:** Every provider below that did not pass has since been removed from the codebase, along with its tests, docs, and the extractors only it used. Separately, v2 narrowed the library to anime, manga and movies, so the books, comics, light novels, meta (AniList, TMDB) and news categories were removed too, including the comics and Anime News Network providers that passed.
+> **Update:** Every provider below that did not pass has since been removed from the codebase, along with its tests, docs, and the extractors only it used. Separately, whole categories were removed; see [below](#why-the-other-categories-were-removed).
 >
 > This page is a snapshot from the 1.x cleanup. It isn't updated as sites change.
+
+## Why the other categories were removed
+
+v2 keeps only anime, manga and movies. The other 1.x categories were removed for three reasons:
+
+- **Focus.** consumet.ts is for streaming and reading. Anime, manga and movies are what it's used for; the other categories were side features.
+- **Mostly broken.** Most of what those categories held no longer worked, as the table below shows.
+- **Maintenance.** Each category needs its own parser, types, docs and tests. Keeping categories that are rarely used and mostly broken costs more than they give.
+
+| Category     | What it held in 1.x                   | State before removal                                                            |
+| ------------ | ------------------------------------- | ------------------------------------------------------------------------------- |
+| Books        | Nothing exported                      | Empty: no providers.                                                            |
+| Comics       | GetComics, commented out of exports   | Its test passed, but users couldn't reach it.                                   |
+| Light novels | NovelUpdates                          | Blocked (HTTP 403).                                                             |
+| Meta         | AniList, MyAnimeList, TMDB            | AniList anime info and episodes failed; TMDB had stale or broken responses; MyAnimeList had no tests. All three got episodes from anime and movie providers that were removed. |
+| News         | Anime News Network                    | Working. Removed for focus: it's the only provider in its category.             |
+| Others       | Nothing exported                      | Empty: no providers.                                                            |
 
 
 ## Provider results
