@@ -42,7 +42,7 @@ consumet.ts gives you one API across many sites: create a provider, call `search
 - **A simpler layout.** The shared framework lives in `src/core/` and each provider is a self-contained folder in `src/providers/`, so adding or fixing a provider doesn't mean reading the rest of the codebase.
 - **Clearer errors.** Failed requests throw a `ProviderError` that says which provider, URL and HTTP status failed.
 - **Tests that run offline.** Each provider's tests replay recorded responses, so CI checks the code without depending on the sites being up.
-- **New providers.** ReAnime is the first one added in v2.
+- **New anime providers.** Anikage, Anikoto, AnimePahe, ANV, AniWave and ReAnime were added in v2.
 
 Expect breaking changes until 2.0.0 is released. See [Coming from 1.x](#coming-from-1x) for what has changed so far.
 
@@ -50,14 +50,14 @@ Expect breaking changes until 2.0.0 is released. See [Coming from 1.x](#coming-f
 
 | Category | Providers                                            |
 | -------- | ---------------------------------------------------- |
-| Anime    | ReAnime                                              |
+| Anime    | Anikage, Anikoto, AnimePahe, ANV, AniWave, ReAnime   |
 | Manga    | ComicK, MangaDex, MangaHere, MangaPill, WeebCentral |
 | Movies   | None right now                                       |
 
 Each provider's README (linked from the [anime](./docs/guides/anime.md) and [manga](./docs/guides/manga.md) guides) lists its methods and example output.
 
 > [!NOTE]
-> ReAnime's streams are encrypted, so the `.m3u8` it returns won't play in a standard HLS player as is. Its [README](./src/providers/anime/reanime/README.md#playing-the-stream) explains how to proxy and decrypt it.
+> Not every anime provider returns a stream you can play directly. Anikoto and AniWave only return a player page for an iframe, ANV's streams need its headers sent through a proxy, and ReAnime's streams are encrypted. The [anime guide](./docs/guides/anime.md#anime-providers) compares them.
 
 ## Installation
 
