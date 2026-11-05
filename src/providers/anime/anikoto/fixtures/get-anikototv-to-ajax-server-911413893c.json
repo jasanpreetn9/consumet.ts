@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "https://anikototv.to/ajax/server?get=MTF1dkFtaW9BRTZPbzJJRElFZUZrOWdjeldjOERLaWNMMXFNbVB3WUJqOGdCT1JkdmlSZzZXQUg2ZjhSZ2RuMGNhV0ZQdXo3V2ZneVhsbGhvdWxsTS9jU2lLV1JyUlUzNHN6VkFZQ3hkZ0d3SGlPdWhKWXJ4UmJSb3NOUHdYUURzVVlraXBybHVyaVRTd0Zjb1F0a2g1SXQzc3IvWC9janhIUTI4aTRKZWZGalZ1UkEyY2ZGUGgwM051MHdxelhs",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "data": "{\n    \"status\": 200,\n    \"result\": {\n        \"url\": \"https:\\/\\/megaplay.buzz\\/stream\\/s-2\\/107257\\/sub?s=tcdn\",\n        \"skip_data\": {\n            \"intro\": [\n                0,\n                89\n            ],\n            \"outro\": [\n                1460,\n                1549\n            ]\n        }\n    }\n}"
+}
