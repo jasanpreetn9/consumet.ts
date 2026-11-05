@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "https://aniwaves.ru/ajax/sources?id=a2a6d165fc6c91a566ad2ef3eee319ec683b9efe3731bcbb19bcd16737f1035a5d81e4085ef2bff82086ef4958ded6cc71d3962b41c43edaf53f807b5d30913b79875893a335c839f196af5a9fa33a6734475b128495098c6857a3cfa29d1fba667b65a7c6ca86ecf02fb43f6534d7e774a80a8bae37e208b229ee46c73fffcd26940e677a8d878bd2070f3025839836e737af1d6f68a385d28fe12de3747513cf8d44e56e16a94d24fb75d085e288d1&asi=1&autoPlay=1",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "data": "{\"status\":200,\"result\":{\"url\":\"https://play.vhscdn.to/embed-1/2d8ce1fa4de6433e0c37de6308675c227bf3ef2ab11aed11c7c3d71ffd0dc6c8ca61fadf253e57a24ccd3bc90480788853755cf5a8839ab42b484fe8a35515c4a6ee333181dcd5b5d708857dfa7d8d4855ae4b81c23758c68e1322e1b2d133295a115af13f450e0eeb26b0a8b5c8d02918836101e2e1c102a059bba758c2ce5bd22e533c48dc66680a04165f097827c88c2b75a0a8c9191460c794afa48dfb3f?v=1?asi=1&autoPlay=1&ao=0\",\"server\":4,\"skip_data\":{\"intro\":[0,0],\"outro\":[0,0]},\"sources\":[],\"tracks\":[],\"htmlGuide\":\"\"}}"
+}

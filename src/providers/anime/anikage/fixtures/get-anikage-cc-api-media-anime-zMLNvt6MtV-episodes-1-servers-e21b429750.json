@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "https://anikage.cc/api/media/anime/zMLNvt6MtV/episodes/1/servers",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "data": "{\"servers\":[{\"id\":\"koto\",\"providerId\":\"koto\",\"default\":true,\"subTypes\":[\"sub\",\"dub\"]},{\"id\":\"kite\",\"providerId\":\"kite\",\"default\":false,\"subTypes\":[\"sub\",\"dub\"]},{\"id\":\"ken\",\"providerId\":\"ken\",\"default\":false,\"subTypes\":[\"sub\",\"dub\"]},{\"id\":\"megg\",\"providerId\":\"megg\",\"default\":false,\"subTypes\":[\"sub\",\"dub\"]},{\"id\":\"wave\",\"providerId\":\"wave\",\"default\":false,\"subTypes\":[\"sub\",\"dub\"]},{\"id\":\"zen\",\"providerId\":\"zen\",\"default\":false,\"subTypes\":[\"sub\",\"dub\"]}],\"embeds\":[{\"id\":\"pam\",\"key\":\"pam\",\"label\":\"E-Pam\",\"urls\":{\"sub\":\"https://ani.pm/embed/ani/154587/1/sub?episodes=0&autonext=0\",\"dub\":\"https://ani.pm/embed/ani/154587/1/dub?episodes=0&autonext=0\"}},{\"id\":\"koto\",\"key\":\"koto\",\"label\":\"E-Koto\"},{\"id\":\"zen\",\"key\":\"zen\",\"label\":\"E-Zen\"}]}"
+}
