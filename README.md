@@ -129,6 +129,7 @@ console.log(PROVIDERS_LIST.MANGA.map(provider => provider.name));
 
 - **Removed providers.** Every 1.x provider whose site was down, blocked or changed is gone; [docs/status.md](./docs/status.md) shows why each one went.
 - **Removed categories.** The books, comics, light novels, meta (AniList, MyAnimeList, TMDB), news and others categories were removed to focus on streaming and reading. Most of their providers were broken or empty; [docs/status.md](./docs/status.md#why-the-other-categories-were-removed) has the details.
+- **No more meta providers.** AniList, MyAnimeList and TMDB are public APIs; call them directly. You fetch only the data you need, and with your own AniList client you can add OAuth and update users' lists. See [why the meta providers were removed](./docs/status.md#why-the-meta-providers-were-removed).
 - **Errors.** Request failures now throw `ProviderError` instead of a plain `Error` or an axios error.
 - **Types.** A few unused types were removed: `IAnimeEpisodeV2`, `StreamingServers`, `WatchListType`, `Topics`, `IPeopleResult`, `IStaff` and `IRoles`.
 
