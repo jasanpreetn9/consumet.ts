@@ -57,12 +57,9 @@
     "@types/node": "^26.6.6",
     "@types/ws": "^8.18.2",
     "auto-changelog": "^2.7.0",
-    "cloudscraper": "^4.6.0",
     "husky": "^9.1.7",
-    "is-ci": "^4.1.0",
     "jest": "^30.5.2",
     "prettier": "^3.9.10",
-    "request": "^2.88.2",
     "rimraf": "^6.1.4",
     "ts-jest": "^29.4.15",
     "ts-node": "^10.9.2",
@@ -84,5 +81,8 @@
     "test": "test",
     "lib": "src"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "resolutions": {
+    "minimatch": "^11.0.1"
+  }
 }
