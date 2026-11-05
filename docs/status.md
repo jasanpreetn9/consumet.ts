@@ -20,7 +20,8 @@ v2 keeps only anime, manga and movies. The other 1.x categories were removed for
 | Books        | Nothing exported                      | Empty: no providers.                                                            |
 | Comics       | GetComics, commented out of exports   | Its test passed, but users couldn't reach it.                                   |
 | Light novels | NovelUpdates                          | Blocked (HTTP 403).                                                             |
-| Meta         | AniList, MyAnimeList, TMDB            | AniList anime info and episodes failed; TMDB had stale or broken responses; MyAnimeList had no tests. All three got episodes from anime and movie providers that were removed. See [below](#why-the-meta-providers-were-removed). |
+| News         | Anime News Network                    | Working. Removed for focus: it's the only provider in its category.             |
+| Others       | Nothing exported                      | Empty: no providers.                                                            |
 
 ### Why the meta providers were removed
 
@@ -31,8 +32,6 @@ The meta providers wrapped metadata APIs (AniList, MyAnimeList, TMDB) and mixed 
 - **Your own client does more.** Talking to AniList yourself lets you add OAuth and update the user's lists, which consumet.ts never supported.
 
 To combine the two, look a title up in AniList or TMDB yourself, then search a consumet.ts provider for it. ReAnime results include `anilistId`, which makes matching easier.
-| News         | Anime News Network                    | Working. Removed for focus: it's the only provider in its category.             |
-| Others       | Nothing exported                      | Empty: no providers.                                                            |
 
 
 ## Provider results
