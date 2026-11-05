@@ -2,59 +2,123 @@
 
 ## Getting Started
 
-Hello! Thank you for checking out consumet.ts!
-
-This document aims to be a gentle introduction to the library and its usage.
-
-Let's start!
+This guide installs consumet.ts and walks through a first search, from finding a manga to getting its page images.
 
 ### Installation
+
 consumet.ts requires [Node.js](https://nodejs.org/) 24.22.2 or later.
 
-Install with npm:
+v2 isn't on npm yet. The `@consumet/extensions` package there is the old 1.x code, so build v2 from source instead:
+
 ```sh
-npm i @consumet/extensions
-```
-Install with yarn:
-```sh
-yarn add @consumet/extensions
+git clone -b v2 https://github.com/jasanpreetn9/consumet.ts.git
+cd consumet.ts
+npm install
+npm run build
 ```
 
-### Usage
+Then, in your own project, install it by path:
 
-**Example** - searching for manga using the MangaPill provider.
+```sh
+npm install /path/to/consumet.ts
+```
+
+It still installs under the name `@consumet/extensions`, so the imports below work as written.
+
+### Your first search
+
+Every provider belongs to a category (`ANIME`, `MANGA` or `MOVIES`). Create a provider, then call its methods:
+
 ```ts
 // ESM
-import { MANGA } from "@consumet/extensions"
+import { MANGA } from '@consumet/extensions';
 // CommonJS
-const { MANGA } = require("@consumet/extensions");
+// const { MANGA } = require('@consumet/extensions');
 
-const main = async () => {
-  // Create a new instance of the MangaPill provider
-  const mangapill = new MANGA.MangaPill();
-  // Search for a manga. In this case, "One Piece"
-  const results = await mangapill.search("One Piece");
-  // Print the results
-  console.log(results);
-  // Get the first manga info
-  const firstManga = results.results[0];
-  const mangaInfo = await mangapill.fetchMangaInfo(firstManga.id);
-  // Print the info
-  console.log(mangaInfo);
-  // Get the pages of the first chapter
-  const pages = await mangapill.fetchChapterPages(mangaInfo.chapters![0].id);
-  console.log(pages);
-};
+const mangapill = new MANGA.MangaPill();
 
-main();
+// 1. Search. Each result has an id you pass to the next call.
+const { results } = await mangapill.search('One Piece');
+console.log(results[0]);
+
+// 2. Get the manga's details and chapter list.
+const info = await mangapill.fetchMangaInfo(results[0].id);
+console.log(info.title, info.chapters!.length);
+
+// 3. Get the page images for a chapter.
+const pages = await mangapill.fetchChapterPages(info.chapters![0].id);
+console.log(pages[0].img);
 ```
-*see also [MANGA documentation](./manga.md#manga) for more information.*\
-Awesome, that was easy.
 
-if you want to use different providers, you can check the providers list [here](https://consumet.org/extensions/list/) or in [json format](https://github.com/consumet/providers-status/blob/main/providers-list.json).
+Anime works the same way: `search`, then `fetchAnimeInfo`, then `fetchEpisodeServers` and `fetchEpisodeSources` for the stream. See the [anime guide](./anime.md).
 
-if you have any questions, please join the [discord server](https://discord.gg/qTPfvMxzNH) or open an [issue](https://github.com/jasanpreetn9/consumet.ts/issues).
+### Switching providers
 
-<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs">back to table of contents</a>)</p>
+Providers in a category share the same core methods, so switching sites is usually a one-line change:
 
+```ts
+const mangadex = new MANGA.MangaDex();
+const { results } = await mangadex.search('One Piece');
+```
 
+Ids are specific to each provider, though. Don't pass an id from one provider to another.
+
+To see every provider in code, use `PROVIDERS_LIST`:
+
+```ts
+import { PROVIDERS_LIST } from '@consumet/extensions';
+
+console.log(PROVIDERS_LIST.MANGA.map(provider => provider.name));
+// [ 'MangaDex', 'ComicK', 'MangaHere', 'MangaPill', 'WeebCentral' ]
+```
+
+### Handling errors
+
+When a request fails, the provider throws a `ProviderError` that says which provider, URL and HTTP status failed:
+
+```ts
+import { MANGA, ProviderError } from '@consumet/extensions';
+
+try {
+  await new MANGA.MangaDex().fetchMangaInfo('not-a-real-id');
+} catch (err) {
+  if (err instanceof ProviderError) {
+    console.log(err.provider); // 'MangaDex'
+    console.log(err.status); // 404
+    console.log(err.url);
+  }
+}
+```
+
+Requests time out after 20 seconds.
+
+### Using a proxy
+
+Some sites block certain regions or servers. Pass a proxy when you create a provider, or call `setProxy` later:
+
+```ts
+const mangadex = new MANGA.MangaDex({ url: 'https://my-proxy.example.com/' });
+
+// Rotate between several proxies (every 5 seconds by default), with an API key sent as X-API-Key:
+mangadex.setProxy({
+  url: ['https://proxy-1.example.com/', 'https://proxy-2.example.com/'],
+  key: 'my-key',
+  rotateInterval: 5000,
+});
+```
+
+The target URL is added straight onto the end of the proxy URL, so with `https://my-proxy.example.com/` a request goes to `https://my-proxy.example.com/https://api.mangadex.org/...`. For proxies that take the target as a query parameter, end the proxy URL with the parameter and set `encodeUrl: true`:
+
+```ts
+mangadex.setProxy({ url: 'https://my-proxy.example.com/get?url=', encodeUrl: true });
+```
+
+### Next steps
+
+- [Anime providers](./anime.md)
+- [Manga providers](./manga.md)
+- Each provider's README, linked from those guides, shows every method with example output.
+
+For bugs and questions, open an [issue](https://github.com/jasanpreetn9/consumet.ts/issues).
+
+<p align="end">(<a href="../README.md">back to table of contents</a>)</p>

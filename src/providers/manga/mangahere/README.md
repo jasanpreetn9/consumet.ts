@@ -309,4 +309,4 @@ returns a promise which resolves into an array of browsed manga. (*[`Promise<ISe
 | `mecha`         | Mecha           |
 | `webtoons`      | Webtoons        |
 
-<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs/guides/manga.md#">back to manga providers list</a>)</p>
+<p align="end">(<a href="../../../../docs/guides/manga.md">back to manga providers list</a>)</p>

@@ -1,12 +1,8 @@
 contact_links:
-  - name: 🙋 Question
-    url: https://discord.gg/qTPfvMxzNH
-    about: Ask your question or suggestion in Discord server
+  - name: 📚 Providers list
+    url: https://github.com/jasanpreetn9/consumet.ts#providers
+    about: The providers available in v2
 
-  - name: 🍔 Providers list
-    url: https://consumet.org/extensions/list/
-    about: A list of the available providers
-
-  - name: 🌐 Rest-API reference
-    url: https://docs.consumet.org
-    about: A reference of the Consumet Rest-API documentation
+  - name: 📖 Documentation
+    url: https://github.com/jasanpreetn9/consumet.ts/tree/v2/docs
+    about: Guides for getting started and for each provider category
