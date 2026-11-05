@@ -47,7 +47,18 @@ Every provider also has `setProxy(config)`; see [using a proxy](./getting-starte
 
 ## Anime Providers
 
-- [ReAnime](../../src/providers/anime/reanime/README.md): sub and dub, from reanime.to. Its streams are encrypted and need a small proxy to play; its README explains how.
+In alphabetical order. Every provider here has sub and dub.
+
+| Provider                                                  | Streams     | Notes                                                                                                |
+| --------------------------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------- |
+| [Anikage](../../src/providers/anime/anikage/README.md)     | Direct HLS  | Plays as is. Includes AniList and MAL ids.                                                           |
+| [Anikoto](../../src/providers/anime/anikoto/README.md)     | Embed only  | Returns an `embedURL` for an iframe.                                                                 |
+| [AnimePahe](../../src/providers/anime/animepahe/README.md) | Direct HLS  | Episode ids use MAL ids. Send the returned `headers`.                                                |
+| [ANV](../../src/providers/anime/anv/README.md)             | Direct HLS  | Needs a proxy that sends the returned `headers`. Includes AniList and MAL ids.                       |
+| [AniWave](../../src/providers/anime/aniwave/README.md)     | Embed only  | Returns an `embedURL` for an iframe.                                                                 |
+| [ReAnime](../../src/providers/anime/reanime/README.md)     | Direct HLS  | Encrypted: needs a small proxy to decrypt playlists and segments; its README explains how.           |
+
+**Direct HLS** returns an `.m3u8` you can play in an HLS player such as [hls.js](https://github.com/video-dev/hls.js). **Embed only** returns a player page to show in an iframe, with `sources` left empty.
 
 > The 1.x anime providers were removed because their sites are unreachable, blocked, or have changed. See [status](../status.md) for details.
 
