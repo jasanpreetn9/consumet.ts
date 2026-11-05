@@ -7,7 +7,7 @@ body:
     attributes:
       label: Source name
       placeholder: |
-        Example: "9anime"
+        Example: "MangaSite"
     validations:
       required: true
 
@@ -16,7 +16,7 @@ body:
     attributes:
       label: Source link
       placeholder: |
-        Example: "https://9anime.to/"
+        Example: "https://mangasite.example/"
     validations:
       required: true
 
@@ -35,12 +35,8 @@ body:
       label: Source type
       options:
         - Anime
-        - Books
-        - Comics
         - Manga
         - Movie/TV
-        - Light Novels
-        - Other
     validations:
       required: true
 

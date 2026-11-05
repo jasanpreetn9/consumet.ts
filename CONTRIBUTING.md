@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to consumet.ts! This guide will help you get started with contributing to the project. Whether you're fixing a bug, adding a new provider, or improving documentation, we appreciate your help.
 
-If you have any questions or suggestions, please open an [issue](https://github.com/jasanpreetn9/consumet.ts/issues/new?assignees=&labels=Bug&template=bug-report.yml) or join our [Discord server](https://discord.gg/qTPfvMxzNH).
+If you have any questions or suggestions, please open an [issue](https://github.com/jasanpreetn9/consumet.ts/issues/new/choose).
 
 No contribution is too small: typo fixes, docs, bug fixes and new providers are all welcome. For a small change (a typo, a fix, a new provider), open a pull request. For a big one, like a refactor, open an issue first so others can weigh in before you start.
 
@@ -143,6 +143,7 @@ A few rules that keep providers simple:
 For reference, check existing providers:
 - Manga (HTML scraping): `src/providers/manga/mangapill/`
 - Manga (JSON API): `src/providers/manga/mangadex/`
+- Anime (JSON API plus an encrypted video host): `src/providers/anime/reanime/`
 
 ## Updating the Codebase
 
@@ -284,9 +285,7 @@ Once you've made your changes and committed them, you're ready to submit a pull 
 
 Need assistance? Here are your options:
 
-- **Discord**: Join our [Discord server](https://discord.gg/qTPfvMxzNH) for real-time help
-- **Issues**: Open an [issue](https://github.com/jasanpreetn9/consumet.ts/issues/new/choose) for bugs or feature requests
-- **Discussions**: Use [GitHub Discussions](https://github.com/jasanpreetn9/consumet.ts/discussions) for questions
+- **Issues**: Open an [issue](https://github.com/jasanpreetn9/consumet.ts/issues/new/choose) for bugs, questions or feature requests
 - **Documentation**: Check the [docs](./docs) folder for guides and examples
 
 Thank you for contributing to consumet.ts! 🎉

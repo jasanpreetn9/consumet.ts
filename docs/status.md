@@ -1,9 +1,11 @@
 # Provider test status
 
 **Observed:** 2026-11-03
-**Scope:** Live Jest integration tests in `test/`
+**Scope:** Live Jest integration tests in the 1.x `test/` folder
 
-> **Update:** Every provider below that did not pass has since been removed from the codebase, along with its tests, docs, and the extractors only it used.
+> **Update:** Every provider below that did not pass has since been removed from the codebase, along with its tests, docs, and the extractors only it used. Separately, v2 narrowed the library to anime, manga and movies, so the books, comics, light novels, meta (AniList, TMDB) and news categories were removed too, including the comics and Anime News Network providers that passed.
+>
+> This page is a snapshot from the 1.x cleanup. It isn't updated as sites change.
 
 
 ## Provider results

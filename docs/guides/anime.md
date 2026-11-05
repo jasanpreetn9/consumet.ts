@@ -2,41 +2,53 @@
 
 <h2>ANIME</h2>
 
-By using `ANIME` category you can interact with the anime providers. And get access to the anime providers methods. Which allows you to search for anime, get the anime information, get the anime episodes with streaming links.
+The `ANIME` category has providers for searching anime, getting their details and episode lists, and getting streaming links.
 
 ```ts
-// ESM
 import { ANIME } from '@consumet/extensions';
 
-// <providerName> is the name of the provider you want to use. list of the proivders is below.
-const animeProvider = new ANIME.<providerName>();
+const reanime = new ANIME.ReAnime();
 ```
 
-## Common Methods
+## Methods
 
-``languages`` - string, the language of the current provider, return language code, example: ``languages: 'en'``
+Every anime provider has these methods. Some providers add extra parameters or methods; check the provider's README.
 
-``isNSFW`` - bool, ``true`` if the provider provides NSFW content.
+| Method                           | Returns                                                       |
+| -------------------------------- | ------------------------------------------------------------- |
+| `search(query, page?)`           | A page of results. Each has an `id` for `fetchAnimeInfo`.     |
+| `fetchAnimeInfo(animeId)`        | Details and the episode list. Each episode has an `id`.       |
+| `fetchEpisodeServers(episodeId)` | The video servers for an episode.                             |
+| `fetchEpisodeSources(episodeId)` | The stream URLs, subtitles and headers needed to play it.     |
 
-``isWorking`` - bool, a bool to identify the state of the current provider, ``true`` if the provider is working, ``false`` otherwise.
+A typical flow:
 
-``isDubAvailableSeparately`` - bool, ``true`` if the provider provides dubbed content.
+```ts
+const { results } = await reanime.search('Frieren');
+const info = await reanime.fetchAnimeInfo(results[0].id);
+const sources = await reanime.fetchEpisodeSources(info.episodes![0].id);
 
-``name`` - string, the name of the current provider, example: ``name: 'Crunchyroll'``
+console.log(sources.sources[0].url);
+```
 
-``baseUrl`` - string, url to the base URL of the current provider
+Some streams need the `headers` in the response (often a `Referer`) to play. Send them with every playlist and segment request.
 
-``logo`` - string, url to the logo image of the current provider
+## Properties
 
-``classPath`` - string,
+| Property                   | Description                                                                           |
+| -------------------------- | ------------------------------------------------------------------------------------- |
+| `name`                     | The provider's name, e.g. `'ReAnime'`.                                                |
+| `isWorking`                | `false` if the provider is known to be broken.                                        |
+| `isNSFW`                   | `true` if the provider only serves NSFW content.                                      |
+| `classPath`                | Where the provider lives in the API, e.g. `'ANIME.ReAnime'`.                          |
+| `stats`                    | All of the above, plus `baseUrl`, `lang` and `logo`, in one object.                   |
 
+Every provider also has `setProxy(config)`; see [using a proxy](./getting-started.md#using-a-proxy).
 
-## Anime Providers List
-This list is in alphabetical order. (except the sub bullet points)
+## Anime Providers
 
-- [ReAnime](../../src/providers/anime/reanime/README.md)
+- [ReAnime](../../src/providers/anime/reanime/README.md): sub and dub, from reanime.to. Its streams are encrypted and need a small proxy to play; its README explains how.
 
-> Earlier anime providers were removed because their sites are unreachable, blocked, or have changed. See [status](../status.md) for details.
+> The 1.x anime providers were removed because their sites are unreachable, blocked, or have changed. See [status](../status.md) for details.
 
-
-<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs">back to table of contents</a>)</p>
+<p align="end">(<a href="../README.md">back to table of contents</a>)</p>

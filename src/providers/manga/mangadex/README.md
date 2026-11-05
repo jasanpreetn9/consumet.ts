@@ -10,8 +10,8 @@ const mangadex = new MANGA.MangaDex();
 - [fetchMangaInfo](#fetchmangainfo)
 - [fetchChapterPages](#fetchchapterpages)
 - [fetchPopular](#fetchpopular)
-- [fetchRecentlyAdded](#fetchRecentlyAdded)
-- [fetchLatestUpdates](#fetchLatestUpdates)
+- [fetchRecentlyAdded](#fetchrecentlyadded)
+- [fetchLatestUpdates](#fetchlatestupdates)
 - [fetchRandom](#fetchrandom)
 
 ### search
@@ -300,4 +300,4 @@ output:
 }
 ```
 
-<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs/guides/manga.md#">back to manga providers list</a>)</p>
+<p align="end">(<a href="../../../../docs/guides/manga.md">back to manga providers list</a>)</p>

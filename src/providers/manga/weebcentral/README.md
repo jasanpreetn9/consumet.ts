@@ -130,4 +130,4 @@ output:
 ]
 ```
 
-<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs/guides/manga.md#">Back to Providers List</a>)</p>
+<p align="end">(<a href="../../../../docs/guides/manga.md">back to manga providers list</a>)</p>

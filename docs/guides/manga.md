@@ -2,41 +2,56 @@
 
 <h2>MANGA</h2>
 
-By using `MANGA` category you can interact with the manga providers. And have access to the manga providers methods. Which allows you to search for manga, get the manga information, get the manga chapters with images to read.
+The `MANGA` category has providers for searching manga, getting their details and chapter lists, and getting the page images for a chapter.
 
 ```ts
-// ESM
 import { MANGA } from '@consumet/extensions';
 
-// <providerName> is the name of the provider you want to use. list of the proivders is below.
-const mangaProvider = MANGA.<providerName>();
+const mangapill = new MANGA.MangaPill();
 ```
 
-## Common Methods
+## Methods
 
-``languages`` - string, the language of the current provider, return language code, example: ``languages: 'en'``
+Every manga provider has these methods. Some providers add extra parameters or methods (MangaDex, for example, has `fetchPopular` and `fetchLatestUpdates`); check the provider's README.
 
-``isNSFW`` - bool, ``true`` if the provider providers NSFW content.
+| Method                         | Returns                                                     |
+| ------------------------------ | ----------------------------------------------------------- |
+| `search(query, page?)`         | A page of results. Each has an `id` for `fetchMangaInfo`.   |
+| `fetchMangaInfo(mangaId)`      | Details and the chapter list. Each chapter has an `id`.     |
+| `fetchChapterPages(chapterId)` | The chapter's pages, in order, each with an `img` URL.      |
 
-``isWorking`` - bool, a bool to identify the state of the current provider, ``true`` if the provider is working, ``false`` otherwise.
+A typical flow:
 
-``name`` - string, the name of the current provider, example: ``name: 'Crunchyroll'``
+```ts
+const { results } = await mangapill.search('One Piece');
+const info = await mangapill.fetchMangaInfo(results[0].id);
+const pages = await mangapill.fetchChapterPages(info.chapters![0].id);
 
-``baseUrl`` - string, url to the base URL of the current provider
+console.log(pages[0].img);
+```
 
-``logo`` - string, url to the logo image of the current provider
+Some image hosts reject requests without a `Referer`. If a page has a `headerForImage`, send it when you load the image.
 
-``classPath`` - string,
+## Properties
 
+| Property    | Description                                                         |
+| ----------- | ------------------------------------------------------------------- |
+| `name`      | The provider's name, e.g. `'MangaPill'`.                            |
+| `isWorking` | `false` if the provider is known to be broken.                      |
+| `isNSFW`    | `true` if the provider only serves NSFW content.                    |
+| `classPath` | Where the provider lives in the API, e.g. `'MANGA.MangaPill'`.      |
+| `stats`     | All of the above, plus `baseUrl`, `lang` and `logo`, in one object. |
 
-## Manga Providers List
-This list is in alphabetical order. (except the sub bullet points)
+Every provider also has `setProxy(config)`; see [using a proxy](./getting-started.md#using-a-proxy).
 
-- [WeebCentral](../../src/providers/manga/weebcentral/README.md)
-- [Mangapill](../../src/providers/manga/mangapill/README.md)
-- [MangaHere](../../src/providers/manga/mangahere/README.md)
-- [MangaDex](../../src/providers/manga/mangadex/README.md)
+## Manga Providers
+
+In alphabetical order:
+
 - [ComicK](../../src/providers/manga/comick/README.md)
+- [MangaDex](../../src/providers/manga/mangadex/README.md): official API. Lists only English chapters hosted on MangaDex.
+- [MangaHere](../../src/providers/manga/mangahere/README.md)
+- [MangaPill](../../src/providers/manga/mangapill/README.md)
+- [WeebCentral](../../src/providers/manga/weebcentral/README.md)
 
-
-<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs">back to table of contents</a>)</p>
+<p align="end">(<a href="../README.md">back to table of contents</a>)</p>

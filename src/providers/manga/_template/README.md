@@ -66,3 +66,5 @@ Returns a promise that resolves to `IMangaChapterPage[]`:
 ```js
 [{ page: 1, img: 'https://...' }]
 ```
+
+<p align="end">(<a href="../../../../docs/guides/manga.md">back to manga providers list</a>)</p>

@@ -175,3 +175,5 @@ const segment = ANIME.ReAnime.decodeSegment(new Uint8Array(segmentBytes));
 Sub and dub servers usually share one stream; the master playlist lists both audio tracks (`Native` and `English`).
 
 If you'd rather not proxy, `embedURL` can be shown in an iframe.
+
+<p align="end">(<a href="../../../../docs/guides/anime.md">back to anime providers list</a>)</p>

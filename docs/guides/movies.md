@@ -2,39 +2,38 @@
 
 <h2>MOVIES</h2>
 
-By using `MOVIES` category you can interact with the movie providers. And have access to the movie providers methods. Which allows you to search for movies and shows, get the movie/tv series information, get the movie/tv series episodes with streaming links.
+> **There are no movie providers right now.** The 1.x ones were removed because their sites are unreachable, blocked, or have changed. See [status](../status.md) for details. `MOVIES` is still exported so new providers can be added without breaking imports.
+
+The `MOVIES` category is for providers that search movies and TV shows, get their details and episode lists, and get streaming links.
 
 ```ts
-// ESM
 import { MOVIES } from '@consumet/extensions';
 
-// <providerName> is the name of the provider you want to use. list of the proivders is below.
-const movieProvider = new MOVIES.<providerName>();
+const provider = new MOVIES.<ProviderName>();
 ```
 
-## Common Methods
+## Methods
 
-``languages`` - string, the language of the current provider, return language code, example: ``languages: 'en'``
+Every movie provider will have these methods:
 
-``isNSFW`` - bool, ``true`` if the provider providers NSFW content.
+| Method                           | Returns                                                       |
+| -------------------------------- | ------------------------------------------------------------- |
+| `search(query, page?)`           | A page of results. Each has an `id` for `fetchMediaInfo`.     |
+| `fetchMediaInfo(mediaId)`        | Details and, for TV shows, the episode list.                  |
+| `fetchEpisodeServers(episodeId)` | The video servers for an episode or movie.                    |
+| `fetchEpisodeSources(episodeId)` | The stream URLs, subtitles and headers needed to play it.     |
 
-``isWorking`` - bool, a bool to identify the state of the current provider, ``true`` if the provider is working, ``false`` otherwise. 
+## Properties
 
-``name`` - string, the name of the current provider, example: ``name: 'FlixHQ'``
+| Property         | Description                                                                         |
+| ---------------- | ----------------------------------------------------------------------------------- |
+| `name`           | The provider's name.                                                                |
+| `isWorking`      | `false` if the provider is known to be broken.                                      |
+| `isNSFW`         | `true` if the provider only serves NSFW content.                                    |
+| `classPath`      | Where the provider lives in the API, e.g. `'MOVIES.<ProviderName>'`.                |
+| `stats`          | All of the above, plus `baseUrl`, `lang` and `logo`, in one object.                 |
+| `supportedTypes` | A `Set` of the media types the provider has. Check one with `supportedTypes.has(type)`. |
 
-``baseUrl`` - string, url to the base URL of the current provider
+Want to add one? See [CONTRIBUTING.md](../../CONTRIBUTING.md#writing-a-provider).
 
-``logo`` - string, url to the logo image of the current provider
-
-``classPath`` - string,
-
-``supportedTypes`` - object, A ``Set`` of supported types by the provider, to check if a type is supported use  ``supportedTypes.has(<the type to be checked>)``.
-  
-
-## Movies Providers List
-This list is in alphabetical order. (except the sub bullet points)
-
-> **Note:** There are currently no working movie providers. The previous ones were removed because their sites are unreachable, blocked, or have changed. See [status](../status.md) for details.
-
-
-<p align="end">(<a href="https://github.com/jasanpreetn9/consumet.ts/blob/master/docs">back to table of contents</a>)</p>
+<p align="end">(<a href="../README.md">back to table of contents</a>)</p>
