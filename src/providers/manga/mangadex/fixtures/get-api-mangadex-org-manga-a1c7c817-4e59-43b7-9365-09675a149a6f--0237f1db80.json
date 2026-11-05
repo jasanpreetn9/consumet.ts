@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "https://api.mangadex.org/manga/a1c7c817-4e59-43b7-9365-09675a149a6f/feed?translatedLanguage%5B%5D=en&order%5Bvolume%5D=desc&order%5Bchapter%5D=desc&includeExternalUrl=0&limit=500&offset=0",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "data": "{\"result\":\"ok\",\"response\":\"collection\",\"data\":[{\"id\":\"391c1555-36ee-423f-a65d-cb5f8abd5286\",\"type\":\"chapter\",\"attributes\":{\"volume\":null,\"chapter\":\"1191\",\"title\":\"Loki Is Here\",\"translatedLanguage\":\"en\",\"externalUrl\":null,\"isUnavailable\":false,\"publishAt\":\"2026-08-25T23:14:12+00:00\",\"readableAt\":\"2026-08-25T23:14:12+00:00\",\"createdAt\":\"2026-08-25T15:48:31+00:00\",\"updatedAt\":\"2026-08-25T23:14:12+00:00\",\"version\":3,\"pages\":14},\"relationships\":[{\"id\":\"ed113659-6eca-4006-aeb5-34e5623e2ddb\",\"type\":\"scanlation_group\"},{\"id\":\"a1c7c817-4e59-43b7-9365-09675a149a6f\",\"type\":\"manga\"},{\"id\":\"3a4b1060-febe-47a9-9e02-166aeb9fb123\",\"type\":\"user\"}]}],\"limit\":500,\"offset\":0,\"total\":1}"
+}

@@ -3,7 +3,7 @@ import { ITitle, MediaStatus } from './common';
 export interface IMangaResult {
   id: string;
   title: string | [lang: string][] | ITitle;
-  altTitles?: string | string[] | [lang: string][];
+  altTitles?: string | string[] | Record<string, string>[];
   image?: string;
   description?: string | [lang: string][] | { [lang: string]: string };
   status?: MediaStatus;

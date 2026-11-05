@@ -71,7 +71,7 @@ managdex.fetchMangaInfo("b35f67b6-bfb9-4cbd-86f0-621f37e6cb41").then(data => {
   console.log(data);
 })
 ```
-returns a promise which resolves into an manga info object (including the chapters). (*[`Promise<IMangaInfo>`](../../../core/types/manga.ts)*)\
+returns a promise which resolves into an manga info object (including the chapters). Only English chapters hosted on MangaDex are listed; chapters that just link to an official site (e.g. MangaPlus) are left out, since they have no pages to fetch. (*[`Promise<IMangaInfo>`](../../../core/types/manga.ts)*)\
 output:
 ```js
 {

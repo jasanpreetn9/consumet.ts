@@ -1,7 +1,5 @@
-import { encode } from 'ascii-url-encoder';
-import { AxiosResponse } from 'axios';
-
 import {
+  IMangaChapter,
   IMangaChapterPage,
   IMangaInfo,
   IMangaResult,
@@ -12,6 +10,53 @@ import {
   substringBefore,
 } from '../../../core';
 
+type Localized = Record<string, string>;
+
+interface Relationship {
+  id: string;
+  type: string;
+  attributes?: { fileName?: string };
+}
+
+interface Manga {
+  id: string;
+  attributes: {
+    title: Localized;
+    altTitles: Localized[];
+    description: Localized;
+    status: string;
+    year: number | null;
+    contentRating: string;
+    lastVolume: string | null;
+    lastChapter: string | null;
+    tags: { attributes: { group: string; name: Localized } }[];
+  };
+  relationships: Relationship[];
+}
+
+interface Chapter {
+  id: string;
+  attributes: {
+    title: string | null;
+    chapter: string | null;
+    volume: string | null;
+    pages: number;
+  };
+}
+
+type Params = Record<string, string | number | string[]>;
+
+const MAX_LIMIT = 100;
+const MAX_OFFSET = 10000;
+const FEED_PAGE_SIZE = 500;
+
+/** English if there is one, otherwise the first language listed. */
+const localized = (text: Localized | undefined): string | undefined =>
+  text ? (text.en ?? Object.values(text)[0]) : undefined;
+
+const tagsIn = (manga: Manga, group: string): string[] =>
+  manga.attributes.tags.filter(tag => tag.attributes.group === group).map(tag => tag.attributes.name.en);
+
 class MangaDex extends MangaParser {
   override readonly name = 'MangaDex';
   protected override baseUrl = 'https://mangadex.org';
@@ -20,56 +65,41 @@ class MangaDex extends MangaParser {
   private readonly apiUrl = 'https://api.mangadex.org';
 
   override fetchMangaInfo = async (mangaId: string): Promise<IMangaInfo> => {
-    const { data } = await this.client.get(`${this.apiUrl}/manga/${mangaId}`);
-    const mangaInfo: IMangaInfo = {
-      id: data.data.id,
-      // Some titles have no English key (e.g. Berserk is only `ja-ro`).
-      title: data.data.attributes.title.en ?? Object.values(data.data.attributes.title)[0],
-      altTitles: data.data.attributes.altTitles,
-      description: data.data.attributes.description,
-      genres: data.data.attributes.tags
-        .filter((tag: any) => tag.attributes.group === 'genre')
-        .map((tag: any) => tag.attributes.name.en),
-      themes: data.data.attributes.tags
-        .filter((tag: any) => tag.attributes.group === 'theme')
-        .map((tag: any) => tag.attributes.name.en),
-      status: capitalizeFirstLetter(data.data.attributes.status) as MediaStatus,
-      releaseDate: data.data.attributes.year,
-      chapters: [],
-    };
+    const { data } = await this.client.get(`${this.apiUrl}/manga/${mangaId}`, {
+      params: { 'includes[]': ['cover_art'] },
+    });
+    const manga: Manga = data.data;
 
-    const allChapters = await this.fetchAllChapters(mangaId, 0);
-    for (const chapter of allChapters) {
-      mangaInfo.chapters?.push({
+    return {
+      id: manga.id,
+      title: localized(manga.attributes.title)!,
+      altTitles: manga.attributes.altTitles,
+      description: manga.attributes.description,
+      genres: tagsIn(manga, 'genre'),
+      themes: tagsIn(manga, 'theme'),
+      status: capitalizeFirstLetter(manga.attributes.status) as MediaStatus,
+      releaseDate: manga.attributes.year ?? undefined,
+      image: this.coverUrl(manga),
+      chapters: (await this.fetchAllChapters(mangaId)).map((chapter): IMangaChapter => ({
         id: chapter.id,
-        title: chapter.attributes.title ? chapter.attributes.title : chapter.attributes.chapter,
-        chapterNumber: chapter.attributes.chapter,
-        volumeNumber: chapter.attributes.volume,
+        title: chapter.attributes.title || chapter.attributes.chapter || '',
+        chapterNumber: chapter.attributes.chapter ?? undefined,
+        volumeNumber: chapter.attributes.volume ?? undefined,
         pages: chapter.attributes.pages,
-      });
-    }
-
-    const findCoverArt = data.data.relationships.find((rel: any) => rel.type === 'cover_art');
-    const coverArt = await this.fetchCoverImage(findCoverArt?.id);
-    mangaInfo.image = `${this.baseUrl}/covers/${mangaInfo.id}/${coverArt}`;
-
-    return mangaInfo;
+      })),
+    };
   };
 
   /**
    * @currently only supports english
    */
   override fetchChapterPages = async (chapterId: string): Promise<IMangaChapterPage[]> => {
-    const res = await this.client.get(`${this.apiUrl}/at-home/server/${chapterId}`);
-    const pages: { img: string; page: number }[] = [];
+    const { data } = await this.client.get(`${this.apiUrl}/at-home/server/${chapterId}`);
 
-    for (const id of res.data.chapter.data) {
-      pages.push({
-        img: `${res.data.baseUrl}/data/${res.data.chapter.hash}/${id}`,
-        page: parseInt(substringBefore(id, '-').replace(/[^0-9.]/g, '')),
-      });
-    }
-    return pages;
+    return data.chapter.data.map((file: string) => ({
+      img: `${data.baseUrl}/data/${data.chapter.hash}/${file}`,
+      page: parseInt(substringBefore(file, '-').replace(/[^0-9.]/g, '')),
+    }));
   };
 
   /**
@@ -81,242 +111,100 @@ class MangaDex extends MangaParser {
     query: string,
     page: number = 1,
     limit: number = 20,
-  ): Promise<ISearch<IMangaResult>> => {
-    if (page <= 0) throw new Error('Page number must be greater than 0');
-    if (limit > 100) throw new Error('Limit must be less than or equal to 100');
-    if (limit * (page - 1) >= 10000) throw new Error('not enough results');
+  ): Promise<ISearch<IMangaResult>> =>
+    this.fetchList({ title: query, 'order[relevance]': 'desc' }, page, limit);
 
-    const res = await this.client.get(
-      `${this.apiUrl}/manga?limit=${limit}&title=${encode(query)}&limit=${limit}&offset=${
-        limit * (page - 1)
-      }&order[relevance]=desc`,
-    );
-
-    if (res.data.result == 'ok') {
-      const results: ISearch<IMangaResult> = {
-        currentPage: page,
-        results: [],
-      };
-
-      for (const manga of res.data.data) {
-        const findCoverArt = manga.relationships.find((item: any) => item.type === 'cover_art');
-        const coverArtId = findCoverArt ? findCoverArt.id : null;
-        const coverArt = await this.fetchCoverImage(
-          coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId,
-        );
-
-        results.results.push({
-          id: manga.id,
-          title: Object.values(manga.attributes.title)[0] as string,
-          altTitles: manga.attributes.altTitles,
-          description: Object.values(manga.attributes.description)[0] as string,
-          status: manga.attributes.status,
-          releaseDate: manga.attributes.year,
-          contentRating: manga.attributes.contentRating,
-          lastVolume: manga.attributes.lastVolume,
-          lastChapter: manga.attributes.lastChapter,
-          image: `${this.baseUrl}/covers/${manga.id}/${coverArt}`,
-        });
-      }
-
-      return results;
-    } else {
-      throw new Error(res.data.message);
-    }
-  };
   fetchRandom = async (): Promise<ISearch<IMangaResult>> => {
-    const res = await this.client.get(`${this.apiUrl}/manga/random`);
+    const { data } = await this.client.get(`${this.apiUrl}/manga/random`, {
+      params: { 'includes[]': ['cover_art'] },
+    });
+    return { currentPage: 1, results: [this.toResult(data.data)] };
+  };
 
-    if (res.data.result == 'ok') {
-      const results: ISearch<IMangaResult> = {
-        currentPage: 1,
-        results: [],
-      };
-      const findCoverArt = res.data.data.relationships.find((item: any) => item.type === 'cover_art');
-      const coverArtId = findCoverArt ? findCoverArt.id : null;
-      const coverArt = await this.fetchCoverImage(
-        coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId,
-      );
+  fetchRecentlyAdded = async (page: number = 1, limit: number = 20): Promise<ISearch<IMangaResult>> =>
+    this.fetchList(
+      {
+        'contentRating[]': ['safe', 'suggestive', 'erotica'],
+        'order[createdAt]': 'desc',
+        hasAvailableChapters: 'true',
+      },
+      page,
+      limit,
+    );
 
-      results.results.push({
-        id: res.data.data.id,
-        title: Object.values(res.data.data.attributes.title)[0] as string,
-        altTitles: res.data.data.attributes.altTitles,
-        description: Object.values(res.data.data.attributes.description)[0] as string,
-        status: res.data.data.attributes.status,
-        releaseDate: res.data.data.attributes.year,
-        contentRating: res.data.data.attributes.contentRating,
-        lastVolume: res.data.data.attributes.lastVolume,
-        lastChapter: res.data.data.attributes.lastChapter,
-        image: `${this.baseUrl}/covers/${res.data.data.id}/${coverArt}`,
+  fetchLatestUpdates = async (page: number = 1, limit: number = 20): Promise<ISearch<IMangaResult>> =>
+    this.fetchList({ 'order[latestUploadedChapter]': 'desc' }, page, limit);
+
+  fetchPopular = async (page: number = 1, limit: number = 20): Promise<ISearch<IMangaResult>> =>
+    this.fetchList(
+      {
+        'order[followedCount]': 'desc',
+        'contentRating[]': ['safe', 'suggestive'],
+        hasAvailableChapters: 'true',
+      },
+      page,
+      limit,
+    );
+
+  /** Pages through `/manga` with the given filters. Covers come back in the same request. */
+  private fetchList = async (params: Params, page: number, limit: number): Promise<ISearch<IMangaResult>> => {
+    if (page <= 0) throw new Error('Page number must be greater than 0');
+    if (limit > MAX_LIMIT) throw new Error(`Limit must be less than or equal to ${MAX_LIMIT}`);
+    const offset = limit * (page - 1);
+    if (offset >= MAX_OFFSET) throw new Error('not enough results');
+
+    const { data } = await this.client.get(`${this.apiUrl}/manga`, {
+      params: { ...params, 'includes[]': ['cover_art'], limit, offset },
+    });
+
+    return {
+      currentPage: page,
+      hasNextPage: offset + limit < Math.min(data.total, MAX_OFFSET),
+      totalResults: data.total,
+      results: data.data.map((manga: Manga) => this.toResult(manga)),
+    };
+  };
+
+  /**
+   * Every English chapter that MangaDex hosts. Chapters that only link to an
+   * official site (e.g. MangaPlus for One Piece) are left out: they have no
+   * pages here, so fetchChapterPages would 404 on them.
+   */
+  private fetchAllChapters = async (mangaId: string): Promise<Chapter[]> => {
+    const chapters: Chapter[] = [];
+    for (let offset = 0; ; offset += FEED_PAGE_SIZE) {
+      const { data } = await this.client.get(`${this.apiUrl}/manga/${mangaId}/feed`, {
+        params: {
+          'translatedLanguage[]': ['en'],
+          'order[volume]': 'desc',
+          'order[chapter]': 'desc',
+          includeExternalUrl: 0,
+          limit: FEED_PAGE_SIZE,
+          offset,
+        },
       });
-
-      return results;
-    } else {
-      throw new Error(res.data.message);
+      chapters.push(...data.data);
+      if (!data.data.length || chapters.length >= data.total) return chapters;
     }
   };
-  fetchRecentlyAdded = async (page: number = 1, limit: number = 20): Promise<ISearch<IMangaResult>> => {
-    if (page <= 0) throw new Error('Page number must be greater than 0');
-    if (limit > 100) throw new Error('Limit must be less than or equal to 100');
-    if (limit * (page - 1) >= 10000) throw new Error('not enough results');
 
-    const res = await this.client.get(
-      `${
-        this.apiUrl
-      }/manga?includes[]=cover_art&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&order[createdAt]=desc&hasAvailableChapters=true&limit=${limit}&offset=${
-        limit * (page - 1)
-      }`,
-    );
-
-    if (res.data.result == 'ok') {
-      const results: ISearch<IMangaResult> = {
-        currentPage: page,
-        results: [],
-      };
-
-      for (const manga of res.data.data) {
-        const findCoverArt = manga.relationships.find((item: any) => item.type === 'cover_art');
-        const coverArtId = findCoverArt ? findCoverArt.id : null;
-        const coverArt = await this.fetchCoverImage(
-          coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId,
-        );
-        results.results.push({
-          id: manga.id,
-          title: Object.values(manga.attributes.title)[0] as string,
-          altTitles: manga.attributes.altTitles,
-          description: Object.values(manga.attributes.description)[0] as string,
-          status: manga.attributes.status,
-          releaseDate: manga.attributes.year,
-          contentRating: manga.attributes.contentRating,
-          lastVolume: manga.attributes.lastVolume,
-          lastChapter: manga.attributes.lastChapter,
-          image: `${this.baseUrl}/covers/${manga.id}/${coverArt}`,
-        });
-      }
-
-      return results;
-    } else {
-      throw new Error(res.data.message);
-    }
-  };
-  fetchLatestUpdates = async (page: number = 1, limit: number = 20): Promise<ISearch<IMangaResult>> => {
-    if (page <= 0) throw new Error('Page number must be greater than 0');
-    if (limit > 100) throw new Error('Limit must be less than or equal to 100');
-    if (limit * (page - 1) >= 10000) throw new Error('not enough results');
-
-    const res = await this.client.get(
-      `${this.apiUrl}/manga?order[latestUploadedChapter]=desc&limit=${limit}&offset=${limit * (page - 1)}`,
-    );
-
-    if (res.data.result == 'ok') {
-      const results: ISearch<IMangaResult> = {
-        currentPage: page,
-        results: [],
-      };
-
-      for (const manga of res.data.data) {
-        const findCoverArt = manga.relationships.find((item: any) => item.type === 'cover_art');
-        const coverArtId = findCoverArt ? findCoverArt.id : null;
-        const coverArt = await this.fetchCoverImage(
-          coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId,
-        );
-
-        results.results.push({
-          id: manga.id,
-          title: Object.values(manga.attributes.title)[0] as string,
-          altTitles: manga.attributes.altTitles,
-          description: Object.values(manga.attributes.description)[0] as string,
-          status: manga.attributes.status,
-          releaseDate: manga.attributes.year,
-          contentRating: manga.attributes.contentRating,
-          lastVolume: manga.attributes.lastVolume,
-          lastChapter: manga.attributes.lastChapter,
-          image: `${this.baseUrl}/covers/${manga.id}/${coverArt}`,
-        });
-      }
-
-      return results;
-    } else {
-      throw new Error(res.data.message);
-    }
-  };
-  fetchPopular = async (page: number = 1, limit: number = 20): Promise<ISearch<IMangaResult>> => {
-    if (page <= 0) throw new Error('Page number must be greater than 0');
-    if (limit > 100) throw new Error('Limit must be less than or equal to 100');
-    if (limit * (page - 1) >= 10000) throw new Error('not enough results');
-
-    const res = await this.client.get(
-      `${
-        this.apiUrl
-      }/manga?includes[]=cover_art&includes[]=artist&includes[]=author&order[followedCount]=desc&contentRating[]=safe&contentRating[]=suggestive&hasAvailableChapters=true&limit=${limit}&offset=${
-        limit * (page - 1)
-      }`,
-    );
-
-    if (res.data.result == 'ok') {
-      const results: ISearch<IMangaResult> = {
-        currentPage: page,
-        results: [],
-      };
-
-      for (const manga of res.data.data) {
-        const findCoverArt = manga.relationships.find((item: any) => item.type === 'cover_art');
-        const coverArtId = findCoverArt ? findCoverArt.id : null;
-        const coverArt = await this.fetchCoverImage(
-          coverArtId === null || coverArtId === void 0 ? void 0 : coverArtId,
-        );
-
-        results.results.push({
-          id: manga.id,
-          title: Object.values(manga.attributes.title)[0] as string,
-          altTitles: manga.attributes.altTitles,
-          description: Object.values(manga.attributes.description)[0] as string,
-          status: manga.attributes.status,
-          releaseDate: manga.attributes.year,
-          contentRating: manga.attributes.contentRating,
-          lastVolume: manga.attributes.lastVolume,
-          lastChapter: manga.attributes.lastChapter,
-          image: `${this.baseUrl}/covers/${manga.id}/${coverArt}`,
-        });
-      }
-
-      return results;
-    } else {
-      throw new Error(res.data.message);
-    }
-  };
-  private fetchAllChapters = async (
-    mangaId: string,
-    offset: number,
-    res?: AxiosResponse<any, any>,
-  ): Promise<any[]> => {
-    if (res?.data?.offset + 96 >= res?.data?.total) {
-      return [];
-    }
-
-    const response = await this.client.get(
-      `${this.apiUrl}/manga/${mangaId}/feed?offset=${offset}&limit=96&order[volume]=desc&order[chapter]=desc&translatedLanguage[]=en`,
-    );
-
-    return [...response.data.data, ...(await this.fetchAllChapters(mangaId, offset + 96, response))];
+  private coverUrl = (manga: Manga): string | undefined => {
+    const fileName = manga.relationships.find(rel => rel.type === 'cover_art')?.attributes?.fileName;
+    return fileName ? `${this.baseUrl}/covers/${manga.id}/${fileName}` : undefined;
   };
 
-  private fetchCoverImage = async (coverId: string): Promise<string> => {
-    const { data } = await this.client.get(`${this.apiUrl}/cover/${coverId}`);
-
-    const fileName = data.data.attributes.fileName;
-
-    return fileName;
-  };
+  private toResult = (manga: Manga): IMangaResult => ({
+    id: manga.id,
+    title: localized(manga.attributes.title)!,
+    altTitles: manga.attributes.altTitles,
+    description: localized(manga.attributes.description),
+    status: manga.attributes.status as MediaStatus,
+    releaseDate: manga.attributes.year ?? undefined,
+    contentRating: manga.attributes.contentRating,
+    lastVolume: manga.attributes.lastVolume,
+    lastChapter: manga.attributes.lastChapter,
+    image: this.coverUrl(manga),
+  });
 }
-
-// (async () => {
-//   const md = new MangaDex();
-//   const search = await md.search('solo leveling');
-//   const manga = await md.fetchMangaInfo(search.results[0].id);
-//   const chapterPages = await md.fetchChapterPages(manga.chapters![0].id);
-//   console.log(chapterPages);
-// })();
 
 export default MangaDex;
