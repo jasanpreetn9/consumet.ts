@@ -8,13 +8,13 @@ on:
         required: true
 
 jobs:
-  publish-npm:
+  unpublish-npm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4.1.0
+      - uses: actions/setup-node@v4
         with:
-          node-version: 24.22.2
+          node-version-file: .nvmrc
           registry-url: https://registry.npmjs.org/
       - run: npm unpublish @consumet/extensions@$VERSION
         env:
