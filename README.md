@@ -38,7 +38,7 @@
 consumet.ts gives you one API across many sites: create a provider, call `search`, then fetch details, chapters or streams. Sites change, go down and get blocked all the time, and by late 2026 most of the 1.x providers no longer worked. v2 is a cleanup focused on keeping what's left reliable:
 
 - **Only working providers.** Every provider whose site was down, blocked or changed was removed, along with the code only it used. [docs/status.md](./docs/status.md) records why each one went.
-- **A narrower scope.** v2 covers anime, manga and movies. The other 1.x categories (books, comics, light novels, meta, news) were dropped.
+- **A narrower scope.** v2 covers anime, manga and movies, the categories consumet.ts is used for. The other 1.x categories (books, comics, light novels, meta, news) were mostly broken or empty, and not worth maintaining. [docs/status.md](./docs/status.md#why-the-other-categories-were-removed) goes through each one.
 - **A simpler layout.** The shared framework lives in `src/core/` and each provider is a self-contained folder in `src/providers/`, so adding or fixing a provider doesn't mean reading the rest of the codebase.
 - **Clearer errors.** Failed requests throw a `ProviderError` that says which provider, URL and HTTP status failed.
 - **Tests that run offline.** Each provider's tests replay recorded responses, so CI checks the code without depending on the sites being up.
@@ -128,7 +128,7 @@ console.log(PROVIDERS_LIST.MANGA.map(provider => provider.name));
 ## Coming from 1.x
 
 - **Removed providers.** Every 1.x provider whose site was down, blocked or changed is gone; [docs/status.md](./docs/status.md) shows why each one went.
-- **Removed categories.** v2 covers anime, manga and movies only. The books, comics, light novels, meta (AniList, TMDB), news and others categories were removed.
+- **Removed categories.** The books, comics, light novels, meta (AniList, MyAnimeList, TMDB), news and others categories were removed to focus on streaming and reading. Most of their providers were broken or empty; [docs/status.md](./docs/status.md#why-the-other-categories-were-removed) has the details.
 - **Errors.** Request failures now throw `ProviderError` instead of a plain `Error` or an axios error.
 - **Types.** A few unused types were removed: `IAnimeEpisodeV2`, `StreamingServers`, `WatchListType`, `Topics`, `IPeopleResult`, `IStaff` and `IRoles`.
 
