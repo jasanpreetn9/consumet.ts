@@ -14,7 +14,8 @@
     "lint": "prettier --write \"src/**/*.ts\" \"jest.config.ts\"",
     "prepare": "husky || true",
     "test": "jest",
-    "test:manga": "jest src/providers/manga"
+    "test:manga": "jest src/providers/manga",
+    "test:live": "LIVE=1 jest"
   },
   "files": [
     "dist"
