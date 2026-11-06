@@ -163,7 +163,10 @@ The stream URL is short-lived (it carries a token), so fetch sources right befor
 FlixCloud encrypts its playlists, so the `.m3u8` above won't play in a standard HLS player directly. Serve it through a small proxy that:
 
 1. Fetches each playlist (master and variants) with `headers`, then returns `ReAnime.decryptPlaylist(body, playlistKey)`. Relative URIs in the playlist are relative to the original playlist URL.
-2. Fetches each segment with `headers`, then returns `ReAnime.decodeSegment(bytes)`, which strips the fake image header some segments are wrapped in.
+2. Fetches each segment with `headers`, then returns `ReAnime.decodeSegment(bytes)`, which strips the fake image header some segments are wrapped in. Other segments pass through unchanged.
+3. Fetches the AES-128 key the variant playlist names (`#EXT-X-KEY:METHOD=AES-128,URI="key.bin"`) with `headers`, and returns it as is. This is standard HLS encryption: the player decrypts the segments itself.
+
+Segments are served with an `image/webp` content type even though they're video, so set `Content-Type: video/mp2t` on them if your player checks it.
 
 ```ts
 import { ANIME } from '@consumet/extensions';

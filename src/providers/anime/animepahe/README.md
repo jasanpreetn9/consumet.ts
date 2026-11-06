@@ -128,14 +128,14 @@ Returns a promise that resolves to [`ISource`](../../../core/types/streaming.ts)
 ```js
 {
   headers: { Referer: 'https://megavid.buzz/' },
-  sources: [{ url: 'https://s-90.megavid.se/uwu/v1.FuVKDycO.../master.txt', quality: 'auto', isM3U8: true }],
-  subtitles: [{ url: 'https://s-90.megavid.se/uwu/...', lang: 'English' }, {...}],
+  sources: [{ url: 'https://megavid.buzz/vid/UStYM3QB...', quality: 'auto', isM3U8: true }],
+  subtitles: [{ url: 'https://...vtt', lang: 'Arabic' }, { url: 'https://...vtt', lang: 'English' }, {...}],
   intro: { start: 0, end: 89 },
   outro: { start: 1460, end: 1549 },
   embedURL: 'https://megavid.buzz/mal/52991/1/sub'
 }
 ```
 
-The playlist ends in `.txt` but is an HLS playlist. With `'Megaplay'`, `sources` is empty and only `embedURL` is set.
+Send `headers` with the playlist requests: Megavid answers 403 without its Referer. The segments are plain MPEG-TS. With `'Megaplay'`, `sources` is empty and only `embedURL` is set.
 
 <p align="end">(<a href="../../../../docs/guides/anime.md">back to anime providers list</a>)</p>

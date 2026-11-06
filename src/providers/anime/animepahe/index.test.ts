@@ -33,7 +33,8 @@ test('fetchEpisodeServers: returns Megavid and Megaplay', async () => {
 
 test('fetchEpisodeSources: returns a Megavid HLS stream with subtitles', async () => {
   const data = await animepahe.fetchEpisodeSources(FRIEREN_EP1);
-  expect(data.sources[0].url).toMatch(/^https:\/\//);
+  // The upstream stream lives on megavid.buzz; Megavid's own copy is on a host that doesn't resolve.
+  expect(data.sources[0].url).toMatch(/^https:\/\/megavid\.buzz\//);
   expect(data.sources[0].isM3U8).toBe(true);
   expect(data.subtitles!.length).toBeGreaterThan(0);
   expect(data.intro!.end).toBeGreaterThan(0);
