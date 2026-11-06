@@ -177,11 +177,16 @@ yarn test src/providers/manga/mangadex
 # Re-record one provider's fixtures against the live site
 RECORD=1 yarn test src/providers/manga/mangadex
 
+# Check one provider (or all, with yarn test:live) against the live site, without touching fixtures
+LIVE=1 yarn test src/providers/manga/mangadex
+
 # Type-check and build
 yarn build
 ```
 
 Every provider should have an `index.test.ts` next to it, with fixtures recorded.
+
+Because CI replays fixtures, it can't tell when a site changes. The [Provider health](.github/workflows/provider-health.yml) workflow covers that: every day it runs each provider's tests with `LIVE=1` and keeps one "Provider health" issue up to date with the providers that fail. If your provider shows up there, re-record its fixtures after fixing it.
 
 ## Code Style
 
