@@ -164,17 +164,26 @@ class AnimePahe extends AnimeParser {
 
     if (server === 'Megaplay') return { sources: [], embedURL: player };
 
-    const { data } = await this.client.get<MegavidSource>(`${player}/source`, {
-      headers: { Referer: player, 'X-Requested-With': 'XMLHttpRequest' },
-    });
+    // Megavid's default answer points at its own copy on a host that doesn't
+    // resolve; its player then falls back to `?provider=1`, the upstream
+    // stream on megavid.buzz. Ask for that directly, and read intro/outro
+    // chapters from the default answer, which is the only one that has them.
+    const request = { headers: { Referer: player, 'X-Requested-With': 'XMLHttpRequest' } };
+    const [{ data }, { data: chapters }] = await Promise.all([
+      this.client.get<MegavidSource>(`${player}/source`, { ...request, params: { provider: 1 } }),
+      this.client.get<MegavidSource>(`${player}/source`, request),
+    ]);
     if (!data?.source) throw new Error(`[${this.name}] Megavid returned no stream for episode ${episodeId}`);
 
     const chapter = (title: string) => {
-      const found = data.chapters?.find(c => c.title.toLowerCase() === title);
+      const found = [...(data.chapters ?? []), ...(chapters?.chapters ?? [])].find(
+        c => c.title.toLowerCase() === title,
+      );
       return found && found.end > 0 ? { start: found.start, end: found.end } : undefined;
     };
 
     return {
+      // Playlists answer 403 without a megavid.buzz Referer.
       headers: { Referer: `${MEGAVID}/` },
       sources: [
         { url: data.source, quality: 'auto', isM3U8: data.type === 'hls' || data.type === undefined },
