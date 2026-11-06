@@ -13,14 +13,21 @@ import axios, { AxiosAdapter, AxiosError, AxiosResponse, InternalAxiosRequestCon
  *
  *   RECORD=1 yarn test src/providers/manga/<name>
  *
+ * Check a provider against the live site without touching its fixtures with:
+ *
+ *   LIVE=1 yarn test src/providers/manga/<name>
+ *
  * @param dir The provider's folder; pass `__dirname` from its test file.
  */
 export const fixtureAdapter = (dir: string): AxiosAdapter => {
   const record = process.env.RECORD === '1';
+  const liveOnly = process.env.LIVE === '1';
   const live = axios.getAdapter(['http']);
   const fixturesDir = join(dir, 'fixtures');
 
   return async (config: InternalAxiosRequestConfig): Promise<AxiosResponse> => {
+    if (liveOnly) return live(config);
+
     const method = (config.method ?? 'get').toUpperCase();
     const url = axios.getUri(config);
     const file = join(fixturesDir, fixtureName(method, url, config.data));

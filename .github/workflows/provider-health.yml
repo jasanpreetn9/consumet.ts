@@ -1,0 +1,128 @@
+name: Provider health
+
+# Runs every provider's tests against the live sites (LIVE=1), instead of the
+# recorded fixtures that normal CI replays. Catches providers that broke
+# because a site changed, moved or went down.
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    outputs:
+      providers: ${{ steps.find.outputs.providers }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: find
+        run: |
+          providers=$(find src/providers -mindepth 2 -maxdepth 2 -type d ! -name _template ! -name fixtures \
+            -exec test -e '{}/index.test.ts' ';' -print | sort | jq -R . | jq -sc .)
+          echo "providers=$providers" >> "$GITHUB_OUTPUT"
+
+  check:
+    needs: list
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        provider: ${{ fromJson(needs.list.outputs.providers) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      - id: test
+        continue-on-error: true
+        run: npx jest "${{ matrix.provider }}"
+        env:
+          LIVE: "1"
+
+      - name: Save result
+        if: always()
+        run: |
+          name=$(echo "${{ matrix.provider }}" | sed 's#src/providers/##; s#/#-#g')
+          echo "name=$name" >> "$GITHUB_ENV"
+          mkdir -p result
+          jq -n --arg provider "${{ matrix.provider }}" --arg outcome "${{ steps.test.outcome }}" \
+            '{provider: $provider, outcome: $outcome}' > "result/$name.json"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: health-${{ env.name }}
+          path: result/
+          retention-days: 7
+
+  report:
+    needs: check
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      TITLE: "Provider health: providers failing against live sites"
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: health-*
+          path: results
+          merge-multiple: true
+
+      - name: Summarize
+        id: summary
+        run: |
+          jq -s 'sort_by(.provider)' results/*.json > all.json
+          failing=$(jq -r '[.[] | select(.outcome != "success") | .provider] | join(", ")' all.json)
+          echo "failing=$failing" >> "$GITHUB_OUTPUT"
+          {
+            echo "## Provider health"
+            echo
+            echo "| Provider | Live tests |"
+            echo "| --- | --- |"
+            jq -r '.[] | "| `\(.provider)` | \(if .outcome == "success" then "✅ pass" else "❌ fail" end) |"' all.json
+            echo
+            echo "A failure can also mean the site blocks GitHub's servers; re-run locally with \`LIVE=1 yarn test <provider>\` to confirm."
+          } > summary.md
+          cat summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Update the health issue
+        run: |
+          if [ "$(gh api "repos/$GH_REPO" --jq .has_issues)" != "true" ]; then
+            echo "::notice::Issues are disabled on this repository, so no health issue was opened or updated."
+            exit 0
+          fi
+          existing=$(gh issue list --state open --search "in:title \"$TITLE\"" --json number,title \
+            --jq ".[] | select(.title == \"$TITLE\") | .number" | head -n1)
+          if [ -n "${{ steps.summary.outputs.failing }}" ]; then
+            { cat summary.md; echo; echo "Run: $RUN_URL"; } > body.md
+            if [ -n "$existing" ]; then
+              gh issue edit "$existing" --body-file body.md
+              gh issue comment "$existing" --body "Still failing: ${{ steps.summary.outputs.failing }} ($RUN_URL)"
+            else
+              gh issue create --title "$TITLE" --body-file body.md
+            fi
+          elif [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "All providers pass against the live sites again ($RUN_URL)."
+          fi
+
+      - name: Fail if any provider failed
+        if: steps.summary.outputs.failing != ''
+        run: |
+          echo "::error::Failing against live sites: ${{ steps.summary.outputs.failing }}"
+          exit 1
